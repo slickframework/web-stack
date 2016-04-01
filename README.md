@@ -1,0 +1,2 @@
+# mvc
+Slick MVC implementation
