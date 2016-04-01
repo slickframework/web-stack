@@ -48,6 +48,11 @@ class Application
     private $response;
 
     /**
+     * @var ContainerInterface
+     */
+    private static $defaultContainer;
+
+    /**
      * Creates an application with an HTTP request
      *
      * If no request is provided then a Slick\Http\PhpEnvironment\Request is
@@ -58,6 +63,10 @@ class Application
     public function __construct(Request $request = null)
     {
         $this->request = $request;
+        self::$defaultContainer = (
+            new ContainerBuilder(__DIR__.'/Configuration/services.php')
+            )
+            ->getContainer();
     }
 
     /**
@@ -68,10 +77,7 @@ class Application
     public function getContainer()
     {
         if (is_null(self::$container)) {
-            self::$container = (
-            new ContainerBuilder($this->configPath.'/services.php')
-            )
-                ->getContainer();
+            self::$container = $this->checkContainer();
         }
         return self::$container;
     }
@@ -169,6 +175,42 @@ class Application
             $this->configPath = getcwd().'/Configuration';
         }
         return $this->configPath;
+    }
+
+    /**
+     * Gets HTTP request object
+     *
+     * @return Request
+     */
+    public function getRequest()
+    {
+        if (null === $this->request) {
+            $this->request = $this->getContainer()
+                ->get('request');
+        }
+        return $this->request;
+    }
+
+    /**
+     * Gets container with user overridden settings
+     * 
+     * @return ContainerInterface|\Slick\Di\Container
+     */
+    protected function checkContainer()
+    {
+        $container = self::$defaultContainer;
+        if (
+            null != $this->configPath &&
+            file_exists($this->configPath.'/services.php')
+        ) {
+            $container = (
+                new ContainerBuilder(
+                    $this->configPath.'/services.php',
+                    true
+                )
+            )->getContainer();
+        }
+        return $container;
     }
 
 }
