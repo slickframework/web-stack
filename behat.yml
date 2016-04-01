@@ -1,0 +1,9 @@
+# Behat configuration file
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+        - Mvc\MvcContext
+      paths:
+        - %paths.base%/features

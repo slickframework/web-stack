@@ -1,0 +1,53 @@
+{
+  "name": "slick/mvc",
+  "description": "MVC implementation for Slick Framework.",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "version": "v1.2.0",
+  "keywords": [
+    "slick",
+    "MVC",
+    "MVC implementation",
+    ""
+  ],
+  "authors": [
+    {
+      "name": "Filipe Silva",
+      "email": "silvam.filipe@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Slick\\Mvc\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Slick\\Tests\\Mvc\\": "tests"
+    }
+  },
+  "require": {
+    "slick/cache": "^1.2",
+    "slick/configuration": "^1.2",
+    "slick/di": "^1.1@dev",
+    "slick/form": "^1.2",
+    "slick/orm": "^1.2",
+    "slick/session": "^1.2",
+    "aura/router": "^3.0",
+    "symfony/yaml": "^2.1",
+    "filp/whoops": "^2.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4",
+    "phpunit/php-code-coverage": "^2",
+    "scrutinizer/ocular": "~1.1",
+    "behat/behat": "~3.0.4"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.2-dev",
+      "dev-develop": "1.3-dev"
+    }
+  }
+}
