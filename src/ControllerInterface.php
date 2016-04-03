@@ -69,4 +69,29 @@ interface ControllerInterface
      * @return ControllerInterface
      */
     public function set($key, $value = null);
+
+    /**
+     * Redirects the flow to another route/path
+     * 
+     * @param string $path the route or path to redirect to
+     * 
+     * @return ControllerInterface|self|$this
+     */
+    public function redirect($path);
+
+    /**
+     * Enables or disables rendering
+     * 
+     * @param bool $disable
+     * @return ControllerInterface|self|$this
+     */
+    public function disableRendering($disable = true);
+
+    /**
+     * Changes the current rendering template
+     * 
+     * @param string $template
+     * @return ControllerInterface|self|$this
+     */
+    public function setView($template);
 }

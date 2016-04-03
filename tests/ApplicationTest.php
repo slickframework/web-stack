@@ -75,8 +75,8 @@ class ApplicationTest extends TestCase
             ->method('get')
             ->with('request')
             ->willReturn($mockedRequest);
+        Application::setContainer($container);
         $request = $this->application
-            ->setContainer($container)
             ->getRequest();
         $this->assertSame($request, $mockedRequest);
     }
@@ -92,8 +92,8 @@ class ApplicationTest extends TestCase
             ->method('get')
             ->with('middleware.runner')
             ->willReturn($this->getMiddlewareRunnerMock());
+        Application::setContainer($container);
         $response = $this->application
-            ->setContainer($container)
             ->getResponse();
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }

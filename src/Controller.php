@@ -97,6 +97,56 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
+     * Enables or disables rendering
+     *
+     * @param bool $disable
+     * @return ControllerInterface|self|$this
+     */
+    public function disableRendering($disable = true)
+    {
+        $this->request = $this->request->withAttribute('render', !$disable);
+        return $this;
+    }
+
+    /**
+     * Changes the current rendering template
+     *
+     * @param string $template
+     * @return ControllerInterface|self|$this
+     */
+    public function setView($template)
+    {
+        $this->request = $this->request->withAttribute('template', $template);
+        return $this;
+    }
+
+    /**
+     * Redirects the flow to another route/path
+     *
+     * @param string $path the route or path to redirect to
+     *
+     * @return Controller|self|$this
+     */
+    public function redirect($path)
+    {
+        $regExp = '/\/\/|https?:/i';
+        if (preg_match($regExp, $path)) {
+            $this->response = $this->createRedirectResponse($path);
+            return $this;
+        }
+        $generated = call_user_func_array(
+            [$this->getRouterGenerator(), 'generate'],
+            func_get_args()
+        );
+        $path = $generated
+            ? $generated
+            : $path;
+        $basePath = rtrim($this->request->getBasePath(), '/');
+        $this->response = $this->createRedirectResponse("{$basePath}/{$path}");
+        return $this;
+    }
+
+    /**
      * Register a variable value
      *
      * @param string $key
@@ -112,5 +162,31 @@ abstract class Controller implements ControllerInterface
         $this->request = $this->request
             ->withAttribute($attrName, $attributes[$attrName]);
         return $this;
+    }
+
+    /**
+     * Return Router path generator
+     *
+     * @return \Aura\Router\Generator
+     */
+    protected function getRouterGenerator()
+    {
+        /** @var Router $router */
+        $router = Application::container()->get('router.middleware');
+        return $router->getRouterContainer()->getGenerator();
+    }
+
+    /**
+     * Creates a redirect response for provided path
+     * 
+     * @param string $path
+     * 
+     * @return Response
+     */
+    protected function createRedirectResponse($path)
+    {
+        $response = $this->response->withStatus(302)
+            ->withHeader('Location', $path);
+        return $response;
     }
 }

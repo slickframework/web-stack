@@ -44,12 +44,10 @@ class Renderer extends AbstractMiddleware implements MiddlewareInterface
     )
     {
         $this->request = $request;
-        $stream = new Stream('php://memory', 'rw+');
-        $this->getEngine()->parse($this->getTemplate());
-        $content = $this->getEngine()->process($this->getData());
-        $stream->write($content);
-
-        $response = $response->withBody($stream);
+        $render = $this->request->getAttribute('render', true);
+        if ($render) {
+            $response = $this->render($response);
+        }
         return $this->executeNext($request, $response);
     }
 
@@ -61,6 +59,23 @@ class Renderer extends AbstractMiddleware implements MiddlewareInterface
     public function addTemplatePath($path)
     {
         Template::addPath($path);
+    }
+
+    /**
+     * Processes and renders the response
+     *
+     * @param ResponseInterface $response
+     * @return ResponseInterface|static
+     */
+    protected function render(ResponseInterface $response)
+    {
+        $stream = new Stream('php://memory', 'rw+');
+        $this->getEngine()->parse($this->getTemplate());
+        $content = $this->getEngine()->process($this->getData());
+        $stream->write($content);
+
+        $response = $response->withBody($stream);
+        return $response;
     }
 
     /**
@@ -81,10 +96,9 @@ class Renderer extends AbstractMiddleware implements MiddlewareInterface
      */
     protected function getTemplate()
     {
-        /** @var Route $route */
-        $route = $this->request->getAttribute('route');
-        $values = $route->attributes;
-        return "{$values['controller']}/{$values['action']}.twig";
+        $template = $this->request
+            ->getAttribute('template', $this->getDefaultTemplate());
+        return $template.'.twig';
     }
 
     /**
@@ -96,5 +110,18 @@ class Renderer extends AbstractMiddleware implements MiddlewareInterface
     {
         $index = ControllerInterface::REQUEST_ATTR_VIEW_DATA;
         return $this->request->getAttribute($index, []);
+    }
+
+    /**
+     * Returns the default template from current request route
+     * 
+     * @return string
+     */
+    protected function getDefaultTemplate()
+    {
+        /** @var Route $route */
+        $route = $this->request->getAttribute('route');
+        $values = $route->attributes;
+        return "{$values['controller']}/{$values['action']}";
     }
 }

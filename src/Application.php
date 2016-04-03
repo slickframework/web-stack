@@ -10,6 +10,7 @@
 namespace Slick\Mvc;
 
 use Interop\Container\ContainerInterface;
+use Slick\Configuration\Configuration;
 use Slick\Di\ContainerBuilder;
 use Slick\Http\PhpEnvironment\MiddlewareRunnerInterface;
 use Slick\Http\PhpEnvironment\Request;
@@ -63,8 +64,10 @@ class Application
     public function __construct(Request $request = null)
     {
         $this->request = $request;
+        Configuration::addPath(__DIR__.'/Configuration');
+        $definitions = include __DIR__.'/Configuration/services.php';
         self::$defaultContainer = (
-            new ContainerBuilder(__DIR__.'/Configuration/services.php')
+            new ContainerBuilder($definitions)
             )
             ->getContainer();
     }
@@ -86,13 +89,10 @@ class Application
      * Sets the dependency injection container
      *
      * @param ContainerInterface $container
-     *
-     * @return $this|self|Application
      */
-    public function setContainer(ContainerInterface $container)
+    public static function setContainer(ContainerInterface $container)
     {
         self::$container = $container;
-        return $this;
     }
 
     /**
@@ -161,6 +161,7 @@ class Application
     public function setConfigPath($configPath)
     {
         $this->configPath = $configPath;
+        Configuration::addPath($configPath);
         return $this;
     }
 
@@ -173,6 +174,7 @@ class Application
     {
         if (null == $this->configPath) {
             $this->configPath = getcwd().'/Configuration';
+            Configuration::addPath($this->configPath);
         }
         return $this->configPath;
     }
@@ -203,9 +205,10 @@ class Application
             null != $this->configPath &&
             file_exists($this->configPath.'/services.php')
         ) {
+            $definitions = include $this->configPath.'/services.php';
             $container = (
                 new ContainerBuilder(
-                    $this->configPath.'/services.php',
+                    $definitions,
                     true
                 )
             )->getContainer();
