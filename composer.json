@@ -35,13 +35,14 @@
     "slick/session": "^1.2",
     "aura/router": "^3.0",
     "symfony/yaml": "^2.1",
-    "filp/whoops": "^2.1"
+    "filp/whoops": "^2.1",
+    "slick/console": "^1.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^4",
     "phpunit/php-code-coverage": "^2",
     "scrutinizer/ocular": "~1.1",
-    "behat/behat": "~3.0.4"
+    "behat/behat": "^3.0.4"
   },
   "extra": {
     "branch-alias": {
