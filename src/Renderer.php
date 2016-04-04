@@ -70,8 +70,10 @@ class Renderer extends AbstractMiddleware implements MiddlewareInterface
     protected function render(ResponseInterface $response)
     {
         $stream = new Stream('php://memory', 'rw+');
-        $this->getEngine()->parse($this->getTemplate());
-        $content = $this->getEngine()->process($this->getData());
+        $content = $this->getEngine()
+            ->parse($this->getTemplate())
+            ->process($this->getData())
+        ;
         $stream->write($content);
 
         $response = $response->withBody($stream);
