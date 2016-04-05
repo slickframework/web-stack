@@ -15,6 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\Server\AbstractMiddleware;
 use Slick\Http\Server\MiddlewareInterface;
 use Slick\Http\Stream;
+use Slick\Mvc\Renderer\HtmlExtension;
 use Slick\Template\Template;
 
 /**
@@ -88,6 +89,7 @@ class Renderer extends AbstractMiddleware implements MiddlewareInterface
     protected function getEngine()
     {
         $template = new Template();
+        $template->addExtension(HtmlExtension::class);
         return $template->initialize();
     }
 

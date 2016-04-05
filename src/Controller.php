@@ -13,6 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\PhpEnvironment\Request;
 use Slick\Http\PhpEnvironment\Response;
+use Slick\Mvc\Controller\UrlUtils;
 
 /**
  * Controller
@@ -32,6 +33,11 @@ abstract class Controller implements ControllerInterface
      * @var ResponseInterface|Response
      */
     protected $response;
+
+    /**
+     * For URL parsing
+     */
+    use UrlUtils;
 
     /**
      * Registers the current HTTP request and response
@@ -129,20 +135,9 @@ abstract class Controller implements ControllerInterface
      */
     public function redirect($path)
     {
-        $regExp = '/\/\/|https?:/i';
-        if (preg_match($regExp, $path)) {
-            $this->response = $this->createRedirectResponse($path);
-            return $this;
-        }
-        $generated = call_user_func_array(
-            [$this->getRouterGenerator(), 'generate'],
-            func_get_args()
-        );
-        $path = $generated
-            ? $generated
-            : $path;
-        $basePath = rtrim($this->request->getBasePath(), '/');
-        $this->response = $this->createRedirectResponse("{$basePath}/{$path}");
+        $args = func_get_args();
+        $url = call_user_func_array([$this, 'getUrl'], $args);
+        $this->response = $this->createRedirectResponse($url);
         return $this;
     }
 
@@ -162,18 +157,6 @@ abstract class Controller implements ControllerInterface
         $this->request = $this->request
             ->withAttribute($attrName, $attributes[$attrName]);
         return $this;
-    }
-
-    /**
-     * Return Router path generator
-     *
-     * @return \Aura\Router\Generator
-     */
-    protected function getRouterGenerator()
-    {
-        /** @var Router $router */
-        $router = Application::container()->get('router.middleware');
-        return $router->getRouterContainer()->getGenerator();
     }
 
     /**

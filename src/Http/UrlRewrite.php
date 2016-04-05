@@ -42,7 +42,7 @@ class UrlRewrite extends AbstractMiddleware implements MiddlewareInterface
         ServerRequestInterface $request, ResponseInterface $response
     )
     {
-        $path = $request->getQuery(self::QUERY_PARAM);
+        $path = $request->getQueryParams()[self::QUERY_PARAM];
         $uri = Uri::create($request->getUri());
         $queryString = ltrim(
             str_replace(

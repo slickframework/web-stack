@@ -1,0 +1,16 @@
+# Route definitio file
+routes:
+  home:
+    allows: [POST, GET]
+    path: /
+    defaults:
+      controller: pages
+      action: home
+  catchall:
+    allows: [POST, GET]
+    path: "{/controller,action}"
+    wildcard: args
+defaults:
+  namespace: App\Controller
+  controller: pages
+  action: index
