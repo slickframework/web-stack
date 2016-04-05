@@ -32,7 +32,6 @@
     "slick/di": "^1.1@dev",
     "slick/form": "^1.2",
     "slick/orm": "^1.2",
-    "slick/session": "^1.2",
     "aura/router": "^3.0",
     "symfony/yaml": "^2.1",
     "filp/whoops": "^2.1",

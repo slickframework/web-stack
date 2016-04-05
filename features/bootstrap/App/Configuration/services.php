@@ -8,6 +8,7 @@
  */
 
 use Slick\Configuration\Configuration;
+use Slick\Configuration\ConfigurationInterface;
 use Slick\Di\Definition\ObjectDefinition;
 use Slick\Http\PhpEnvironment\Request;
 use Slick\Http\PhpEnvironment\Response;
@@ -32,10 +33,26 @@ $templatePath = $config->get(
  */
 $services = [];
 
+// Default session driver
+$services['session'] = function(ConfigurationInterface $config) {
+    $options = $config->get(
+        'session',
+        [
+            'driver' => 'server',
+            'options' => []
+        ]
+    );
+    $session = new \Slick\Http\Session($options);
+    return $session->initialize();
+};
+
 $services['request'] = ObjectDefinition::create(Request::class);
 $services['response'] = ObjectDefinition::create(Response::class);
 
 // Middleware
+$services['session.middleware'] = ObjectDefinition::create(
+    \Slick\Mvc\Http\Session::class
+);
 $services['url.rewrite.middleware'] = ObjectDefinition::create(UrlRewrite::class);
 $services['router.middleware'] = ObjectDefinition::create(Router::class)
     ->setMethod('setRouteFile', [__DIR__.'/routes.yml']);
@@ -44,6 +61,7 @@ $services['renderer.middleware'] = ObjectDefinition::create(Renderer::class)
     ->setMethod('addTemplatePath', [$templatePath]);
 $services['middleware.runner'] = ObjectDefinition::create(Server::class)
     ->setConstructArgs(['@request', '@response'])
+    ->setMethod('add', ['@session.middleware'])
     ->setMethod('add', ['@url.rewrite.middleware'])
     ->setMethod('add', ['@router.middleware'])
     ->setMethod('add', ['@dispatcher.middleware'])
