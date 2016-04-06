@@ -94,4 +94,14 @@ interface ControllerInterface
      * @return ControllerInterface|self|$this
      */
     public function setView($template);
+
+    /**
+     * Get the routed request attributes
+     * 
+     * @param null|string $name
+     * @param mixed       $default
+     * 
+     * @return mixed
+     */
+    public function getRouteAttributes($name = null, $default = null);
 }

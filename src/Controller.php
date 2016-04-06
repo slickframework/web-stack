@@ -9,6 +9,7 @@
 
 namespace Slick\Mvc;
 
+use Aura\Router\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\PhpEnvironment\Request;
@@ -139,6 +140,31 @@ abstract class Controller implements ControllerInterface
         $url = call_user_func_array([$this, 'getUrl'], $args);
         $this->response = $this->createRedirectResponse($url);
         return $this;
+    }
+
+    /**
+     * Get the routed request attributes
+     *
+     * @param null|string $name
+     * @param mixed       $default
+     *
+     * @return mixed
+     */
+    public function getRouteAttributes($name = null, $default = null)
+    {
+        /** @var Route $route */
+        $route = $this->request->getAttribute('route', false);
+        $attributes = $route
+            ? $route->attributes
+            : [];
+        
+        if (null == $name) {
+            return $attributes;
+        }
+        
+        return array_key_exists($name, $attributes)
+            ? $attributes[$name]
+            : $default;
     }
 
     /**
