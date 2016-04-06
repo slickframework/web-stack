@@ -48,7 +48,7 @@ trait SessionAwareMethods
      */
     public function setSessionDriver(SessionDriverInterface $driver)
     {
-        $this->setSessionDriver($driver);
+        $this->sessionDriver = $driver;
         return $this;
     }
 }
