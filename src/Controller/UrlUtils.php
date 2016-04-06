@@ -42,11 +42,12 @@ trait UrlUtils
             $generated = false;
         }
 
+        $basePath = rtrim($this->getRequest()->getBasePath(), '/');
         $path = $generated
             ? $generated
-            : $path;
-        $basePath = rtrim($this->getRequest()->getBasePath(), '/');
-        return ("{$basePath}/{$path}");
+            : "{$basePath}/{$path}";
+
+        return $path;
     }
 
     /**
