@@ -28,4 +28,4 @@
 
   Scenario: Print css style tag
     When I request page "/url/home"
-    Then response should contain '<script src="/stylesheets/bootstrap.min.js"></script>'
+    Then response should contain '<script src="/javascripts/bootstrap.min.js"></script>'

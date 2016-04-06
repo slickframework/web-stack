@@ -63,7 +63,7 @@ class HtmlExtension extends AbstractTwigExtension implements EngineExtensionInte
             ),
             new SimpleFunction(
                 'addJs',
-                function($file, $path='/stylesheets') {
+                function($file, $path='/javascripts') {
                     return $this->addJs($file, $path);
                 }
             )
@@ -102,7 +102,7 @@ class HtmlExtension extends AbstractTwigExtension implements EngineExtensionInte
         return sprintf('<link href="%s" %s>', $file, $attr);
     }
 
-    public function addJs($file, $path='/stylesheets')
+    public function addJs($file, $path='/javascripts')
     {
         $file = str_replace('//', '', "{$path}/{$file}");
         return sprintf('<script src="%s"></script>', $file);
