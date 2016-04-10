@@ -14,6 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\Server\AbstractMiddleware;
 use Slick\Http\Server\MiddlewareInterface;
 use Slick\Mvc\Application;
+use Slick\Mvc\ControllerInterface;
 
 /**
  * Session initialization
@@ -36,8 +37,15 @@ class Session extends AbstractMiddleware implements MiddlewareInterface
         ServerRequestInterface $request, ResponseInterface $response
     )
     {
+        $key = ControllerInterface::REQUEST_ATTR_VIEW_DATA;
+        $vars = $request->getAttribute($key, []);
         $session = Application::container()->get('session');
-        $request = $request->withAttribute('session', $session);
+        $vars['flashMessages'] = new FlashMessages();
+        $request = $request
+            ->withAttribute('session', $session)
+            ->withAttribute($key, $vars)
+        ;
+
         return $this->executeNext($request, $response);
     }
 }

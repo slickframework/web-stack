@@ -88,6 +88,7 @@ class Renderer extends AbstractMiddleware implements MiddlewareInterface
      */
     protected function getEngine()
     {
+        Template::addPath(dirname(__DIR__).'/templates');
         $template = new Template();
         $template->addExtension(HtmlExtension::class);
         return $template->initialize();
