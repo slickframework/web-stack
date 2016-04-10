@@ -139,6 +139,7 @@ abstract class Controller implements ControllerInterface
         $args = func_get_args();
         $url = call_user_func_array([$this, 'getUrl'], $args);
         $this->response = $this->createRedirectResponse($url);
+        $this->disableRendering();
         return $this;
     }
 
