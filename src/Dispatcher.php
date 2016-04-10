@@ -69,12 +69,34 @@ class Dispatcher extends AbstractMiddleware implements MiddlewareInterface
         $this->checkAction($class);
 
         call_user_func_array([$controller, $this->action], $this->args);
+        $request = $controller->getRequest();
+        $request = $this->setViewVars($controller, $request);
 
         return $this->executeNext(
-            $controller->getRequest(),
+            $request,
             $controller->getResponse()
         );
 
+    }
+
+    /**
+     * Sets the data values into request
+     * 
+     * @param ControllerInterface $controller
+     * @param ServerRequestInterface $request
+     * 
+     * @return ServerRequestInterface|static
+     */
+    protected function setViewVars(
+        ControllerInterface $controller, ServerRequestInterface $request
+    ) {
+        $key = $controller::REQUEST_ATTR_VIEW_DATA;
+        $data = $request->getAttribute($key, []);
+        $request = $request->withAttribute(
+            $key,
+            array_merge($data, $controller->getViewVars())
+        );
+        return $request;
     }
 
     /**

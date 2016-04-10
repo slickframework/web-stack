@@ -104,4 +104,11 @@ interface ControllerInterface
      * @return mixed
      */
     public function getRouteAttributes($name = null, $default = null);
+
+    /**
+     * Returns the data that was set on controller action
+     * 
+     * @return array
+     */
+    public function getViewVars();
 }

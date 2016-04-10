@@ -36,6 +36,11 @@ abstract class Controller implements ControllerInterface
     protected $response;
 
     /**
+     * @var array
+     */
+    protected $vars = [];
+
+    /**
      * For URL parsing
      */
     use UrlUtils;
@@ -101,6 +106,16 @@ abstract class Controller implements ControllerInterface
             $this->registerVar($name, $value);
         }
         return $this;
+    }
+
+    /**
+     * Returns the data that was set on controller action
+     *
+     * @return array
+     */
+    public function getViewVars()
+    {
+        return $this->vars;
     }
 
     /**
@@ -178,11 +193,7 @@ abstract class Controller implements ControllerInterface
      */
     protected function registerVar($key, $value)
     {
-        $attrName = ControllerInterface::REQUEST_ATTR_VIEW_DATA;
-        $attributes = $this->request->getAttributes();
-        $attributes[$attrName][$key] = $value;
-        $this->request = $this->request
-            ->withAttribute($attrName, $attributes[$attrName]);
+        $this->vars[$key] = $value;
         return $this;
     }
 

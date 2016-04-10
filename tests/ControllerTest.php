@@ -73,12 +73,10 @@ class ControllerTest extends TestCase
      */
     public function setSingleValue()
     {
-        $index = ControllerInterface::REQUEST_ATTR_VIEW_DATA;
         $this->controller->set('foo', 'bar');
-        $request = $this->controller->getRequest();
         $this->assertEquals(
             'bar',
-            $request->getAttribute($index)['foo']
+            $this->controller->getViewVars()['foo']
         );
     }
 
@@ -90,12 +88,11 @@ class ControllerTest extends TestCase
     {
         $foo = 'bar';
         $baz = 'moo';
-        $index = ControllerInterface::REQUEST_ATTR_VIEW_DATA;
         $expected = ['foo' => 'bar', 'baz' => 'moo'];
         $this->controller->set(compact('foo', 'baz'));
         $this->assertEquals(
             $expected,
-            $this->controller->getRequest()->getAttribute($index)
+            $this->controller->getViewVars()
         );
     }
 
