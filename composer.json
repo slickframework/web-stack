@@ -27,7 +27,6 @@
     }
   },
   "require": {
-    "slick/cache": "^1.2",
     "slick/configuration": "^1.2",
     "slick/di": "^1.1@dev",
     "slick/form": "^1.2",

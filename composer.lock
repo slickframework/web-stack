@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9850a4f3e146ebaf6801f8e7b3813269",
-    "content-hash": "38a25edc0f44702416f4905236346725",
+    "hash": "a36167b6f267a6e39118b6e0cc659c95",
+    "content-hash": "3463bbc67069f17e674932577d8dbdd2",
     "packages": [
         {
             "name": "aura/router",
@@ -84,16 +84,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.0",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "8da9523f07c62d56fe1cf36f8ae29b333afc181f"
+                "reference": "d13505b240a6f580bc75ba591da30299d6cb0eec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/8da9523f07c62d56fe1cf36f8ae29b333afc181f",
-                "reference": "8da9523f07c62d56fe1cf36f8ae29b333afc181f",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/d13505b240a6f580bc75ba591da30299d6cb0eec",
+                "reference": "d13505b240a6f580bc75ba591da30299d6cb0eec",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2016-03-13 10:22:39"
+            "time": "2016-04-07 06:16:25"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -148,12 +148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "8e4e5ef9fbcc6ced335f398b32dcf2a0e4a24acb"
+                "reference": "85cb758d7367f3aaaa8ffc9269e777919c5f68bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8e4e5ef9fbcc6ced335f398b32dcf2a0e4a24acb",
-                "reference": "8e4e5ef9fbcc6ced335f398b32dcf2a0e4a24acb",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/85cb758d7367f3aaaa8ffc9269e777919c5f68bb",
+                "reference": "85cb758d7367f3aaaa8ffc9269e777919c5f68bb",
                 "shasum": ""
             },
             "require": {
@@ -202,7 +202,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-04-01 05:52:09"
+            "time": "2016-04-06 17:59:33"
         },
         {
             "name": "guzzlehttp/promises",
@@ -452,12 +452,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09"
+                "reference": "a7ade9d68f41bf6b01cc6121635c87b4420a5b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/064b38c16790249488e7a8b987acf1c9d7383c09",
-                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a7ade9d68f41bf6b01cc6121635c87b4420a5b46",
+                "reference": "a7ade9d68f41bf6b01cc6121635c87b4420a5b46",
                 "shasum": ""
             },
             "require": {
@@ -522,7 +522,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-04-02 13:12:58"
+            "time": "2016-04-10 12:01:10"
         },
         {
             "name": "myclabs/php-enum",
@@ -670,12 +670,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/cache.git",
-                "reference": "8001eded1886081b1ef5a61b3872e9b61970a0ef"
+                "reference": "fb0f72ae19601fc279ec70ca0279b88505ee5182"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/cache/zipball/8001eded1886081b1ef5a61b3872e9b61970a0ef",
-                "reference": "8001eded1886081b1ef5a61b3872e9b61970a0ef",
+                "url": "https://api.github.com/repos/slickframework/cache/zipball/fb0f72ae19601fc279ec70ca0279b88505ee5182",
+                "reference": "fb0f72ae19601fc279ec70ca0279b88505ee5182",
                 "shasum": ""
             },
             "require": {
@@ -717,7 +717,7 @@
                 "memcached",
                 "slick"
             ],
-            "time": "2016-02-29 01:28:32"
+            "time": "2016-04-07 12:06:44"
         },
         {
             "name": "slick/common",
@@ -725,12 +725,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/common.git",
-                "reference": "c89ab0f373206441cdffe53d310ad586f84391da"
+                "reference": "d48f616219f103387b7909b7447c221c3a41add8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/common/zipball/c89ab0f373206441cdffe53d310ad586f84391da",
-                "reference": "c89ab0f373206441cdffe53d310ad586f84391da",
+                "url": "https://api.github.com/repos/slickframework/common/zipball/d48f616219f103387b7909b7447c221c3a41add8",
+                "reference": "d48f616219f103387b7909b7447c221c3a41add8",
                 "shasum": ""
             },
             "require": {
@@ -776,7 +776,7 @@
                 "magic methods",
                 "slick"
             ],
-            "time": "2016-01-11 16:49:11"
+            "time": "2016-04-08 00:09:23"
         },
         {
             "name": "slick/configuration",
@@ -897,12 +897,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/database.git",
-                "reference": "6e90d127dfb6b8ecc0d1a3bbf6c83f07dd76c399"
+                "reference": "dd543c296151d882b871b7c18baf814637972ef5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/database/zipball/6e90d127dfb6b8ecc0d1a3bbf6c83f07dd76c399",
-                "reference": "6e90d127dfb6b8ecc0d1a3bbf6c83f07dd76c399",
+                "url": "https://api.github.com/repos/slickframework/database/zipball/dd543c296151d882b871b7c18baf814637972ef5",
+                "reference": "dd543c296151d882b871b7c18baf814637972ef5",
                 "shasum": ""
             },
             "require": {
@@ -946,7 +946,7 @@
                 "slick",
                 "sql"
             ],
-            "time": "2016-02-28 02:40:28"
+            "time": "2016-04-10 22:37:32"
         },
         {
             "name": "slick/di",
@@ -1981,12 +1981,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-validator.git",
-                "reference": "07a66da9f107fa317880e866b85eda25db4bce5e"
+                "reference": "7b89424b6782b636e08f00f3d2fc732b0adaa485"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/07a66da9f107fa317880e866b85eda25db4bce5e",
-                "reference": "07a66da9f107fa317880e866b85eda25db4bce5e",
+                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/7b89424b6782b636e08f00f3d2fc732b0adaa485",
+                "reference": "7b89424b6782b636e08f00f3d2fc732b0adaa485",
                 "shasum": ""
             },
             "require": {
@@ -2021,8 +2021,12 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
+                    "dev-master": "2.7-dev",
+                    "dev-develop": "2.8-dev"
+                },
+                "zf": {
+                    "component": "Zend\\Validator",
+                    "config-provider": "Zend\\Validator\\ConfigProvider"
                 }
             },
             "autoload": {
@@ -2040,7 +2044,7 @@
                 "validator",
                 "zf2"
             ],
-            "time": "2016-03-07 15:50:21"
+            "time": "2016-04-06 15:46:04"
         }
     ],
     "packages-dev": [
@@ -3111,12 +3115,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "d667a50e195cb539fb88d866f0ce50496997622a"
+                "reference": "f9733ae34271bec6a6a6a1d4e9a8dd28f2ac1628"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d667a50e195cb539fb88d866f0ce50496997622a",
-                "reference": "d667a50e195cb539fb88d866f0ce50496997622a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f9733ae34271bec6a6a6a1d4e9a8dd28f2ac1628",
+                "reference": "f9733ae34271bec6a6a6a1d4e9a8dd28f2ac1628",
                 "shasum": ""
             },
             "require": {
@@ -3175,7 +3179,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-04-04 10:56:57"
+            "time": "2016-04-07 07:09:31"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3757,12 +3761,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "22e93498c1f27320a0ff340810ffe25fe74f8a2f"
+                "reference": "4d11d8088d395b7fa0762e474cdda2259efba9e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/22e93498c1f27320a0ff340810ffe25fe74f8a2f",
-                "reference": "22e93498c1f27320a0ff340810ffe25fe74f8a2f",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/4d11d8088d395b7fa0762e474cdda2259efba9e5",
+                "reference": "4d11d8088d395b7fa0762e474cdda2259efba9e5",
                 "shasum": ""
             },
             "require": {
@@ -3808,7 +3812,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2016-04-04 09:35:16"
+            "time": "2016-04-07 12:29:40"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -3816,12 +3820,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "47d2d8cade9b1c3987573d2943bb9352536cdb87"
+                "reference": "81c4c51f7fd6d0d40961bd53dd60cade32db6ed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/47d2d8cade9b1c3987573d2943bb9352536cdb87",
-                "reference": "47d2d8cade9b1c3987573d2943bb9352536cdb87",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/81c4c51f7fd6d0d40961bd53dd60cade32db6ed6",
+                "reference": "81c4c51f7fd6d0d40961bd53dd60cade32db6ed6",
                 "shasum": ""
             },
             "require": {
@@ -3868,7 +3872,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-07 14:04:32"
+            "time": "2016-04-05 16:36:54"
         },
         {
             "name": "symfony/filesystem",
