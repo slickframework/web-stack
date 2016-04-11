@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a36167b6f267a6e39118b6e0cc659c95",
-    "content-hash": "3463bbc67069f17e674932577d8dbdd2",
+    "hash": "4ff18b6e910d24b4cfc092bade260fa4",
+    "content-hash": "a44f0072c0a65520aa3dc7ebb529b4d9",
     "packages": [
         {
             "name": "aura/router",
@@ -1235,12 +1235,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/orm.git",
-                "reference": "e66fe00be9bf86d5cb2b37315ce5ef378115299a"
+                "reference": "0e9614826a82b55bc77020244c6ced22ad2a310f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/orm/zipball/e66fe00be9bf86d5cb2b37315ce5ef378115299a",
-                "reference": "e66fe00be9bf86d5cb2b37315ce5ef378115299a",
+                "url": "https://api.github.com/repos/slickframework/orm/zipball/0e9614826a82b55bc77020244c6ced22ad2a310f",
+                "reference": "0e9614826a82b55bc77020244c6ced22ad2a310f",
                 "shasum": ""
             },
             "require": {
@@ -1284,7 +1284,7 @@
                 "orm",
                 "slick"
             ],
-            "time": "2016-03-31 21:42:47"
+            "time": "2016-04-11 00:04:43"
         },
         {
             "name": "slick/template",
@@ -4040,7 +4040,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "slick/di": 20
+        "slick/di": 20,
+        "slick/orm": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
