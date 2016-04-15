@@ -10,6 +10,7 @@
 namespace Slick\Tests\Mvc;
 
 use Aura\Router\Generator;
+use Aura\Router\Route;
 use Aura\Router\RouterContainer;
 use Interop\Container\ContainerInterface;
 use PHPUnit_Framework_TestCase as TestCase;
@@ -165,5 +166,44 @@ class ControllerTest extends TestCase
         $this->assertEquals(302, $response->getStatusCode());
         $basePath = rtrim($this->controller->getRequest()->getBasePath(), '/');
         $this->assertEquals($basePath.'/blog.edit', $response->getHeader('location')[0]);
+    }
+
+    /**
+     * @test
+     * @return MockObject|Controller
+     */
+    public function getRouteAttributes()
+    {
+        $attr = ['id' => '2'];
+        $route = new Route();
+        $route->attributes($attr);
+        $request = (new Request())->withAttribute('route', $route);
+        /** @var Response $response */
+        $response = $this->getMock(Response::class);
+        $this->controller->register($request, $response);
+
+        $this->assertEquals($attr, $this->controller->getRouteAttributes());
+
+        return $this->controller;
+    }
+
+    /**
+     * @param Controller $controller
+     * @test
+     * @depends getRouteAttributes
+     */
+    public function getSingleAttribute(Controller $controller)
+    {
+        $this->assertEquals(2, $controller->getRouteAttributes('id'));
+    }
+
+    /**
+     * @param Controller $controller
+     * @test
+     * @depends getRouteAttributes
+     */
+    public function getDefaultValueForAttribute(Controller $controller)
+    {
+        $this->assertEquals(5, $controller->getRouteAttributes('myId', 5));
     }
 }

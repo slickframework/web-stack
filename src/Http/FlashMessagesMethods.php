@@ -55,11 +55,7 @@ trait FlashMessagesMethods
      */
     public function addInfoMessage($message)
     {
-        $this->getFlashMessages()->set(
-            FlashMessages::TYPE_INFO,
-            $message
-        );
-        return $this;
+        return $this->setMessage(FlashMessages::TYPE_INFO, $message);
     }
 
     /**
@@ -70,11 +66,7 @@ trait FlashMessagesMethods
      */
     public function addWarningMessage($message)
     {
-        $this->getFlashMessages()->set(
-            FlashMessages::TYPE_WARNING,
-            $message
-        );
-        return $this;
+        return $this->setMessage(FlashMessages::TYPE_WARNING, $message);
     }
 
     /**
@@ -85,11 +77,7 @@ trait FlashMessagesMethods
      */
     public function addErrorMessage($message)
     {
-        $this->getFlashMessages()->set(
-            FlashMessages::TYPE_ERROR,
-            $message
-        );
-        return $this;
+        return $this->setMessage(FlashMessages::TYPE_ERROR, $message);
     }
 
     /**
@@ -100,11 +88,7 @@ trait FlashMessagesMethods
      */
     public function addSuccessMessage($message)
     {
-        $this->getFlashMessages()->set(
-            FlashMessages::TYPE_SUCCESS,
-            $message
-        );
-        return $this;
+        return $this->setMessage(FlashMessages::TYPE_SUCCESS, $message);
     }
 
     /**
