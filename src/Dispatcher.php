@@ -10,6 +10,7 @@
 namespace Slick\Mvc;
 
 use Aura\Router\Route;
+use Guzzle\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\Server\AbstractMiddleware;
@@ -17,6 +18,7 @@ use Slick\Http\Server\MiddlewareInterface;
 use Slick\Mvc\Exception\ControllerMethodNotFoundException;
 use Slick\Mvc\Exception\ControllerNotFoundException;
 use Slick\Mvc\Exception\InvalidControllerException;
+use Slick\Template\Template;
 
 /**
  * Dispatcher
@@ -63,20 +65,40 @@ class Dispatcher extends AbstractMiddleware implements MiddlewareInterface
         $route = $request->getAttribute('route', false);
         $this->setAttributes($route);
         $class = $this->namespace.'\\'.$this->controller;
-        $controller = $this->createController($class);
-        $controller->register($request, $response);
+        try {
+            $controller = $this->createController($class);
+            $controller->register($request, $response);
 
-        $this->checkAction($class);
+            $this->checkAction($class);
 
-        call_user_func_array([$controller, $this->action], $this->args);
-        $request = $controller->getRequest();
-        $request = $this->setViewVars($controller, $request);
+            call_user_func_array([$controller, $this->action], $this->args);
+            $request = $controller->getRequest();
+            $request = $this->setViewVars($controller, $request);
+            $response = $controller->getResponse();
+        } catch (ControllerNotFoundException $caught) {
+            $this->checkView($request, $caught);
+        }
 
-        return $this->executeNext(
-            $request,
-            $controller->getResponse()
-        );
+        return $this->executeNext($request, $response);
+    }
 
+
+    protected function checkView(
+        ServerRequestInterface $request,
+        ControllerNotFoundException $caught
+    ) {
+        /** @var Route $route */
+        $route = $request->getAttribute('route');
+        $def = $route->attributes;
+        $viewName = "{$def['controller']}/{$def['action']}.twig";
+        $paths = Template::getPaths();
+        foreach ($paths as $path) {
+            $filename = str_replace('//', '/', "{$path}/{$viewName}");
+            if (is_file($filename)) {
+                return;
+            }
+        }
+        throw $caught;
     }
 
     /**

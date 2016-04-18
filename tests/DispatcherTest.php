@@ -80,6 +80,7 @@ class DispatcherTest extends TestCase
     public function dispatchNull()
     {
         $route = new Route();
+        $route->attributes(['controller' => 'pages', 'action' => 'index']);
         $request = (new Request())
             ->withAttribute('route', $route);
         $response = new Response();
