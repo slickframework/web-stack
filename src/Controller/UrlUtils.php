@@ -1,19 +1,25 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: filipesilva
- * Date: 04/04/16
- * Time: 22:10
+ * This file is part of slick/mvc package
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Slick\Mvc\Controller;
-
 
 use Aura\Router\Exception as AuraException;
 use Slick\Http\PhpEnvironment\Request;
 use Slick\Mvc\Application;
 use Slick\Mvc\Router;
 
+/**
+ * UrlUtils
+ * 
+ * @package Slick\Mvc\Controller
+ * @author  Filipe Silva <silvam.filipe@gmail.com>
+ */
 trait UrlUtils
 {
     /**
