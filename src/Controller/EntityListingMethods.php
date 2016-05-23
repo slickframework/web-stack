@@ -92,7 +92,7 @@ trait EntityListingMethods
     {
         if (null == $this->listingService) {
             $this->listingService = new EntityListingService(
-                $this->entityClassName
+                $this->getEntityClassName()
             );
         }
         return $this->listingService;
@@ -119,7 +119,7 @@ trait EntityListingMethods
      */
     protected function getEntityNamePlural()
     {
-        $names = explode('\\', $this->entityClassName);
+        $names = explode('\\', $this->getEntityClassName());
         $name = end($names);
         $nameParts = Text::camelCaseToSeparator($name, '#');
         $nameParts = explode('#', $nameParts);
@@ -158,7 +158,7 @@ trait EntityListingMethods
      * 
      * @return string
      */
-    abstract protected function getEntityClassName();
+    abstract public function getEntityClassName();
 
     /**
      * Get the fields list to use on search filter
