@@ -14,6 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slick\Database\Adapter\AdapterInterface;
 use Slick\Http\PhpEnvironment\Request;
 use Slick\Mvc\Controller\EntityListingMethods;
+use Slick\Mvc\ControllerInterface;
 use Slick\Mvc\Service\Entity\EntityListingService;
 use Slick\Mvc\Service\Entity\QueryFilter\SearchFilter;
 use Slick\Mvc\Service\Entity\QueryFilterCollectionInterface;
@@ -139,8 +140,30 @@ class EntityListingMethodsTest extends TestCase
      *
      * @return string
      */
-    protected function getEntityClassName()
+    public function getEntityClassName()
     {
         return $this->entityClassName;
+    }
+
+    /**
+     * Redirects the flow to another route/path
+     *
+     * @param string $path the route or path to redirect to
+     *
+     * @return ControllerInterface|self|$this
+     */
+    public function redirect($path)
+    {
+        return $this;
+    }
+
+    /**
+     * Gets the URL base path form this controller
+     *
+     * @return string
+     */
+    protected function getBasePath()
+    {
+        return 'base-path';
     }
 }

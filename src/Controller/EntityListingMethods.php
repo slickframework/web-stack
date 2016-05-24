@@ -9,15 +9,10 @@
 
 namespace Slick\Mvc\Controller;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Slick\Common\Utils\Text;
 use Slick\Filter\StaticFilter;
-use Slick\Http\PhpEnvironment\Request;
-use Slick\Mvc\ControllerInterface;
 use Slick\Mvc\Service\Entity\EntityListingService;
 use Slick\Mvc\Service\Entity\QueryFilter\SearchFilter;
 use Slick\Mvc\Utils\Pagination;
-use Slick\Orm\Orm;
 
 /**
  * Entity Listing Methods
@@ -28,6 +23,8 @@ use Slick\Orm\Orm;
 trait EntityListingMethods
 {
 
+    use EntityBasedMethods;
+    
     /**
      * @var int
      */
@@ -47,6 +44,11 @@ trait EntityListingMethods
      * @var string[]
      */
     protected $searchFields;
+
+    /**
+     * @var string
+     */
+    protected $order;
 
     /**
      * Handle the request to display a list of entities
@@ -113,54 +115,6 @@ trait EntityListingMethods
     }
 
     /**
-     * Get the plural name of the entity
-     * 
-     * @return string
-     */
-    protected function getEntityNamePlural()
-    {
-        $names = explode('\\', $this->getEntityClassName());
-        $name = end($names);
-        $nameParts = Text::camelCaseToSeparator($name, '#');
-        $nameParts = explode('#', $nameParts);
-        $lastPart = array_pop($nameParts);
-        $lastPart = ucfirst(Text::plural(strtolower($lastPart)));
-        array_push($nameParts, $lastPart);
-        return lcfirst(implode('', $nameParts));
-    }
-
-    /**
-     * Gets updated HTTP request
-     *
-     * @return ServerRequestInterface|Request
-     */
-    abstract public function getRequest();
-
-    /**
-     * Sets a value to be used by render
-     *
-     * The key argument can be an associative array with values to be set
-     * or a string naming the passed value. If an array is given then the
-     * value will be ignored.
-     *
-     * Those values must be set in the request attributes so they can be used
-     * latter by any other middle ware in the stack.
-     *
-     * @param string|array $key
-     * @param mixed        $value
-     *
-     * @return ControllerInterface
-     */
-    abstract public function set($key, $value = null);
-
-    /**
-     * Gets the entity FQ class name
-     * 
-     * @return string
-     */
-    abstract public function getEntityClassName();
-
-    /**
      * Get the fields list to use on search filter
      * 
      * @return array|\string[]
@@ -168,13 +122,10 @@ trait EntityListingMethods
     protected function getSearchFields()
     {
         if (null == $this->searchFields) {
-            $descriptor =  $this->getListingService()
-                ->getRepository()
-                ->getEntityDescriptor()
-            ;    
-            $field = $descriptor->getDisplayFiled();
+            $field = $this->getEntityDescriptor()->getDisplayFiled();
             $this->searchFields = [
-                $descriptor->getTableName().'.'.$field->getField()
+                $this->getEntityDescriptor()
+                    ->getTableName().'.'.$field->getField()
             ];
         }
         return $this->searchFields;

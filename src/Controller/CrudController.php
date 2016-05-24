@@ -10,6 +10,7 @@
 namespace Slick\Mvc\Controller;
 
 use Slick\Mvc\Controller;
+use Slick\Mvc\Http\FlashMessagesMethods;
 
 /**
  * CRUD Controller
@@ -21,7 +22,17 @@ abstract class CrudController extends Controller
 {
 
     /**
+     * To output error/success messages
+     */
+    use FlashMessagesMethods;
+    
+    /**
      * For list and filter handling
      */
     use EntityListingMethods;
+
+    /**
+     * For handling entity view request
+     */
+    use EntityViewMethods;
 }
