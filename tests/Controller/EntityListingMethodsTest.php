@@ -51,6 +51,13 @@ class EntityListingMethodsTest extends TestCase
         $this->assertEquals('posts', $this->getEntityNamePlural());
     }
     
+    public function testListingServiceLazyLoading()
+    {
+        $service = $this->getListingService();
+        $this->assertInstanceOf(EntityListingService::class, $service);
+    }
+
+    
     public function testGetSearchFields()
     {
         /** @var AdapterInterface $adapter */

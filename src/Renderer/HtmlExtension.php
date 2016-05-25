@@ -71,14 +71,28 @@ class HtmlExtension extends AbstractTwigExtension implements EngineExtensionInte
     }
 
     /**
+     * Get request
      * @return Request
      */
     public function getRequest()
     {
         if (null == $this->request) {
-            $this->request = Application::container()->get('request');
+            $this->setRequest(Application::container()->get('request'));
         }
         return $this->request;
+    }
+
+    /**
+     * Set HTML request message
+     * 
+     * @param Request $request
+     * 
+     * @return $this
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+        return $this;
     }
 
     /**

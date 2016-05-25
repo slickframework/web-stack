@@ -27,7 +27,7 @@ class EntityUpdateService extends AbstractEntityService implements
     /**
      * @var array
      */
-    protected $data;
+    protected $data = [];
 
     /**
      * @var Entity
