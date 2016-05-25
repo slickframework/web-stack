@@ -9,7 +9,9 @@
 
 namespace Slick\Mvc\Controller;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Slick\Filter\StaticFilter;
+use Slick\Http\PhpEnvironment\Request;
 use Slick\Mvc\Service\Entity\EntityListingService;
 use Slick\Mvc\Service\Entity\QueryFilter\SearchFilter;
 use Slick\Mvc\Utils\Pagination;
@@ -22,8 +24,6 @@ use Slick\Mvc\Utils\Pagination;
  */
 trait EntityListingMethods
 {
-
-    use EntityBasedMethods;
     
     /**
      * @var int
@@ -130,4 +130,25 @@ trait EntityListingMethods
         }
         return $this->searchFields;
     }
+
+    /**
+     * Gets updated HTTP request
+     *
+     * @return ServerRequestInterface|Request
+     */
+    abstract public function getRequest();
+
+    /**
+     * Get the current entity descriptor
+     *
+     * @return \Slick\Orm\Descriptor\EntityDescriptorInterface
+     */
+    abstract protected function getEntityDescriptor();
+
+    /**
+     * Get the plural name of the entity
+     *
+     * @return string
+     */
+    abstract protected function getEntityNamePlural();
 }

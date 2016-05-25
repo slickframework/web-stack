@@ -13,6 +13,7 @@ use PHPUnit_Framework_TestCase as TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Database\Adapter\AdapterInterface;
 use Slick\Http\PhpEnvironment\Request;
+use Slick\Mvc\Controller\EntityBasedMethods;
 use Slick\Mvc\Controller\EntityListingMethods;
 use Slick\Mvc\ControllerInterface;
 use Slick\Mvc\Service\Entity\EntityListingService;
@@ -42,6 +43,8 @@ class EntityListingMethodsTest extends TestCase
     protected $entityClassName = Post::class;
     
     use EntityListingMethods;
+    
+    use EntityBasedMethods;
     
     public function testNamePlural()
     {
@@ -166,4 +169,5 @@ class EntityListingMethodsTest extends TestCase
     {
         return 'base-path';
     }
+
 }

@@ -12,6 +12,7 @@ namespace Slick\Mvc\Controller;
 use Slick\Common\Log;
 use Slick\Filter\StaticFilter;
 use Slick\Mvc\Exception\Service\EntityNotFoundException;
+use Slick\Orm\EntityInterface;
 
 /**
  * Entity View Methods
@@ -22,11 +23,6 @@ use Slick\Mvc\Exception\Service\EntityNotFoundException;
 trait EntityViewMethods
 {
 
-    /**
-     * For entity retrieval
-     */
-    use EntityBasedMethods;
-    
     /**
      * Add a warning flash message
      *
@@ -78,4 +74,23 @@ trait EntityViewMethods
         }
         
     }
+
+    /**
+     * Gets entity with provided primary key
+     *
+     * @param mixed $entityId
+     *
+     * @return EntityInterface
+     *
+     * @throws EntityNotFoundException If no entity was found with
+     *   provided primary key
+     */
+    abstract protected function getEntity($entityId);
+
+    /**
+     * Get entity singular name used on controller actions
+     *
+     * @return string
+     */
+    abstract protected function getEntityNameSingular();
 }
