@@ -13,6 +13,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_TestCase as TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\PhpEnvironment\Request;
+use Slick\I18n\TranslateMethods;
 use Slick\Mvc\Controller\EntityBasedMethods;
 use Slick\Mvc\ControllerInterface;
 use Slick\Mvc\Exception\Service\EntityNotFoundException;
@@ -28,6 +29,8 @@ class EntityBasedMethodsTest extends TestCase
 {
 
     use EntityBasedMethods;
+    
+    use TranslateMethods;
 
     public function testGetEntity()
     {

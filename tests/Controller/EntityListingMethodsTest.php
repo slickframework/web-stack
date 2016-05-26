@@ -13,6 +13,7 @@ use PHPUnit_Framework_TestCase as TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Database\Adapter\AdapterInterface;
 use Slick\Http\PhpEnvironment\Request;
+use Slick\I18n\TranslateMethods;
 use Slick\Mvc\Controller\EntityBasedMethods;
 use Slick\Mvc\Controller\EntityListingMethods;
 use Slick\Mvc\ControllerInterface;
@@ -45,6 +46,8 @@ class EntityListingMethodsTest extends TestCase
     use EntityListingMethods;
     
     use EntityBasedMethods;
+    
+    use TranslateMethods;
     
     public function testNamePlural()
     {

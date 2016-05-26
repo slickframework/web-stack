@@ -12,6 +12,7 @@ namespace Slick\Tests\Mvc\Controller;
 use PHPUnit_Framework_TestCase as TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\PhpEnvironment\Request;
+use Slick\I18n\TranslateMethods;
 use Slick\Mvc\Controller\EntityBasedMethods;
 use Slick\Mvc\Controller\EntityViewMethods;
 use Slick\Mvc\ControllerInterface;
@@ -31,6 +32,8 @@ class EntityViewMethodsTest extends TestCase
     use EntityBasedMethods;
 
     use EntityViewMethods;
+    
+    use TranslateMethods;
 
     private $vars = [];
 

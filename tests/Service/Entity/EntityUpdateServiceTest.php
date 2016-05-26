@@ -74,5 +74,5 @@ class EntityUpdateServiceTest extends TestCase
         $this->service->setEntity($entity);
         $this->service->update();
     }
-
+    
 }

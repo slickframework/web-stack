@@ -9,6 +9,7 @@
 
 namespace Slick\Mvc\Controller;
 
+use Slick\I18n\TranslateMethods;
 use Slick\Mvc\Controller;
 use Slick\Mvc\Http\FlashMessagesMethods;
 
@@ -30,10 +31,20 @@ abstract class CrudController extends Controller
      * Entity Related methods.
      */
     use EntityBasedMethods;
+
+    /**
+     * For flash message translation
+     */
+    use TranslateMethods;
+
+    /**
+     * For edit/create trait methods
+     */
+    use FormAwareMethods;
     
     /**
      * For list, view handling
      */
-    use EntityListingMethods, EntityViewMethods;
+    use EntityListingMethods, EntityViewMethods, EntityCreateMethods, EntityEditMethods;
     
 }

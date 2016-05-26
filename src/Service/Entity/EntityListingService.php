@@ -45,6 +45,11 @@ class EntityListingService extends AbstractEntityService implements
     private $repository;
 
     /**
+     * @var string
+     */
+    private $order;
+
+    /**
      * Entity Listing Service needs an entity or entity class name.
      * 
      * @param string|EntityInterface $className
@@ -68,6 +73,7 @@ class EntityListingService extends AbstractEntityService implements
         /** @var Select|QueryObjectInterface $query */
         $query = $this->getRepository()->find();
         $this->getFilters()->apply($query);
+        $query->order($this->getOrder());
         $this->getPagination()->setTotal($query->count());
         $query->limit(
             $this->getPagination()->offset,
@@ -156,6 +162,27 @@ class EntityListingService extends AbstractEntityService implements
         return $this;
     }
 
+    /**
+     * Get the order by clause
+     *
+     * @return string
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
 
+    /**
+     * Set the order by clause
+     *
+     * @param string $order
+     *
+     * @return EntityListingService
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+        return $this;
+    }
     
 }

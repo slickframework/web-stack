@@ -41,7 +41,8 @@ trait EntityViewMethods
     protected function getMissingEntityMessage($entityId)
     {
         $singleName = $this->getEntityNameSingular();
-        return "The {$singleName} with ID {$entityId} was not found.";
+        $message = "The {$singleName} with ID %s was not found.";
+        return sprintf($this->translate($message), $entityId);
     }
 
     /**
@@ -56,12 +57,15 @@ trait EntityViewMethods
 
     /**
      * Handles the request to view an entity
-     * 
+     *
      * @param int $entityId
+     * 
+     * @return null|EntityInterface
      */
     public function show($entityId = 0)
     {
         $entityId = StaticFilter::filter('text', $entityId);
+        $entity = null;
         try {
             $entity = $this->getEntity($entityId);
             $this->set($this->getEntityNameSingular(), $entity);
@@ -72,7 +76,7 @@ trait EntityViewMethods
             );
             $this->redirectFromMissingEntity();
         }
-        
+        return $entity;
     }
 
     /**
@@ -93,4 +97,17 @@ trait EntityViewMethods
      * @return string
      */
     abstract protected function getEntityNameSingular();
+
+    /**
+     * Returns the translation for the provided message
+     *
+     * @param string $message
+     * @param string $domain
+     * @param string $locale
+     *
+     * @return string
+     */
+    abstract public function translate(
+        $message, $domain = null, $locale = null
+    );
 }

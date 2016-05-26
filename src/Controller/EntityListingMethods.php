@@ -15,6 +15,7 @@ use Slick\Http\PhpEnvironment\Request;
 use Slick\Mvc\Service\Entity\EntityListingService;
 use Slick\Mvc\Service\Entity\QueryFilter\SearchFilter;
 use Slick\Mvc\Utils\Pagination;
+use Slick\Orm\Repository\EntityRepository;
 
 /**
  * Entity Listing Methods
@@ -44,11 +45,6 @@ trait EntityListingMethods
      * @var string[]
      */
     protected $searchFields;
-
-    /**
-     * @var string
-     */
-    protected $order;
 
     /**
      * Handle the request to display a list of entities
@@ -129,6 +125,20 @@ trait EntityListingMethods
             ];
         }
         return $this->searchFields;
+    }
+
+    /**
+     * Returns the query order by clause
+     * 
+     * @return string
+     */
+    protected function getOrder()
+    {
+        /** @var EntityRepository $repo */
+        $repo = $this->getRepository();
+        $table = $repo->getEntityDescriptor()->getTableName();
+        $pmk = $repo->getEntityDescriptor()->getPrimaryKey()->getField();
+        return "{$table}.{$pmk} DESC";
     }
 
     /**

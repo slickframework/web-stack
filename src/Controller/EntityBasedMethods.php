@@ -12,6 +12,7 @@ namespace Slick\Mvc\Controller;
 use Slick\Mvc\Exception\Service\EntityNotFoundException;
 use Slick\Orm\EntityInterface;
 use Slick\Orm\Orm;
+use Slick\Orm\Repository\EntityRepository;
 use Slick\Orm\RepositoryInterface;
 
 /**
@@ -57,7 +58,7 @@ trait EntityBasedMethods
     /**
      * Get entity repository
      * 
-     * @return RepositoryInterface
+     * @return RepositoryInterface|EntityRepository
      */
     public function getRepository()
     {
