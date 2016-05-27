@@ -27,4 +27,9 @@ class Pages extends Controller
     {
         $this->set('str', 'This is home!');
     }
+
+    public function index()
+    {
+        
+    }
 }

@@ -40,7 +40,10 @@
     "phpunit/phpunit": "^4",
     "phpunit/php-code-coverage": "^2",
     "scrutinizer/ocular": "~1.1",
-    "behat/behat": "^3.0.4"
+    "behat/behat": "^3.0.4",
+    "behat/mink": "^1.7",
+    "behat/mink-goutte-driver": "^1.2",
+    "behat/mink-extension": "^2.2"
   },
   "extra": {
     "branch-alias": {

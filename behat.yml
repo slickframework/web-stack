@@ -2,8 +2,21 @@
 default:
   suites:
     default:
+      phpwebserver:
+        # URL to use against the web server in the features
+        url: http://localhost:8880
+        # Path to the document root
+        documentRoot: ./features/bootstrap/webroot ./features/bootstrap/webroot/router.php
+        # How many seconds will we allow the httpd to use when starting?
+        timeout: 2
       contexts:
         - FeatureContext
         - Mvc\MvcContext
       paths:
         - %paths.base%/features
+  extensions:
+    Behat\MinkExtension:
+      base_url:  'http://localhost:8880'
+      sessions:
+        default:
+          goutte: ~

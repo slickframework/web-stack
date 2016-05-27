@@ -1,14 +1,13 @@
 <?php
 
 /**
- * This file is part of slick/mvc package
+ * This file is part of silvam_filipe/song-notebook package
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 use Slick\Configuration\Configuration;
-use Slick\Configuration\ConfigurationInterface;
 use Slick\Di\Definition\ObjectDefinition;
 use Slick\Http\PhpEnvironment\Request;
 use Slick\Http\PhpEnvironment\Response;
@@ -17,28 +16,28 @@ use Slick\Mvc\Dispatcher;
 use Slick\Mvc\Http\UrlRewrite;
 use Slick\Mvc\Renderer;
 use Slick\Mvc\Router;
+use Slick\Mvc\Http\Session;
 
 /**
  * @var $this \Slick\Mvc\Application
  */
 
 $config = Configuration::get('settings');
-$templatePath = $config->get(
-    'template.path',
-    dirname(dirname(__DIR__)).'/templates'
-);
+$templatePath = $config->get('template.path');
 
 /**
  * Default DI services definitions
  */
 $services = [];
 
+// ------------------------------------
 // Default session driver
-$services['session'] = function(ConfigurationInterface $config) {
+// ------------------------------------
+$services['session'] = function() use ($config) {
     $options = $config->get(
         'session',
         [
-            'driver' => 'server',
+            'driver' => \Slick\Http\Session::DRIVER_SERVER,
             'options' => []
         ]
     );
@@ -46,19 +45,32 @@ $services['session'] = function(ConfigurationInterface $config) {
     return $session->initialize();
 };
 
+// ------------------------------------
+// HTTP request and response objects
+// ------------------------------------
 $services['request'] = ObjectDefinition::create(Request::class);
 $services['response'] = ObjectDefinition::create(Response::class);
 
+// ------------------------------------
 // Middleware
-$services['session.middleware'] = ObjectDefinition::create(
-    \Slick\Mvc\Http\Session::class
-);
+// ------------------------------------
+$services['session.middleware']     = ObjectDefinition::create(Session::class);
 $services['url.rewrite.middleware'] = ObjectDefinition::create(UrlRewrite::class);
-$services['router.middleware'] = ObjectDefinition::create(Router::class)
-    ->setMethod('setRouteFile', [__DIR__.'/routes.yml']);
-$services['dispatcher.middleware'] = ObjectDefinition::create(Dispatcher::class);
-$services['renderer.middleware'] = ObjectDefinition::create(Renderer::class)
-    ->setMethod('addTemplatePath', [$templatePath]);
+$services['router.middleware']      = ObjectDefinition::create(Router::class)
+    ->setMethod(
+        'setRouteFile',
+        [__DIR__.'/routes.yml']
+    );
+$services['dispatcher.middleware']  = ObjectDefinition::create(Dispatcher::class);
+$services['renderer.middleware']    = ObjectDefinition::create(Renderer::class)
+    ->setMethod(
+        'addTemplatePath',
+        [$templatePath]
+    );
+
+// ------------------------------------
+// HTTP server middleware stack
+// ------------------------------------
 $services['middleware.runner'] = ObjectDefinition::create(Server::class)
     ->setConstructArgs(['@request', '@response'])
     ->setMethod('add', ['@session.middleware'])
