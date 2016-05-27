@@ -13,6 +13,9 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
+use Behat\MinkExtension\Context\MinkContext;
+use Behat\Testwork\Hook\Scope\AfterSuiteScope;
+use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
 use Slick\Http\PhpEnvironment\Response;
 use Slick\Http\Server;
 use Slick\Http\Server\Request;
@@ -25,7 +28,7 @@ use PHPUnit_Framework_Assert as Assert;
  * @package Mvc
  * @behatContext
  */
-class MvcContext extends \AbstractContext implements
+class MvcContext extends MinkContext implements
     Context, SnippetAcceptingContext
 {
 
@@ -46,6 +49,31 @@ class MvcContext extends \AbstractContext implements
     {
         $this->application = new Application();
         $this->application->setConfigPath(dirname(__DIR__).'/App/Configuration');
+    }
+
+    /**
+     * Start up the web server
+     *
+     * @BeforeSuite
+     *
+     * @param BeforeSuiteScope $scope
+     */
+    public static function setUp(BeforeSuiteScope $scope)
+    {
+        $params = $scope->getSuite()->getSetting('phpwebserver');
+        PhpServer::start($params);
+    }
+
+    /**
+     * Kill the httpd process if it has been started when the tests have finished
+     * 
+     * @AfterSuite
+     *
+     * @param AfterSuiteScope $scope
+     */
+    public static function tearDown(AfterSuiteScope $scope)
+    {
+        PhpServer::stop();
     }
 
     /**

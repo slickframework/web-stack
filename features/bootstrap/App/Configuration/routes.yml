@@ -10,6 +10,8 @@ routes:
     allows: [POST, GET]
     path: "{/controller,action}"
     wildcard: args
+    defaults:
+      namespace: App\Controller
 defaults:
   namespace: App\Controller
   controller: pages
