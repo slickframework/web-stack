@@ -58,8 +58,11 @@ trait EntityCreateMethods
         }
         
         $this->addSuccessMessage(
-            $this->getCreateSuccessMessage($this->getUpdateService()->getEntity())
+            $this->getCreateSuccessMessage(
+                $this->getUpdateService()->getEntity()
+            )
         );
+        $this->redirectFromCreated($this->getUpdateService()->getEntity());
     }
     
     /**
@@ -74,6 +77,20 @@ trait EntityCreateMethods
         $singleName = $this->getEntityNameSingular();
         $message = "The {$singleName} '%s' was successfully created.";
         return sprintf($this->translate($message), $entity);
+    }
+
+    /**
+     * Redirect after successful entity creation
+     * 
+     * @param EntityInterface $entity
+     * 
+     * @return $this|ControllerInterface|static
+     */
+    protected function redirectFromCreated(EntityInterface $entity)
+    {
+        return $this->redirect(
+            $this->getBasePath().'/show/'.$entity->getId()
+        );
     }
 
     /**

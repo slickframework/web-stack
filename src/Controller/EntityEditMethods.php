@@ -40,6 +40,8 @@ trait EntityEditMethods
         if (!$entity instanceof EntityInterface) {
             return;
         }
+
+        $form->setData($entity->asArray());
         
         if (!$form->wasSubmitted()) {
             return;
@@ -66,6 +68,21 @@ trait EntityEditMethods
 
         $this->addSuccessMessage(
             $this->getEditSuccessMessage($this->getUpdateService()->getEntity())
+        );
+        $this->redirectFromEdit($entity);
+    }
+
+    /**
+     * Redirect after successful entity change
+     *
+     * @param EntityInterface $entity
+     *
+     * @return $this|ControllerInterface|static
+     */
+    protected function redirectFromEdit(EntityInterface $entity)
+    {
+        return $this->redirect(
+            $this->getBasePath().'/show/'.$entity->getId()
         );
     }
 
