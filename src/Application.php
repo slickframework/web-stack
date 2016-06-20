@@ -11,6 +11,7 @@ namespace Slick\Mvc;
 
 use Interop\Container\ContainerInterface;
 use Slick\Configuration\Configuration;
+use Slick\Di\Container;
 use Slick\Di\ContainerBuilder;
 use Slick\Http\PhpEnvironment\MiddlewareRunnerInterface;
 use Slick\Http\PhpEnvironment\Request;
@@ -75,7 +76,7 @@ class Application
     /**
      * Gets the application dependency injection container
      *
-     * @return ContainerInterface
+     * @return ContainerInterface|Container
      */
     public function getContainer()
     {
@@ -98,7 +99,7 @@ class Application
     /**
      * Returns the application dependency container
      *
-     * @return ContainerInterface
+     * @return ContainerInterface|Container
      */
     public static function container()
     {

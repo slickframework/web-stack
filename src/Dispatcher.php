@@ -131,7 +131,7 @@ class Dispatcher extends AbstractMiddleware implements MiddlewareInterface
     protected function createController($controller)
     {
         $this->checkClass($controller);
-        $handler = new $controller;
+        $handler = Application::container()->make($controller);
         if (! $handler instanceof ControllerInterface) {
             throw new InvalidControllerException(
                 "The class '{$controller}' does not implement ControllerInterface."
