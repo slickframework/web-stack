@@ -69,8 +69,22 @@ class Application
         $definitions = include __DIR__.'/Configuration/services.php';
         self::$defaultContainer = (
             new ContainerBuilder($definitions)
-            )
-            ->getContainer();
+        )
+        ->getContainer();
+    }
+
+    /**
+     * Sets a new request
+     *
+     * @param Request $request
+     *
+     * @return Application
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+        $this->getContainer()->register('request', $request);
+        return $this;
     }
 
     /**
@@ -144,10 +158,11 @@ class Application
     public function getRunner()
     {
         if (null === $this->runner) {
-            $this->setRunner(
-                $this->getContainer()
-                    ->get('middleware.runner')
-            );
+            $runner = $this->getContainer()
+                ->get('middleware.runner')
+                ->setRequest($this->getRequest())
+            ;
+            $this->setRunner($runner);
         }
         return $this->runner;
     }

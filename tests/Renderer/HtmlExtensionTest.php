@@ -9,9 +9,11 @@
 
 namespace Slick\Tests\Mvc\Renderer;
 
+use Interop\Container\ContainerInterface;
 use PHPUnit_Framework_TestCase as TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\PhpEnvironment\Request;
+use Slick\Mvc\Application;
 use Slick\Mvc\Renderer\HtmlExtension;
 
 /**
@@ -33,6 +35,7 @@ class HtmlExtensionTest extends TestCase
         parent::setUp();
         $this->extension = new HtmlExtension();
         $this->extension->setRequest(new Request());
+        Application::setContainer($this->getContainer());
     }
     
     public function testGetName()
@@ -95,5 +98,18 @@ class HtmlExtensionTest extends TestCase
             ['foo' => 'bar']
         );
         $this->assertEquals($expected, $htmlTag);
+    }
+
+    protected function getContainer()
+    {
+        $class = ContainerInterface::class;
+        $methods = get_class_methods($class);
+        $container = $this->getMockBuilder($class)
+            ->setMethods($methods)
+            ->getMock();
+        $container->method('get')
+            ->with('request')
+            ->willReturn(new Request());
+        return $container;
     }
 }

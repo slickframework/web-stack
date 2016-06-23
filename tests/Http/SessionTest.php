@@ -9,6 +9,7 @@
 
 namespace Slick\Tests\Mvc\Http;
 
+use Interop\Container\ContainerInterface;
 use PHPUnit_Framework_TestCase as TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,7 +17,9 @@ use Slick\Http\PhpEnvironment\Request;
 use Slick\Http\PhpEnvironment\Response;
 use Slick\Http\Server\AbstractMiddleware;
 use Slick\Http\Server\MiddlewareInterface;
+use Slick\Http\Session\Driver\NullDriver;
 use Slick\Http\SessionDriverInterface;
+use Slick\Mvc\Application;
 use Slick\Mvc\ControllerInterface;
 use Slick\Mvc\Http\FlashMessages;
 use Slick\Mvc\Http\Session;
@@ -51,6 +54,7 @@ class SessionTest extends TestCase
         $this->request = new Request();
         $this->session = new Session();
         $this->session->setNext(new GrabRequest());
+        Application::setContainer($this->getContainer());
     }
 
     /**
@@ -91,6 +95,19 @@ class SessionTest extends TestCase
             SessionDriverInterface::class,
             $this->getSessionDriver()
         );
+    }
+
+    protected function getContainer()
+    {
+        $class = ContainerInterface::class;
+        $methods = get_class_methods($class);
+        $container = $this->getMockBuilder($class)
+            ->setMethods($methods)
+            ->getMock();
+        $container->method('get')
+            ->with('session')
+            ->willReturn(new NullDriver());
+        return $container;
     }
 }
 

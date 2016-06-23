@@ -33,12 +33,14 @@ $templatePath = $config->get(
  */
 $services = [];
 
+// ------------------------------------
 // Default session driver
-$services['session'] = function () use ($config) {
+// ------------------------------------
+$services['session'] = function() use ($config) {
     $options = $config->get(
         'session',
         [
-            'driver' => \Slick\Http\Session::DRIVER_SERVER,
+            'driver' => \Slick\Http\Session::DRIVER_NULL,
             'options' => []
         ]
     );

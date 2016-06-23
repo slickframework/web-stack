@@ -13,8 +13,10 @@ use Interop\Container\ContainerInterface;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_TestCase as TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Slick\Di\Container;
 use Slick\Http\PhpEnvironment\MiddlewareRunnerInterface;
 use Slick\Http\PhpEnvironment\Request;
+use Slick\Http\Server;
 use Slick\Mvc\Application;
 
 /**
@@ -93,6 +95,7 @@ class ApplicationTest extends TestCase
             ->with('middleware.runner')
             ->willReturn($this->getMiddlewareRunnerMock());
         Application::setContainer($container);
+        $this->application->setRequest(new Request());
         $response = $this->application
             ->getResponse();
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -122,7 +125,7 @@ class ApplicationTest extends TestCase
      */
     protected function getMockedContainer()
     {
-        $class = ContainerInterface::class;
+        $class = Container::class;
         $methods = get_class_methods($class);
         /** @var ContainerInterface|MockObject $container */
         $container = $this->getMockBuilder($class)
@@ -138,13 +141,15 @@ class ApplicationTest extends TestCase
      */
     protected function getMiddlewareRunnerMock()
     {
-        $class = MiddlewareRunnerInterface::class;
+        $class = Server::class;
         /** @var MiddlewareRunnerInterface|MockObject $middleWare */
         $middleWare = $this->getMockBuilder($class)
             ->setMethods(get_class_methods($class))
             ->getMock();
         $middleWare->method('run')
             ->willReturn($this->getMock(ResponseInterface::class));
+        $middleWare->method('setRequest')
+            ->willReturn($middleWare);
         return $middleWare;
     }
 }
