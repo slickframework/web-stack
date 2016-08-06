@@ -1,7 +1,19 @@
 version: '2'
 
 services:
+  web:
+    image: slickframework/nginx
+    ports:
+      - 80
+    volumes_from:
+      - php
+    environment:
+      - CONF_APP=php
+      - CONF_PUBLIC=features/bootstrap/webroot
+      - CONF_UPSTREAM=php:9000
+
   php:
     image: slickframework/php:5.5
     volumes:
-      - ./:/var/www/html
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
