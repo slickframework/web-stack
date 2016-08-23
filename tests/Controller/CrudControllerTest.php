@@ -10,6 +10,7 @@
 namespace Slick\Tests\Mvc\Controller;
 
 use Slick\Form\FormInterface;
+use Slick\Form\FormRegistry;
 use Slick\Mvc\Controller\CrudController;
 use Slick\Mvc\Form\EntityForm;
 
@@ -56,6 +57,7 @@ class Posts extends CrudController
      */
     function getForm()
     {
+        FormRegistry::getForm(__DIR__.'/Form/postsForm.yml');
         return;
     }
 

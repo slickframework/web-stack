@@ -16,7 +16,7 @@ default:
         - %paths.base%/features
   extensions:
     Behat\MinkExtension:
-      base_url:  'http://localhost:8880'
+      base_url: 'http://localhost:8880'
       sessions:
         default:
           goutte: ~
