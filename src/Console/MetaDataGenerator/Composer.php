@@ -133,15 +133,18 @@ class Composer extends AbstractMetaDataGenerator implements MetaDataGeneratorInt
         return $this->questionHelper;
     }
 
-
+    /**
+     * Gets the author name and e-mail
+     *
+     * @return array
+     */
     protected function getAuthor()
     {
-        if (empty($this->getComposerData()->authors)) {
+        if (
+            !isset($this->getComposerData()->authors) ||
+            count($this->getComposerData()->authors) != 1
+        ) {
             return $this->requestAuthor();
-        }
-
-        if (count($this->getComposerData()->authors) > 1) {
-            return $this->selectAuthors();
         }
 
         return [
@@ -150,9 +153,17 @@ class Composer extends AbstractMetaDataGenerator implements MetaDataGeneratorInt
         ];
     }
 
-
+    /**
+     * Asks the author name and e-mail and returns them
+     *
+     * @return array
+     */
     protected function requestAuthor()
     {
+        if (!empty($this->getComposerData()->authors)) {
+            return $this->selectAuthors();
+        }
+
         $nameQuestion = new Question('Please enter your name: ');
         $emailQuestion = new Question('Please enter your e-mail address: ');
         $this->getOutput()->writeln('');
@@ -179,6 +190,12 @@ class Composer extends AbstractMetaDataGenerator implements MetaDataGeneratorInt
         return compact('authorName', 'authorEmail');
     }
 
+    /**
+     * Requests user to select author form a list of composer authors
+     * and returns them.
+     *
+     * @return array
+     */
     protected function selectAuthors()
     {
         $options = $this->getAuthorsAsOptions();
@@ -187,9 +204,14 @@ class Composer extends AbstractMetaDataGenerator implements MetaDataGeneratorInt
             '<info>Multiple authors found on ' .
             'project\'s composer.json file.</info>'
         );
-        $question = new ChoiceQuestion('Please select the author from the list above:', $options, 0);
+        $question = new ChoiceQuestion(
+            'Please select the author from the list above:',
+            $options,
+            0
+        );
         $question->setErrorMessage('The choice %s is invalid.');
-        $selected = $this->getQuestionHelper()->ask($this->input, $this->output, $question);
+        $selected = $this->getQuestionHelper()
+            ->ask($this->input, $this->output, $question);
         $parts = explode('<', $selected);
         return [
             'authorName' => trim($parts[0]),

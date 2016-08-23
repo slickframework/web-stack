@@ -12,7 +12,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_TestCase as TestCase;
 use Slick\Mvc\Console\Command\GenerateController;
 use Slick\Mvc\Console\Command\Task\CreateController;
-use Slick\Mvc\Console\Command\Task\CreatedCrudController;
+use Slick\Mvc\Console\Command\Task\CreateCrudController;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -77,7 +77,7 @@ class GenerateControllerTest extends TestCase
         $output = $this->getMock(OutputInterface::class);
         $this->command->setInput($input)->setOutput($output);
         $creator = $this->command->getControllerGenerator();
-        $this->assertInstanceOf(CreatedCrudController::class, $creator);
+        $this->assertInstanceOf(CreateCrudController::class, $creator);
     }
 
     /**

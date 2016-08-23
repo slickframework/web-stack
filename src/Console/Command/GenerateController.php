@@ -10,7 +10,7 @@
 namespace Slick\Mvc\Console\Command;
 
 use Slick\Mvc\Console\Command\Task\CreateController;
-use Slick\Mvc\Console\Command\Task\CreatedCrudController;
+use Slick\Mvc\Console\Command\Task\CreateCrudController;
 use Slick\Mvc\Exception\FileNotFoundException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -256,7 +256,7 @@ class GenerateController extends Command
         $class = CreateController::class;
         if (null !== $this->getEntityName()) {
             $info = "Generate CRUD controller '{$this->getControllerName()}'...";
-            $class = CreatedCrudController::class;
+            $class = CreateCrudController::class;
         }
         $this->output->writeln("<info>{$info}</info>");
         return $class;

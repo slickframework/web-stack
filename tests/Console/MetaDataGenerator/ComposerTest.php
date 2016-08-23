@@ -12,6 +12,10 @@ namespace Slick\Tests\Mvc\Console\MetaDataGenerator;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_TestCase as TestCase;
 use Slick\Mvc\Console\MetaDataGenerator\Composer;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Composer meta data generator test case
@@ -92,6 +96,10 @@ class ComposerTest extends TestCase
         $generator->getData();
     }
 
+    /**
+     * Should look for composer file if none is given
+     * @test
+     */
     public function testDefaultComposer()
     {
         $generator = new Composer();
@@ -99,5 +107,127 @@ class ComposerTest extends TestCase
             getcwd().'/composer.json',
             $generator->getComposerFile()
         );
+    }
+
+    /**
+     * Should ask user for name and e-mail if none is present on composer.json
+     * @test
+     */
+    public function requestNameAndEmail()
+    {
+        $generator = new Composer(__DIR__.'/empty-author.json');
+        $generator->setInput($this->getInputMock())
+            ->setOutput($this->getOutputMock())
+            ->setCommand($this->getCommandMock());
+        /** @var QuestionHelper|MockObject $helper */
+        $helper = $generator->getQuestionHelper();
+        $helper->expects($this->atLeast(2))
+            ->method('ask')
+            ->willReturnOnConsecutiveCalls(
+                'Filipe Silva',
+                'silvam.filipe@gmail.com'
+            );
+        $this->assertEquals(
+            [
+                'authorName' => 'Filipe Silva',
+                'authorEmail' => 'silvam.filipe@gmail.com',
+                'project' => 'slick/mvc'
+            ],
+            $generator->getData()
+        );
+    }
+
+    /**
+     * Should ask user to choose from a list of available authors
+     * @test
+     */
+    public function selectFromMultipleAuthors()
+    {
+        $generator = new Composer(__DIR__.'/multi-author.json');
+        $generator->setInput($this->getInputMock())
+            ->setOutput($this->getOutputMock())
+            ->setCommand($this->getCommandMock());
+        /** @var QuestionHelper|MockObject $helper */
+        $helper = $generator->getQuestionHelper();
+        $helper->expects($this->once())
+            ->method('ask')
+            ->willReturn('Filipe Silva <silvam.filipe@gmail.com>');
+        $this->assertEquals(
+            [
+                'authorName' => 'Filipe Silva',
+                'authorEmail' => 'silvam.filipe@gmail.com',
+                'project' => 'slick/mvc'
+            ],
+            $generator->getData()
+        );
+    }
+
+    /**
+     * Get the input method mock
+     *
+     * @return MockObject|InputInterface
+     */
+    protected function getInputMock()
+    {
+        $class = InputInterface::class;
+        $methods = get_class_methods($class);
+        /** @var InputInterface|MockObject $input */
+        $input = $this->getMockBuilder($class)
+            ->setMethods($methods)
+            ->getMock();
+        return $input;
+    }
+
+    /**
+     * Get the out method mock
+     *
+     * @return MockObject|OutputInterface
+     */
+    protected function getOutputMock()
+    {
+        $class = OutputInterface::class;
+        $methods = get_class_methods($class);
+        /** @var OutputInterface|MockObject $output */
+        $output = $this->getMockBuilder($class)
+            ->setMethods($methods)
+            ->getMock();
+        return $output;
+    }
+
+    /**
+     * Get the out method mock
+     *
+     * @return MockObject|Command
+     */
+    protected function getCommandMock()
+    {
+        $class = Command::class;
+        $methods = get_class_methods($class);
+        /** @var Command|MockObject $command */
+        $command = $this->getMockBuilder($class)
+            ->setMethods($methods)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $command->method('getHelper')
+            ->with('question')
+            ->willReturn($this->getQuestionMock());
+        return $command;
+    }
+
+    /**
+     * Get mock for question helper
+     *
+     * @return MockObject|QuestionHelper
+     */
+    protected function getQuestionMock()
+    {
+        $class = QuestionHelper::class;
+        $methods = get_class_methods($class);
+        /** @var QuestionHelper|MockObject $helper */
+        $helper = $this->getMockBuilder($class)
+            ->disableOriginalConstructor()
+            ->setMethods($methods)
+            ->getMock();
+        return $helper;
     }
 }

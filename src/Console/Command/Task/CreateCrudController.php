@@ -21,7 +21,7 @@ use Slick\Mvc\Exception\Console\EntityClassNotFound;
  *
  * @property string $entityName
  */
-class CreatedCrudController extends CreateController
+class CreateCrudController extends CreateController
 {
 
     /**
@@ -43,14 +43,15 @@ class CreatedCrudController extends CreateController
     protected function configureController(Controller $controller)
     {
         parent::configureController($controller);
-        $entity = new Entity($this->entityName);
-        $controller->add($entity);
+        $controller[] = new Entity($this->entityName);
     }
 
     /**
      * Sets the entity class name
      *
-     * @param string $entityName
+     * @param $entityName
+     *
+     * @return self|CreateCrudController
      */
     public function setEntityName($entityName)
     {
@@ -60,5 +61,6 @@ class CreatedCrudController extends CreateController
             );
         }
         $this->entityName = $entityName;
+        return $this;
     }
 }
