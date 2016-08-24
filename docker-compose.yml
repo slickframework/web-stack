@@ -4,11 +4,11 @@ services:
   web:
     image: slickframework/nginx
     ports:
-      - 80
+      - 8880:80
     volumes_from:
       - php
     environment:
-      - CONF_APP=php
+      - CONF_APP=slick
       - CONF_PUBLIC=features/bootstrap/webroot
       - CONF_UPSTREAM=php:9000
 
