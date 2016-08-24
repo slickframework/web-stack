@@ -3,7 +3,7 @@ sudo: required
 services:
   - docker
 env:
-  COMPOSE_VERSION: 1.4.1
+  COMPOSE_VERSION: 1.8.0
 php:
   - 5.5
   - 5.6
