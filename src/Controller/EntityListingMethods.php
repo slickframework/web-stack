@@ -52,6 +52,7 @@ trait EntityListingMethods
     public function index()
     {
         $this->getListingService()
+            ->setOrder($this->getOrder())
             ->setPagination($this->getPagination())
             ->getFilters()->add($this->getSearchFilter());
         $this->set(

@@ -73,11 +73,11 @@ class EntityListingService extends AbstractEntityService implements
         /** @var Select|QueryObjectInterface $query */
         $query = $this->getRepository()->find();
         $this->getFilters()->apply($query);
-        $query->order($this->getOrder());
         $this->getPagination()->setTotal($query->count());
+        $query->order($this->getOrder());
         $query->limit(
-            $this->getPagination()->offset,
-            $this->getPagination()->rowsPerPage
+            $this->getPagination()->rowsPerPage,
+            $this->getPagination()->offset
         );
         return $query->all();
     }
