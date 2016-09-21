@@ -1243,12 +1243,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/orm.git",
-                "reference": "abc0629d82f5dc5fb5cbb3a587290d65ec8f9a9e"
+                "reference": "81db3c0153df97397665cdd5e321a0928665da76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/orm/zipball/abc0629d82f5dc5fb5cbb3a587290d65ec8f9a9e",
-                "reference": "abc0629d82f5dc5fb5cbb3a587290d65ec8f9a9e",
+                "url": "https://api.github.com/repos/slickframework/orm/zipball/81db3c0153df97397665cdd5e321a0928665da76",
+                "reference": "81db3c0153df97397665cdd5e321a0928665da76",
                 "shasum": ""
             },
             "require": {
@@ -1292,7 +1292,7 @@
                 "orm",
                 "slick"
             ],
-            "time": "2016-05-14 01:10:22"
+            "time": "2016-09-21 17:52:24"
         },
         {
             "name": "slick/template",
@@ -2879,12 +2879,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "705d0b4633b9c44e6253aa18306b3972282cd3a3"
+                "reference": "5ebae632eb79179c11a81f4ece77f086efdf493c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/705d0b4633b9c44e6253aa18306b3972282cd3a3",
-                "reference": "705d0b4633b9c44e6253aa18306b3972282cd3a3",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/5ebae632eb79179c11a81f4ece77f086efdf493c",
+                "reference": "5ebae632eb79179c11a81f4ece77f086efdf493c",
                 "shasum": ""
             },
             "require": {
@@ -2945,7 +2945,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2016-08-23 17:20:24"
+            "time": "2016-09-12 14:08:36"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -4374,12 +4374,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "5382f4c882e73c267c80b8edcd482a76ef62bbe2"
+                "reference": "9558911a4071ace3523c70ba4d0c6315b567f460"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/5382f4c882e73c267c80b8edcd482a76ef62bbe2",
-                "reference": "5382f4c882e73c267c80b8edcd482a76ef62bbe2",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/9558911a4071ace3523c70ba4d0c6315b567f460",
+                "reference": "9558911a4071ace3523c70ba4d0c6315b567f460",
                 "shasum": ""
             },
             "require": {
@@ -4426,7 +4426,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-07-19 10:47:02"
+            "time": "2016-09-17 14:23:22"
         },
         {
             "name": "symfony/filesystem",
