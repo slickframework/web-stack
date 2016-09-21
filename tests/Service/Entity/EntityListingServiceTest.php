@@ -123,7 +123,7 @@ class EntityListingServiceTest extends TestCase
             ->willReturn(2);
         $query->expects($this->at(1))
             ->method('limit')
-            ->with(0, 12);
+            ->with(12, 0);
         $query->expects($this->at(2))
             ->method('all')
             ->willReturn($this->getPostCollection());
