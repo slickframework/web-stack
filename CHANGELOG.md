@@ -2,8 +2,7 @@
 
 All Notable changes to `Slick/Mvc` will be documented in this file.
 
-## 1.2.0 - 2016-??-??
+## 1.0.0 - 2017-01-06
 
 ### Added
-- Completely remake for Slick v1.2.0.
 - First released as a stand alone MVC package for Slick framework.
