@@ -29,7 +29,7 @@
   "require": {
     "php" : ">=5.5",
     "slick/configuration": "^1.2",
-    "slick/di": "^1.1|^2.0",
+    "slick/di": "^1",
     "slick/form": "^1.2",
     "slick/orm": "^1.3@dev",
     "aura/router": "^3.0",
