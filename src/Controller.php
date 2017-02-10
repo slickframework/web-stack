@@ -7,207 +7,74 @@
  * file that was distributed with this source code.
  */
 
-namespace Slick\Mvc;
+namespace Slick\WebStack;
 
-use Aura\Router\Route;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Slick\Http\PhpEnvironment\Request;
-use Slick\Http\PhpEnvironment\Response;
-use Slick\Mvc\Controller\UrlUtils;
+use Slick\WebStack\Controller\ControllerContextInterface;
 
 /**
  * Controller
  *
- * @package Slick\Mvc
+ * @package Slick\WebStack
  * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
 abstract class Controller implements ControllerInterface
 {
 
     /**
-     * @var ServerRequestInterface|Request
+     * @var ControllerContextInterface
      */
-    protected $request;
-
-    /**
-     * @var ResponseInterface|Response
-     */
-    protected $response;
+    protected $context;
 
     /**
      * @var array
      */
-    protected $vars = [];
+    private $viewData = [];
 
     /**
-     * For URL parsing
-     */
-    use UrlUtils;
-
-    /**
-     * Registers the current HTTP request and response
+     * Sets te context for this controller execution
      *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
+     * @param ControllerContextInterface $context
      *
-     * @return Controller|$this|self|ControllerInterface
+     * @return self|ControllerInterface
      */
-    public function register(
-        ServerRequestInterface $request, ResponseInterface $response
-    ) {
-        $this->request = $request;
-        $this->response = $response;
+    public function setContext(ControllerContextInterface $context)
+    {
+        $this->context = $context;
         return $this;
     }
 
     /**
-     * Gets updated HTTP response
+     * Sets a variable to the view data model
      *
-     * @return ResponseInterface
+     * If you provide an associative array in the $name argument it will be
+     * set all the elements using the key as the variable name on view
+     * data model.
+     *
+     * @param string|array $name
+     * @param mixed$value
+     *
+     * @return self|ControllerInterface
      */
-    public function getResponse()
+    public function set($name, $value = null)
     {
-        return $this->response;
-    }
-
-    /**
-     * Gets updated HTTP request
-     *
-     * @return ServerRequestInterface
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * Sets a value to be used by render
-     *
-     * The key argument can be an associative array with values to be set
-     * or a string naming the passed value. If an array is given then the
-     * value will be ignored.
-     *
-     * Those values must be set in the request attributes so they can be used
-     * latter by any other middle ware in the stack.
-     *
-     * @param string|array $key
-     * @param mixed        $value
-     *
-     * @return Controller|$this|self|ControllerInterface
-     */
-    public function set($key, $value = null)
-    {
-        if (is_string($key)) {
-            return $this->registerVar($key, $value);
+        if (is_array($name)) {
+            foreach ($name as $key => $value) {
+                $this->set($key, $value);
+            }
+            return $this;
         }
 
-        foreach ($key as $name => $value) {
-            $this->registerVar($name, $value);
-        }
+        $this->viewData[$name] = $value;
         return $this;
     }
 
     /**
-     * Returns the data that was set on controller action
+     * A view data model used by renderer
      *
      * @return array
      */
-    public function getViewVars()
+    public function getViewData()
     {
-        return $this->vars;
-    }
-
-    /**
-     * Enables or disables rendering
-     *
-     * @param bool $disable
-     * @return ControllerInterface|self|$this
-     */
-    public function disableRendering($disable = true)
-    {
-        $this->request = $this->request->withAttribute('render', !$disable);
-        return $this;
-    }
-
-    /**
-     * Changes the current rendering template
-     *
-     * @param string $template
-     * @return ControllerInterface|self|$this
-     */
-    public function setView($template)
-    {
-        $this->request = $this->request->withAttribute('template', $template);
-        return $this;
-    }
-
-    /**
-     * Redirects the flow to another route/path
-     *
-     * @param string $path the route or path to redirect to
-     *
-     * @return Controller|self|$this
-     */
-    public function redirect($path)
-    {
-        $args = func_get_args();
-        $url = call_user_func_array([$this, 'getUrl'], $args);
-        $this->response = $this->createRedirectResponse($url);
-        $this->disableRendering();
-        return $this;
-    }
-
-    /**
-     * Get the routed request attributes
-     *
-     * @param null|string $name
-     * @param mixed       $default
-     *
-     * @return mixed
-     */
-    public function getRouteAttributes($name = null, $default = null)
-    {
-        /** @var Route $route */
-        $route = $this->request->getAttribute('route', false);
-        $attributes = $route
-            ? $route->attributes
-            : [];
-        
-        if (null == $name) {
-            return $attributes;
-        }
-        
-        return array_key_exists($name, $attributes)
-            ? $attributes[$name]
-            : $default;
-    }
-
-    /**
-     * Register a variable value
-     *
-     * @param string $key
-     * @param mixed $value
-     *
-     * @return Controller|$this|self
-     */
-    protected function registerVar($key, $value)
-    {
-        $this->vars[$key] = $value;
-        return $this;
-    }
-
-    /**
-     * Creates a redirect response for provided path
-     * 
-     * @param string $path
-     * 
-     * @return Response
-     */
-    protected function createRedirectResponse($path)
-    {
-        $response = $this->response->withStatus(302)
-            ->withHeader('Location', $path);
-        return $response;
+        return $this->viewData;
     }
 }

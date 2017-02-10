@@ -1,6 +1,0 @@
-class: Slick\Mvc\Form\EntityForm
-id: test-form
-elements:
-  id:
-    type: hidden
-    value: 1

@@ -1,6 +1,0 @@
-# Route definitio file
-routes:
-  catchall:
-    allows: [POST, GET]
-    path: "{/controller,action}"
-    wildcard: args

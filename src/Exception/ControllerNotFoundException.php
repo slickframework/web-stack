@@ -7,18 +7,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Slick\Mvc\Exception;
+namespace Slick\WebStack\Exception;
 
-use RuntimeException;
-use Slick\Mvc\Exception;
+use InvalidArgumentException;
+use Slick\WebStack\Exception;
 
 /**
  * Controller Not Found Exception
  *
- * @package Slick\Mvc\Exception
+ * @package Slick\WebStack\Exception
  * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
-class ControllerNotFoundException extends RuntimeException implements Exception
+class ControllerNotFoundException extends InvalidArgumentException implements
+    Exception
 {
 
 }

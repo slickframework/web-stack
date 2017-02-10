@@ -7,22 +7,32 @@
  * file that was distributed with this source code.
  */
 
-namespace Slick\Mvc;
+namespace Slick\WebStack;
 
-use Interop\Container\ContainerInterface;
-use Slick\Configuration\Configuration;
-use Slick\Di\Container;
+use Psr\Http\Message\ResponseInterface;
 use Slick\Di\ContainerBuilder;
-use Slick\Http\PhpEnvironment\MiddlewareRunnerInterface;
-use Slick\Http\PhpEnvironment\Request;
+use Slick\Di\ContainerInterface;
 use Slick\Http\PhpEnvironment\Response;
+use Slick\Http\Server;
 
 /**
- * Class Application
- * @package Slick\Mvc
+ * Application
+ *
+ * @package Slick\WebStack
+ * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
 class Application
 {
+
+    /**
+     * @var string
+     */
+    private $servicesPath;
+
+    /**
+     * @var Server
+     */
+    private $httpServer;
 
     /**
      * @var ContainerInterface
@@ -30,206 +40,84 @@ class Application
     private static $container;
 
     /**
-     * @var string
-     */
-    private $configPath;
-
-    /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @var MiddlewareRunnerInterface
-     */
-    private $runner;
-
-    /**
-     * @var Response
-     */
-    private $response;
-
-    /**
-     * @var ContainerInterface
-     */
-    private static $defaultContainer;
-
-    /**
-     * Creates an application with an HTTP request
+     * Creates ab MVC Application
      *
-     * If no request is provided then a Slick\Http\PhpEnvironment\Request is
-     * created with values form current php environment settings.
-     *
-     * @param Request $request
+     * @param string|null $servicesPath
      */
-    public function __construct(Request $request = null)
+    public function __construct($servicesPath = null)
     {
-        $this->request = $request;
-        Configuration::addPath(__DIR__.'/Configuration');
-        $definitions = include __DIR__.'/Configuration/services.php';
-        self::$defaultContainer = (
-            new ContainerBuilder($definitions)
-        )
-        ->getContainer();
+        $this->servicesPath = $servicesPath;
+        $this->createContainer();
     }
 
     /**
-     * Sets a new request
+     * Get application dependency container
      *
-     * @param Request $request
-     *
-     * @return Application
-     */
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
-        $this->getContainer()->register('request', $request);
-        return $this;
-    }
-
-    /**
-     * Gets the application dependency injection container
-     *
-     * @return ContainerInterface|Container
+     * @return ContainerInterface
      */
     public function getContainer()
     {
-        if (is_null(self::$container)) {
-            self::$container = $this->checkContainer();
-        }
         return self::$container;
     }
 
     /**
-     * Sets the dependency injection container
+     * Get HTTP middleware server
      *
-     * @param ContainerInterface $container
+     * @return Server
      */
-    public static function setContainer(ContainerInterface $container)
+    public function getHttpServer()
     {
-        self::$container = $container;
-    }
-
-    /**
-     * Returns the application dependency container
-     *
-     * @return ContainerInterface|Container
-     */
-    public static function container()
-    {
-        if (null == self::$container) {
-            $app = new static;
-            $app->getContainer();
+        if (!$this->httpServer) {
+            $server = $this->getContainer()->get('middleware.server');
+            $this->setHttpServer($server);
         }
-        return self::$container;
+        return $this->httpServer;
     }
 
     /**
-     * Set middleware runner
+     * Set the HTTP middleware server
      *
-     * @param MiddlewareRunnerInterface $runner
+     * @param Server $httpServer
      *
-     * @return $this|self|Application
+     * @return Application
      */
-    public function setRunner(MiddlewareRunnerInterface $runner)
+    public function setHttpServer(Server $httpServer)
     {
-        $this->runner = $runner;
+        $this->httpServer = $httpServer;
         return $this;
     }
 
     /**
-     * Returns the processed response
-     *
-     * @return Response
+     * @return ResponseInterface|Response
      */
-    public function getResponse()
+    public function run()
     {
-        if (is_null($this->response)) {
-            $this->response = $this->getRunner()->run();
-        }
-        return $this->response;
+        return $this->getHttpServer()->run();
     }
 
     /**
-     * Gets the HTTP middleware runner for this application
-     *
-     * @return MiddlewareRunnerInterface
+     * Creates the default dependency container
      */
-    public function getRunner()
+    private function createContainer()
     {
-        if (null === $this->runner) {
-            $runner = $this->getContainer()
-                ->get('middleware.runner')
-                ->setRequest($this->getRequest())
-            ;
-            $this->setRunner($runner);
-        }
-        return $this->runner;
+        $this->createApplicationContainer();
+        $builder = new ContainerBuilder(__DIR__.'/Service/Definitions');
+        self::$container = $builder->getContainer();
     }
 
     /**
-     * Set configuration path
-     * 
-     * @param string $configPath
-     * 
-     * @return Application|self
+     * Creates user defined container
+     *
+     * @return Application
      */
-    public function setConfigPath($configPath)
+    private function createApplicationContainer()
     {
-        $this->configPath = $configPath;
-        Configuration::addPath($configPath);
+        if ($this->servicesPath === null) {
+            return $this;
+        }
+
+        $builder = new ContainerBuilder($this->servicesPath);
+        $builder->getContainer();
         return $this;
     }
-
-    /**
-     * Gets configuration path
-     * 
-     * @return string
-     */
-    public function getConfigPath()
-    {
-        if (null == $this->configPath) {
-            $this->configPath = getcwd().'/Configuration';
-            Configuration::addPath($this->configPath);
-        }
-        return $this->configPath;
-    }
-
-    /**
-     * Gets HTTP request object
-     *
-     * @return Request
-     */
-    public function getRequest()
-    {
-        if (null === $this->request) {
-            $this->request = $this->getContainer()
-                ->get('request');
-        }
-        return $this->request;
-    }
-
-    /**
-     * Gets container with user overridden settings
-     * 
-     * @return ContainerInterface|\Slick\Di\Container
-     */
-    protected function checkContainer()
-    {
-        $container = self::$defaultContainer;
-        if (
-            null != $this->configPath &&
-            file_exists($this->configPath.'/services.php')
-        ) {
-            $definitions = include $this->configPath.'/services.php';
-            $container = (
-                new ContainerBuilder(
-                    $definitions,
-                    true
-                )
-            )->getContainer();
-        }
-        return $container;
-    }
-
 }

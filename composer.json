@@ -1,13 +1,12 @@
 {
-  "name": "slick/mvc",
+  "name": "slick/web_stack",
   "description": "MVC implementation for Slick Framework.",
   "minimum-stability": "dev",
   "license": "MIT",
-  "version": "v1.2.0",
+  "version": "v1.0.0-alpha",
   "keywords": [
     "slick",
-    "MVC",
-    "MVC implementation"
+    "PSR-7 stack"
   ],
   "authors": [
     {
@@ -18,38 +17,33 @@
   ],
   "autoload": {
     "psr-4": {
-      "Slick\\Mvc\\": "src"
+      "Slick\\WebStack\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Slick\\Tests\\Mvc\\": "tests"
+      "Features\\App\\": "features/app/src"
     }
   },
   "require": {
-    "php" : ">=5.5",
-    "slick/configuration": "^1.2",
-    "slick/di": "^1",
-    "slick/form": "^1.2",
-    "slick/orm": "^1.3@dev",
+    "php" : ">=5.6",
+    "slick/di": "^2.2",
+    "slick/http": "^1.2",
+    "slick/configuration": "@dev",
+    "symfony/yaml": "^3.2",
     "aura/router": "^3.0",
-    "symfony/yaml": "^2.1",
-    "filp/whoops": "^2.1",
-    "slick/console": "^1.2"
+    "slick/template": "^1.2",
+    "filp/whoops": "^2.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4",
-    "phpunit/php-code-coverage": "^2",
-    "scrutinizer/ocular": "~1.1",
-    "behat/behat": "^3.0.4",
-    "behat/mink": "^1.7",
+    "phpspec/phpspec": "^3.2",
+    "behat/mink-extension": "^2.2",
     "behat/mink-goutte-driver": "^1.2",
-    "behat/mink-extension": "^2.2"
+    "slick/console": "^1.2@dev"
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0-dev",
-      "dev-develop": "2.0-dev"
+      "dev-master": "1.0-dev"
     }
   }
 }

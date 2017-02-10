@@ -1,0 +1,14 @@
+routes:
+  home:
+    allows: [POST, GET]
+    path: /
+    defaults:
+      action: home
+  catchall:
+    allows: [POST, GET]
+    path: "{/controller,action}"
+    wildcard: args
+defaults:
+  namespace: Controller
+  action: index
+  controller: pages

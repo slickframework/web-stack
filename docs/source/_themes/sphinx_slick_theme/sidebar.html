@@ -1,0 +1,13 @@
+
+{% block menu %}
+
+{% set toctree = toctree(maxdepth=theme_navigation_depth|int, collapse=theme_collapse_navigation, includehidden=True) %}
+{% if toctree %}
+    {{ toctree }}
+{% else %}
+<!-- Local TOC -->
+<div class="local-toc sidenav dropable ">{{ toc }}</div>
+{% endif %}
+<div class="wy-menu wy-menu-vertical"></div>
+{% endblock %}
+

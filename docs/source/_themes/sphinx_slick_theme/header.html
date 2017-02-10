@@ -1,0 +1,60 @@
+<header class="site-header sticky">
+
+    <!-- Top navbar & branding -->
+    <nav class="navbar navbar-default">
+        <div class="container">
+
+            <!-- Toggle buttons and brand -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
+                    <span class="glyphicon glyphicon-option-vertical"></span>
+                </button>
+
+                <button type="button" class="navbar-toggle for-sidebar" data-toggle="offcanvas">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="{{ pathto(master_doc) }}"><img src="{{ pathto('_static/img/logo.png', 1) }}" alt="logo"></a>
+            </div>
+            <!-- END Toggle buttons and brand -->
+
+            <!-- Top navbar -->
+            <div id="navbar" class="navbar-collapse collapse" aria-expanded="true" role="banner">
+                {%- if builder != 'singlehtml' %}
+                <form id="rtd-search-form" class="navbar-form navbar-right" action="{{ pathto('search') }}" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q" placeholder="Search for...">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+                {% endif %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        {% if display_github %}
+                        {% if check_meta and 'github_url' in meta %}
+                        <!-- User defined GitHub URL -->
+                        <a href="{{ meta['github_url'] }}">
+                            <i class="fa fa-github"></i>
+                            {{ _('Edit on GitHub') }}
+                        </a>
+                        {% else %}
+                        <a href="https://{{ github_host|default("github.com") }}/{{ github_user }}/{{ github_repo }}">
+                            <i class="fa fa-github"></i>
+                            {{ _('Repository') }}
+                        </a>
+                        {% endif %}
+                        {% endif %}
+                    </li>
+
+                </ul>
+            </div>
+            <!-- END Top navbar -->
+        </div>
+    </nav>
+    <!-- END Top navbar & branding -->
+
+</header>
