@@ -23,7 +23,7 @@ before_script:
   - travis_retry composer install --no-interaction --prefer-source
 
 script:
-  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpspec run --format=dot
   - docker-compose up -d
   - vendor/bin/behat -f progress
   - docker-compose stop
