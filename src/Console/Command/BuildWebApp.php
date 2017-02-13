@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of slick/mvc package
+ * This file is part of slick/web_stack package
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,6 +9,7 @@
 
 namespace Slick\WebStack\Console\Command;
 
+use Slick\WebStack\Console\Command\Task\AskForNamespace;
 use Slick\WebStack\Console\Command\Task\AskForWebRoot;
 use Slick\WebStack\Console\Service\ContainerFactory;
 use Symfony\Component\Console\Command\Command;
@@ -51,9 +52,18 @@ class BuildWebApp extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = ContainerFactory::create($this)->container();
+        $this->printBanner($output);
+        $webRoot = $container->get(AskForWebRoot::class)
+            ->execute($input, $output);
+        $nameSpace = $container->get(AskForNamespace::class)
+            ->execute($input, $output);
+        return 0;
+    }
+
+    private function printBanner(OutputInterface $output)
+    {
+        $output->writeln('');
         $output->writeln('<info>Slick web application initialization</info>');
         $output->writeln('<info>------------------------------------</info>');
-        $webRoot = $container->get(AskForWebRoot::class)->execute($input, $output);
-        return 0;
     }
 }

@@ -1,7 +1,7 @@
 Slick Framework
 ===============
 
-``slick/mvc`` is an...
+``slick/web_stack package`` is an...
 
 
 .. toctree::
