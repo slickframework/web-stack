@@ -1,0 +1,25 @@
+{{ '<?php' }}
+
+/**
+ * Features application front controller
+ *
+ * This file is part of {{ appName }}
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+use Slick\WebStack\Application;
+
+define('ROOT_PATH', {{ rootPath }});
+define('APP_PATH', ROOT_PATH . '{{ appPath }}');
+
+require ROOT_PATH . '/vendor/autoload.php';
+
+$application = new Application(
+APP_PATH . '{{ namespaceRoot }}/Configuration/Services'
+);
+
+$response = $application->run();
+
+$response->send();
