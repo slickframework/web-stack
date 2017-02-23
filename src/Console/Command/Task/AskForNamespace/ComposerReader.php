@@ -78,20 +78,8 @@ class ComposerReader
     private function add(array $item)
     {
         foreach ($item as $nameSpace => $path) {
-            $entry = new NameSpaceEntry($nameSpace, $this->composePath($path));
+            $entry = new NameSpaceEntry($nameSpace, $path, $this->basePath);
             $this->collection->offsetSet(null, $entry);
         }
-    }
-
-    /**
-     * Set the base path to the namespace path
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    private function composePath($path)
-    {
-        return $this->basePath .'/'. $path;
     }
 }

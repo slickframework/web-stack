@@ -11,6 +11,7 @@ namespace Slick\WebStack\Console\Command;
 
 use Slick\WebStack\Console\Command\Task\AskForNamespace;
 use Slick\WebStack\Console\Command\Task\AskForWebRoot;
+use Slick\WebStack\Console\Command\Task\CreateIndexFile;
 use Slick\WebStack\Console\Service\ContainerFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -57,6 +58,18 @@ class BuildWebApp extends Command
             ->execute($input, $output);
         $nameSpace = $container->get(AskForNamespace::class)
             ->execute($input, $output);
+
+        /** @var CreateIndexFile $createIndex */
+        $createIndex = $container->make(
+            CreateIndexFile::class,
+            $nameSpace,
+            $webRoot,
+            '@local.filesystem',
+            '@template.engine'
+        );
+        $createIndex->execute($input, $output);
+
+        $this->printSuccess($output);
         return 0;
     }
 
@@ -65,5 +78,12 @@ class BuildWebApp extends Command
         $output->writeln('');
         $output->writeln('<info>Slick web application initialization</info>');
         $output->writeln('<info>------------------------------------</info>');
+    }
+
+    private function printSuccess(OutputInterface $output)
+    {
+        $output->writeln('');
+        $output->writeln('<info>Web application structured and bootstrapped!</info>');
+        $output->writeln('');
     }
 }

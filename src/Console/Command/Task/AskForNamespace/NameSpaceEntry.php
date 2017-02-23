@@ -27,17 +27,23 @@ class NameSpaceEntry
      * @var string
      */
     private $path;
+    /**
+     * @var null
+     */
+    private $basePath;
 
     /**
      * Creates a Namespace Entry
      *
      * @param string $nameSpace
      * @param string $path
+     * @param string $basePath
      */
-    public function __construct($nameSpace, $path)
+    public function __construct($nameSpace, $path, $basePath = null)
     {
         $this->nameSpace = $nameSpace;
         $this->path = $path;
+        $this->basePath = $basePath;
     }
 
     /**
@@ -58,5 +64,15 @@ class NameSpaceEntry
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * Get the base path for the name spaced classes
+     *
+     * @return null|string
+     */
+    public function getBasePath()
+    {
+        return $this->basePath;
     }
 }
