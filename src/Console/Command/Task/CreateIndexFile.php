@@ -26,7 +26,8 @@ class CreateIndexFile implements TaskInterface
 {
 
     const TEMPLATE_FILE = 'templates/console/init/index.twig';
-    const SERVICES_PATH = 'Infrastructure/Web/UI/Service/Definitions';
+    const SERVICES_PATH = 'Infrastructure/WebUI/Service/Definition';
+    const MODULE        = 'Infrastructure/WebUI';
 
     /**
      * @var NameSpaceEntry
@@ -91,6 +92,11 @@ class CreateIndexFile implements TaskInterface
         return $this->filesystem->write($file, $content);
     }
 
+    /**
+     * Get index file content
+     *
+     * @return string
+     */
     private function getContent()
     {
         return $this->templateEngine
@@ -104,6 +110,11 @@ class CreateIndexFile implements TaskInterface
         ;
     }
 
+    /**
+     * Get services path
+     *
+     * @return string
+     */
     private function getServicesPath()
     {
         return "/{$this->namespace->getPath()}/".self::SERVICES_PATH;
@@ -131,9 +142,9 @@ class CreateIndexFile implements TaskInterface
     }
 
     /**
+     * Delete the index.php if it exists
      *
-     *
-     * @param $file
+     * @param string $file
      */
     private function deleteExistingFile($file)
     {
