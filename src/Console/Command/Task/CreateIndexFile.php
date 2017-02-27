@@ -26,8 +26,7 @@ class CreateIndexFile implements TaskInterface
 {
 
     const TEMPLATE_FILE = 'templates/console/init/index.twig';
-    const SERVICES_PATH = 'Infrastructure/WebUI/Service/Definition';
-    const MODULE        = 'Infrastructure/WebUI';
+    const SERVICES_PATH = 'Service/Definition';
 
     /**
      * @var NameSpaceEntry
@@ -47,18 +46,24 @@ class CreateIndexFile implements TaskInterface
      * @var string
      */
     private $webRoot;
+    /**
+     * @var string
+     */
+    private $path;
 
     /**
      * Creates a create Index File task
      *
      * @param NameSpaceEntry          $namespace
      * @param string                  $webRoot
+     * @param string                  $path
      * @param FilesystemInterface     $filesystem
      * @param TemplateEngineInterface $templateEngine
      */
     public function __construct(
         NameSpaceEntry $namespace,
         $webRoot,
+        $path,
         FilesystemInterface $filesystem,
         TemplateEngineInterface $templateEngine
     )
@@ -68,6 +73,7 @@ class CreateIndexFile implements TaskInterface
         $this->filesystem = $filesystem;
         $this->templateEngine = $templateEngine;
         $this->webRoot = $webRoot;
+        $this->path = $path;
     }
 
     /**
@@ -102,8 +108,8 @@ class CreateIndexFile implements TaskInterface
         return $this->templateEngine
             ->process(
                 [
-                    'appName' => $this->namespace->getNameSpace(),
-                    'rootPath' => $this->getDirName($this->webRoot),
+                    'appName' => trim($this->namespace->getNameSpace(), "\\"),
+                    'rootPath' => TaskTools::getDirName($this->webRoot),
                     'servicesPath' => $this->getServicesPath()
                 ]
             )
@@ -117,21 +123,9 @@ class CreateIndexFile implements TaskInterface
      */
     private function getServicesPath()
     {
-        return "/{$this->namespace->getPath()}/".self::SERVICES_PATH;
-    }
-
-    private function getDirName($path, $from = '__DIR__')
-    {
-        $parts = explode('/', trim($path, '/'));
-        array_pop($parts);
-
-        $expression = "dirname({$from})";
-
-        if (count($parts) > 0) {
-            return $this->getDirName(implode('/', $parts), $expression);
-        }
-
-        return $expression;
+        $path = trim($this->path, '/');
+        return str_replace('//', '/', "/{$this->namespace->getPath()}/{$path}/".
+            self::SERVICES_PATH);
     }
 
     private function verifyDirectory()

@@ -9,11 +9,17 @@
 
 namespace Slick\WebStack\Console\Command;
 
+use Slick\Di\ContainerInterface;
 use Slick\WebStack\Console\Command\Task\AskForNamespace;
 use Slick\WebStack\Console\Command\Task\AskForWebRoot;
+use Slick\WebStack\Console\Command\Task\CopyTemplateFiles;
 use Slick\WebStack\Console\Command\Task\CreateIndexFile;
+use Slick\WebStack\Console\Command\Task\CreatePagesController;
+use Slick\WebStack\Console\Command\Task\CreateRoutesFile;
+use Slick\WebStack\Console\Command\Task\CreateServicesFile;
 use Slick\WebStack\Console\Service\ContainerFactory;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -25,6 +31,20 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class BuildWebApp extends Command
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * @var InputInterface
+     */
+    private $input;
+
+    /**
+     * @var OutputInterface
+     */
+    private $output;
 
     /**
      * Configure command
@@ -34,6 +54,7 @@ class BuildWebApp extends Command
         $this
             ->setName('init')
             ->setDescription('Builds a basic, startup files and directory structure for a web application.')
+            ->addArgument('path', InputArgument::REQUIRED, 'Where will your web application files live in?')
         ;
     }
 
@@ -52,24 +73,33 @@ class BuildWebApp extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $container = ContainerFactory::create($this)->container();
-        $this->printBanner($output);
-        $webRoot = $container->get(AskForWebRoot::class)
-            ->execute($input, $output);
-        $nameSpace = $container->get(AskForNamespace::class)
-            ->execute($input, $output);
 
-        /** @var CreateIndexFile $createIndex */
-        $createIndex = $container->make(
-            CreateIndexFile::class,
+        $this->input = $input;
+        $this->output = $output;
+
+        $this->printBanner($this->output);
+
+        $webRoot = $this->container()
+            ->get(AskForWebRoot::class)
+            ->execute($this->input, $this->output);
+        $nameSpace = $this->container()
+            ->get(AskForNamespace::class)
+            ->execute($this->input, $this->output);
+
+        $this->createIndexFile($nameSpace, $webRoot);
+        $this->createServicesFile($nameSpace);
+        $this->createRoutesFile($nameSpace);
+        $this->createController($nameSpace);
+
+        $copyFiles = $this->container()->make(
+            CopyTemplateFiles::class,
             $nameSpace,
-            $webRoot,
-            '@local.filesystem',
-            '@template.engine'
+            $this->input->getArgument('path'),
+            '@local.filesystem'
         );
-        $createIndex->execute($input, $output);
+        $copyFiles->execute($this->input, $this->output);
 
-        $this->printSuccess($output);
+        $this->printSuccess($this->output);
         return 0;
     }
 
@@ -85,5 +115,97 @@ class BuildWebApp extends Command
         $output->writeln('');
         $output->writeln('<info>Web application structured and bootstrapped!</info>');
         $output->writeln('');
+    }
+
+    /**
+     * Get container
+     *
+     * @return \Slick\Di\ContainerInterface
+     */
+    private function container()
+    {
+        if (!$this->container) {
+            $this->container = ContainerFactory::create($this)->container();
+        }
+        return $this->container;
+    }
+
+    /**
+     * Creates the index.php file
+     *
+     * @param AskForNamespace\NameSpaceEntry $nameSpace
+     * @param string $webRoot
+     */
+    protected function createIndexFile(
+        AskForNamespace\NameSpaceEntry $nameSpace,
+        $webRoot
+    )
+    {
+        /** @var CreateIndexFile $createIndex */
+        $createIndex = $this->container()->make(
+            CreateIndexFile::class,
+            $nameSpace,
+            $webRoot,
+            $this->input->getArgument('path'),
+            '@local.filesystem',
+            '@template.engine'
+        );
+        $createIndex->execute($this->input, $this->output);
+    }
+
+    /**
+     * Creates the services file
+     *
+     * @param AskForNamespace\NameSpaceEntry $nameSpace
+     */
+    protected function createServicesFile(
+        AskForNamespace\NameSpaceEntry $nameSpace
+    )
+    {
+        /** @var CreateServicesFile $createServices */
+        $createServices = $this->container()->make(
+            CreateServicesFile::class,
+            $nameSpace,
+            $this->input->getArgument('path'),
+            '@template.engine',
+            '@local.filesystem'
+        );
+
+        $createServices->execute($this->input, $this->output);
+    }
+
+    /**
+     *
+     *
+     * @param $nameSpace
+     */
+    protected function createRoutesFile($nameSpace)
+    {
+        /** @var CreateRoutesFile $createRoutes */
+        $createRoutes = $this->container()->make(
+            CreateRoutesFile::class,
+            $nameSpace,
+            $this->input->getArgument('path'),
+            '@template.engine',
+            '@local.filesystem'
+        );
+        $createRoutes->execute($this->input, $this->output);
+    }
+
+    /**
+     *
+     *
+     * @param $nameSpace
+     */
+    protected function createController($nameSpace)
+    {
+        $createController = $this->container()->make(
+            CreatePagesController::class,
+            $nameSpace,
+            $this->input->getArgument('path'),
+            '@template.engine',
+            '@local.filesystem'
+        );
+        $createController->execute($this->input, $this->output);
     }
 }

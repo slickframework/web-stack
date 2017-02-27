@@ -20,7 +20,7 @@ class CreateIndexFileSpec extends ObjectBehavior
         TemplateEngineInterface $templateEngine
     )
     {
-        $namespace = new NameSpaceEntry('Foo\Bar', 'src', getcwd());
+        $namespace = new NameSpaceEntry("Foo\\Bar\\", 'src', getcwd());
         $webRoot = 'features/app/public';
 
         $content = 'test';
@@ -35,7 +35,13 @@ class CreateIndexFileSpec extends ObjectBehavior
         $filesystem->has('features/app/public/index.php')
             ->willReturn(false);
 
-        $this->beConstructedWith($namespace, $webRoot, $filesystem, $templateEngine);
+        $this->beConstructedWith(
+            $namespace,
+            $webRoot,
+            'Infrastructure/WebUI',
+            $filesystem,
+            $templateEngine
+        );
     }
 
     function it_is_initializable()
@@ -58,7 +64,7 @@ class CreateIndexFileSpec extends ObjectBehavior
             [
                 'appName' => 'Foo\Bar',
                 'rootPath' => 'dirname(dirname(dirname(__DIR__)))',
-                'servicesPath' => '/src/'.CreateIndexFile::SERVICES_PATH
+                'servicesPath' => '/src/Infrastructure/WebUI/'.CreateIndexFile::SERVICES_PATH
             ]
         )
             ->shouldBeCalled()
