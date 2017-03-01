@@ -301,7 +301,7 @@ primary_domain = 'php'
 html_context = {
   "display_github": True,
   "github_user": "slickframework",
-  "github_repo": "di",
+  "github_repo": "web-stack",
   "github_version": "master",
   "conf_py_path": "/doc/",
   "source_suffix": source_suffix,

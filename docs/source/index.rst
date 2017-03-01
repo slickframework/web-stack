@@ -1,13 +1,14 @@
-Slick Framework
+Slick Web Stack
 ===============
 
-``slick/web_stack package`` is an...
+``slick/webstack package`` is an...
 
 
 .. toctree::
     :hidden:
     :maxdepth: 2
 
+    manual/getting-started
     manual/contrib
     manual/license
 

@@ -1,5 +1,5 @@
 {
-  "name": "slick/web_stack",
+  "name": "slick/webstack",
   "description": "MVC implementation for Slick Framework.",
   "minimum-stability": "dev",
   "license": "MIT",
