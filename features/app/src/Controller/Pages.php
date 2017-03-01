@@ -14,7 +14,7 @@ use Slick\WebStack\Controller;
 /**
  * Pages
  *
- * @package Features\App\\Controller
+ * @package Features\App\Controller
  */
 class Pages extends Controller
 {

@@ -106,7 +106,7 @@ class CreateRoutesFile implements TaskInterface
     private function fullNamespace()
     {
         $path = str_replace('//', '/', $this->path.'/'.self::CONTROLLER_PATH);
-        $path = str_replace('/', "\\", $path);
+        $path = str_replace('/', "\\", trim($path, '/'));
         return "{$this->namespace->getNameSpace()}{$path}";
     }
 

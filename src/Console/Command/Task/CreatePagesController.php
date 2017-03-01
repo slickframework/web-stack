@@ -111,7 +111,7 @@ class CreatePagesController implements TaskInterface
             '/',
             $this->path.'/'.CreateRoutesFile::CONTROLLER_PATH
         );
-        $path = str_replace('/', "\\", $path);
+        $path = str_replace('/', "\\", trim($path, '/'));
         return "{$this->namespace->getNameSpace()}{$path}";
     }
 

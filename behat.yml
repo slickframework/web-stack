@@ -4,7 +4,7 @@ default:
     default:
       contexts:
         - FeatureContext
-        - Mvc\MvcContext
+        - CommandLine\CommandLineContext
       paths:
         - %paths.base%/features
   extensions:
