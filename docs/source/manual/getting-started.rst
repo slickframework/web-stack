@@ -59,7 +59,8 @@ You also have to set your http server document root to this folder.
 .. code-block:: bash
 
     Please select the namespace to use (Slick\WebStack):
-      [0] Vendor\App
+      [0] Slick\WebStack
+      [1] Vendor\App
      >
 
 Select the PSR-0/PSR-4 namespace you are working with and the application will be bootstrapped
