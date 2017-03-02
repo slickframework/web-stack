@@ -3,6 +3,14 @@
 Getting started
 ===============
 
+``slick/webstack package`` is a PSR-7 HTTP middleware stack that can help you create
+web applications or web services for HTTP protocol.
+It offers a router, dispatcher and view mechanism that returns PSR-7 Responses for
+HTTP Requests (usually through a web server).
+
+You can change (add or remove) the HTTP stack by adding your own middleware making
+this library very flexible and suitable for almost any HTTP handling needs.
+
 Installation
 ------------
 

@@ -1,7 +1,13 @@
-Slick Web Stack
-===============
+.. title:: Slick framework documentation
 
-``slick/webstack package`` is an...
+.. raw:: html
+    :file: features.html
+
+Packages
+--------
+
+.. raw:: html
+    :file: other-modules.html
 
 
 .. toctree::
