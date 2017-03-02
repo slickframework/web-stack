@@ -1,13 +1,13 @@
-{% set messages =  flashMessages.get %}
+{% set messages =  flashMessages.messages %}
 {% if messages|length > 0 %}
     <div class="flash-messages">
         {% for type, especific in messages %}
-            {% for message in especific %}
-                <div class="alert alert-{{ flashMessages.classes[type] }} alert-dismissable fade in">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ message|raw }}
-                </div>
-            {% endfor %}
+            <div class="alert alert-{{ type }} alert-dismissable fade show">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {% for message in especific %}
+                    <p>{{ message|raw }}</p>
+                {% endfor %}
+            </div>
         {% endfor %}
     </div>
 {% endif %}

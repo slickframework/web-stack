@@ -22,6 +22,7 @@ use Slick\WebStack\Exception\ControllerNotFoundException;
 use Slick\WebStack\Http\Dispatcher\ControllerDispatch;
 use Slick\WebStack\Http\Dispatcher\ControllerDispatchInflectorInterface;
 use Slick\WebStack\Http\Dispatcher\ControllerInvokerInterface;
+use Slick\WebStack\Service\FlashMessages;
 
 /**
  * Dispatcher Middleware
@@ -89,6 +90,7 @@ class DispatcherMiddleware extends AbstractMiddleware implements MiddlewareInter
 
         $this->setControllerContext($controller, $request, $response);
         $dataView = $this->invoker->invoke($controller, $controllerDispatch);
+        $dataView['flashMessages'] = $this->container->get(FlashMessages::class);
 
         $request = $this->context->getRequest();
         $request = $request->withAttribute('viewData', $dataView);

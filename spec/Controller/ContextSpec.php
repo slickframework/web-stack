@@ -5,6 +5,7 @@ namespace spec\Slick\WebStack\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Di\ContainerInjectionInterface;
+use Slick\Http\Uri;
 use Slick\WebStack\Controller\Context;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -123,10 +124,11 @@ class ContextSpec extends ObjectBehavior
         $response->withHeader('location', '/pages/index')
             ->shouldBeCalled()
             ->willReturn($response);
-
+        $uriGenerator->setRequest($request)
+            ->shouldBeCalled();
         $uriGenerator->generate($location, [])
             ->shouldBeCalled()
-            ->willReturn('/pages/index');
+            ->willReturn(new Uri('/pages/index'));
 
         $this->register($request, $response);
         $this->redirect($location);

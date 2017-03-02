@@ -47,6 +47,6 @@ class FlashMessagesSpec extends ObjectBehavior
             ->willReturn($messages);
 
         $sessionDriver->erase('_messages_')->shouldBeCalled();
-        $this->get()->shouldBe($messages);
+        $this->messages()->shouldBe($messages);
     }
 }

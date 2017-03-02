@@ -20,6 +20,7 @@ use Slick\WebStack\Http\Dispatcher\ControllerDispatch;
 use Slick\WebStack\Http\Dispatcher\ControllerDispatchInflectorInterface;
 use Slick\WebStack\Http\Dispatcher\ControllerInvokerInterface;
 use Slick\WebStack\Http\DispatcherMiddleware;
+use Slick\WebStack\Service\FlashMessages;
 
 class DispatcherMiddlewareSpec extends ObjectBehavior
 {
@@ -81,6 +82,8 @@ class DispatcherMiddlewareSpec extends ObjectBehavior
             ->inflect(Argument::any())
             ->willReturn($dispatch);
 
+        $container->get(FlashMessages::class)
+            ->willReturn(true);
         $container->make("controllerClass")->willReturn($controller);
         $container->has('controller.context.class')->willReturn(false);
         $container->make(DispatcherMiddleware::CONTEXT_CLASS)
@@ -88,7 +91,7 @@ class DispatcherMiddlewareSpec extends ObjectBehavior
 
         $invoker
             ->invoke($controller, Argument::type(ControllerDispatch::class))
-            ->willReturn([]);
+            ->willReturn(["flashMessages" => true]);
         $context->register(
             Argument::type(ServerRequestInterface::class),
             Argument::type(ResponseInterface::class)
@@ -183,7 +186,7 @@ class DispatcherMiddlewareSpec extends ObjectBehavior
         $this->prepareRequest($request);
 
         $this->handle($request, $response);
-        $request->withAttribute('viewData', [])
+        $request->withAttribute('viewData', ["flashMessages" => true])
             ->shouldHaveBeenCalled();
     }
 
@@ -235,7 +238,7 @@ class DispatcherMiddlewareSpec extends ObjectBehavior
         $route = !$route ? new Route() : $route;
         $request->getAttribute('route', false)
             ->willReturn($route);
-        $request->withAttribute('viewData', [])
+        $request->withAttribute('viewData', ["flashMessages" => true])
             ->willReturn($request);
         $this->contextMock->getRequest()->willReturn($request);
         $this->contextMock->getResponse()->willReturn(new Response());

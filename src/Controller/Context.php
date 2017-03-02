@@ -82,6 +82,7 @@ class Context implements
     {
         $this->request = $request;
         $this->setResponse($response);
+        $this->uriGenerator->setRequest($request);
         return $this;
     }
 
@@ -131,14 +132,15 @@ class Context implements
      */
     public function redirect($location, array $options = [])
     {
-        $response = $this->response
-            ->withStatus(302)
-            ->withHeader(
-                'location',
-                $this->uriGenerator->generate($location, $options)
-            )
-        ;
-        $this->setResponse($response);
+        $location = $this->uriGenerator
+            ->generate($location, $options)
+            ->__toString();
+
+        $this->setResponse(
+            $this->response
+                ->withStatus(302)
+                ->withHeader('location', $location)
+        );
     }
 
     /**

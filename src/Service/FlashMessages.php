@@ -28,10 +28,10 @@ class FlashMessages
     /**#@+
      * @const string TYPE for message type constants
      */
-    const TYPE_SUCCESS = 0;
-    const TYPE_ERROR   = 1;
-    const TYPE_WARNING = 2;
-    const TYPE_INFO    = 3;
+    const TYPE_SUCCESS = 'success';
+    const TYPE_ERROR   = 'danger';
+    const TYPE_WARNING = 'warning';
+    const TYPE_INFO    = 'info';
     /**#@-*/
 
     /**
@@ -59,8 +59,11 @@ class FlashMessages
      */
     public function set($type, $message)
     {
-        $type = StaticFilter::filter('number', $type);
-        if ($type === '' || $type < 0 || $type > 3) {
+        $types = [
+            self::TYPE_ERROR, self::TYPE_INFO, self::TYPE_SUCCESS,
+            self::TYPE_WARNING
+        ];
+        if (!in_array($type, $types)) {
             $type = self::TYPE_INFO;
         }
         self::$messages[$type][] = $message;
@@ -85,7 +88,7 @@ class FlashMessages
      *
      * @return array
      */
-    public function get()
+    public function messages()
     {
         $messages = $this->sessionDriver->get('_messages_', []);
         $this->flush();
@@ -98,7 +101,7 @@ class FlashMessages
      * @param string $message
      * @return self
      */
-    public function addInfoMessage($message)
+    public function addInfo($message)
     {
         return $this->set(FlashMessages::TYPE_INFO, $message);
     }
@@ -108,7 +111,7 @@ class FlashMessages
      * @param string $message
      * @return self
      */
-    public function addWarningMessage($message)
+    public function addWarning($message)
     {
         return $this->set(FlashMessages::TYPE_WARNING, $message);
     }
@@ -118,7 +121,7 @@ class FlashMessages
      * @param string $message
      * @return self
      */
-    public function addErrorMessage($message)
+    public function addError($message)
     {
         return $this->set(FlashMessages::TYPE_ERROR, $message);
     }
@@ -128,7 +131,7 @@ class FlashMessages
      * @param string $message
      * @return self
      */
-    public function addSuccessMessage($message)
+    public function addSuccess($message)
     {
         return $this->set(FlashMessages::TYPE_SUCCESS, $message);
     }

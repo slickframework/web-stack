@@ -34,6 +34,7 @@ $services['session.driver'] = function (ContainerInterface $container) {
 };
 
 // FLASH MESSAGES
+$services[FlashMessages::class] = '@flash.messages';
 $services['flash.messages'] = function (ContainerInterface $container) {
     return new FlashMessages($container->get('session.driver'));
 };

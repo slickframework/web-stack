@@ -9,6 +9,8 @@
 
 namespace Features\App\Service\Definition;
 
+use Slick\Http\Session;
+use Slick\Http\SessionDriverInterface;
 use Slick\Template\Template;
 
 // ADD template path
@@ -16,5 +18,7 @@ Template::addPath(dirname(dirname(dirname(__DIR__))).'/templates');
 
 $services = [];
 $services['routes.file'] = dirname(__DIR__) . '/routes.yml';
+
+$services[SessionDriverInterface::class] =  Session::DRIVER_SERVER;
 
 return $services;

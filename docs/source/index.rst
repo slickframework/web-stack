@@ -15,6 +15,7 @@ Packages
     :maxdepth: 2
 
     manual/getting-started
+    manual/flash-messages
     manual/contrib
     manual/license
 
