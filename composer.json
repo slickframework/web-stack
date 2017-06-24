@@ -33,10 +33,10 @@
     "symfony/yaml": "^3.2",
     "aura/router": "^3.0",
     "slick/template": "^1.2",
-    "filp/whoops": "^2.1",
     "league/flysystem": "^1.0"
   },
   "require-dev": {
+    "filp/whoops": "^2.1",
     "phpspec/phpspec": "^3.2",
     "behat/mink-extension": "^2.2",
     "behat/mink-goutte-driver": "^1.2",

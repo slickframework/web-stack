@@ -92,7 +92,10 @@ class DispatcherMiddleware extends AbstractMiddleware implements MiddlewareInter
         $dataView = $this->invoker->invoke($controller, $controllerDispatch);
         $dataView['flashMessages'] = $this->container->get(FlashMessages::class);
 
+
         $request = $this->context->getRequest();
+        $data = $request->getAttribute('viewData', []);
+        $dataView = array_merge($data, $dataView);
         $request = $request->withAttribute('viewData', $dataView);
         $response = $this->context->getResponse();
 

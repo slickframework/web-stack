@@ -64,13 +64,17 @@ class DispatcherMiddlewareSpec extends ObjectBehavior
         ControllerInvokerInterface $invoker,
         ContainerInterface $container,
         TestController $controller,
-        ControllerContextInterface $context
+        ControllerContextInterface $context,
+        ServerRequestInterface $request
     ) {
         $this->beConstructedWith(
             $controllerDispatchInflector,
             $invoker,
             $container
         );
+
+        $request->getAttribute('viewData', [])->willReturn([]);
+
         $this->dispatchInflector = $controllerDispatchInflector;
         $this->invokerMock = $invoker;
         $this->controllerMock = $controller;
