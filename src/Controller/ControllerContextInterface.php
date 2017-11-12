@@ -16,23 +16,9 @@ use Psr\Http\Message\ServerRequestInterface;
  * Controller Context Interface
  *
  * @package Slick\WebStack\Controller
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
 interface ControllerContextInterface
 {
-
-    /**
-     * Registers the HTTP request and response to this context
-     *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
-     *
-     * @return self|ControllerContextInterface
-     */
-    public function register(
-        ServerRequestInterface $request,
-        ResponseInterface $response
-    );
 
     /**
      * Gets the post parameter that was submitted with provided name
@@ -46,7 +32,7 @@ interface ControllerContextInterface
      *
      * @return array|string
      */
-    public function getPost($name = null, $default = null);
+    public function postParam($name = null, $default = null);
 
     /**
      * Gets the URL query parameter with provided name
@@ -60,7 +46,21 @@ interface ControllerContextInterface
      *
      * @return array|string
      */
-    public function getQuery($name = null, $default = null);
+    public function queryParam($name = null, $default = null);
+
+    /**
+     * Gets the route parameter with provided name
+     *
+     * If its not submitted the default value will be returned.
+     * If no arguments are passed the full URL query parameters from request will
+     * be returned. In this case the default value is ignored.
+     *
+     * @param null|string $name
+     * @param mixed       $default
+     *
+     * @return array|string
+     */
+    public function routeParam($name = null, $default = null);
 
     /**
      * Sets a redirection header in the HTTP response
@@ -80,13 +80,13 @@ interface ControllerContextInterface
     public function disableRendering();
 
     /**
-     * Sets the view that will be rendered
+     * Sets the view template to use by render process
      *
-     * @param string $viewPath
+     * @param string $template
      *
      * @return self|ControllerContextInterface
      */
-    public function setView($viewPath);
+    public function useTemplate($template);
 
     /**
      * Sets a new response
@@ -98,16 +98,25 @@ interface ControllerContextInterface
     public function setResponse(ResponseInterface $response);
 
     /**
+     * Sets a new or updated server request
+     *
+     * @param ServerRequestInterface $request
+     *
+     * @return self|ControllerContextInterface
+     */
+    public function changeRequest(ServerRequestInterface $request);
+
+    /**
      * Get current HTTP response
      *
      * @return ResponseInterface
      */
-    public function getResponse();
+    public function response();
 
     /**
      * Get current HTTP request
      *
      * @return ServerRequestInterface
      */
-    public function getRequest();
+    public function request();
 }

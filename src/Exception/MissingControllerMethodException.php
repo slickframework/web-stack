@@ -13,11 +13,10 @@ use InvalidArgumentException;
 use Slick\WebStack\Exception;
 
 /**
- * Controller Not Found Exception
+ * Missing Controller Method Exception
  *
  * @package Slick\WebStack\Exception
  */
-class ControllerNotFoundException extends InvalidArgumentException implements Exception
+class MissingControllerMethodException extends InvalidArgumentException implements Exception
 {
-
 }

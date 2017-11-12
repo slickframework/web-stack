@@ -1,21 +1,12 @@
 version: '2'
 
 services:
-  web:
-    image: slickframework/nginx
-    ports:
-      - 8880:80
-    volumes_from:
-      - php
-    environment:
-      - CONF_APP=slick
-      - CONF_PUBLIC=features/app/webroot
-      - CONF_UPSTREAM=php:9000
 
   php:
-    image: slickframework/php:5.6
+    build: docker/php
+    ports:
+      - 8880:80
     volumes:
-      - ./:/usr/src/app
-    working_dir: /usr/src/app
+      - ./:/var/www/app
     environment:
       - USE_XDEBUG=yes
