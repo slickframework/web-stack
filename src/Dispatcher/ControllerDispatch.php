@@ -19,7 +19,7 @@ use Slick\WebStack\Exception\MissingControllerMethodException;
  *
  * @package Slick\WebStack\Dispatcher
  */
-final class ControllerDispatch
+class ControllerDispatch
 {
     /**
      * @var \ReflectionClass

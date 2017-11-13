@@ -9,7 +9,7 @@
 
 namespace spec\Slick\WebStack\Dispatcher;
 
-use Slick\WebStack\Controller\ControllerContextInterface;
+use Slick\WebStack\Controller\ControllerMethods;
 use Slick\WebStack\ControllerInterface;
 use Slick\WebStack\Dispatcher\ControllerDispatch;
 use PhpSpec\ObjectBehavior;
@@ -70,45 +70,7 @@ class ControllerDispatchSpec extends ObjectBehavior
 
 class DummyController implements ControllerInterface
 {
-
-    /**
-     * Sets te context for this controller execution
-     *
-     * @param ControllerContextInterface $context
-     *
-     * @return self|ControllerInterface
-     */
-    public function runWithContext(ControllerContextInterface $context)
-    {
-        return $this;
-    }
-
-    /**
-     * Sets a variable to the view data model
-     *
-     * If you provide an associative array in the $name argument it will be
-     * set all the elements using the key as the variable name on view
-     * data model.
-     *
-     * @param string|array $name
-     * @param mixed $value
-     *
-     * @return self|ControllerInterface
-     */
-    public function set($name, $value = null)
-    {
-        return $this;
-    }
-
-    /**
-     * A view data model used by renderer
-     *
-     * @return array
-     */
-    public function data()
-    {
-        return [];
-    }
+    use ControllerMethods;
 
     public function handle()
     {

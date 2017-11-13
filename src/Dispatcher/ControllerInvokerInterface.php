@@ -9,7 +9,7 @@
 
 namespace Slick\WebStack\Dispatcher;
 
-use Slick\WebStack\ControllerInterface;
+use Slick\WebStack\Controller\ControllerContextInterface;
 
 /**
  * Controller Invoker Interface
@@ -22,13 +22,13 @@ interface ControllerInvokerInterface
     /**
      * Invokes the controller action returning view data
      *
-     * @param ControllerInterface $controller
-     * @param ControllerDispatch  $dispatch
+     * @param ControllerContextInterface $context
+     * @param ControllerDispatch $dispatch
      *
      * @return array
      */
     public function invoke(
-        ControllerInterface $controller,
+        ControllerContextInterface $context,
         ControllerDispatch $dispatch
     );
 }
