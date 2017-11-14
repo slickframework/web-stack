@@ -12,6 +12,7 @@ namespace Slick\WebStack\Controller;
 use Aura\Router\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slick\Http\Message\Response;
 
 /**
  * Controller Context
@@ -26,9 +27,19 @@ class Context implements ControllerContextInterface
     private $request;
 
     /**
+     * @var ResponseInterface
+     */
+    private $response;
+
+    /**
      * @var Route
      */
     private $route;
+
+    /**
+     * @var bool
+     */
+    private $handleResponse = false;
 
     /**
      * Creates a controller context
@@ -56,7 +67,11 @@ class Context implements ControllerContextInterface
      */
     public function postParam($name = null, $default = null)
     {
-        // TODO: Implement postParam() method.
+        return $this->getData(
+            $this->request->getParsedBody(),
+            $name,
+            $default
+        );
     }
 
     /**
@@ -73,7 +88,11 @@ class Context implements ControllerContextInterface
      */
     public function queryParam($name = null, $default = null)
     {
-        // TODO: Implement queryParam() method.
+        return $this->getData(
+            $this->request->getQueryParams(),
+            $name,
+            $default
+        );
     }
 
     /**
@@ -90,7 +109,7 @@ class Context implements ControllerContextInterface
      */
     public function routeParam($name = null, $default = null)
     {
-        // TODO: Implement routeParam() method.
+        return $this->getData($this->route->attributes, $name, $default);
     }
 
     /**
@@ -103,7 +122,9 @@ class Context implements ControllerContextInterface
      */
     public function redirect($location, array $options = [])
     {
-        // TODO: Implement redirect() method.
+        $this->disableRendering();
+        $response = new Response(302, '', ['Location' => $location]);
+        $this->setResponse($response);
     }
 
     /**
@@ -113,7 +134,8 @@ class Context implements ControllerContextInterface
      */
     public function disableRendering()
     {
-        // TODO: Implement disableRendering() method.
+        $this->handleResponse = true;
+        return $this;
     }
 
     /**
@@ -137,7 +159,8 @@ class Context implements ControllerContextInterface
      */
     public function setResponse(ResponseInterface $response)
     {
-        // TODO: Implement setResponse() method.
+        $this->response = $response;
+        returN $this;
     }
 
     /**
@@ -159,7 +182,7 @@ class Context implements ControllerContextInterface
      */
     public function response()
     {
-        // TODO: Implement response() method.
+        return $this->response;
     }
 
     /**
@@ -169,7 +192,7 @@ class Context implements ControllerContextInterface
      */
     public function request()
     {
-        // TODO: Implement request() method.
+        return $this->request;
     }
 
     /**
@@ -179,6 +202,40 @@ class Context implements ControllerContextInterface
      */
     public function handlesResponse()
     {
-        // TODO: Implement handlesResponse() method.
+        return $this->handleResponse;
+    }
+
+    /**
+     * Checks the request method
+     *
+     * @param string $methodName
+     *
+     * @return boolean
+     */
+    public function requestIs($methodName)
+    {
+        $method = $this->request->getMethod();
+        return $method === strtoupper($methodName);
+    }
+
+    /**
+     * Gets the value(s) from provided data
+     *
+     * @param mixed       $data
+     * @param null|string $name
+     * @param null|string $default
+     *
+     * @return mixed
+     */
+    private function getData($data, $name = null, $default = null)
+    {
+        if ($name == null) return $data;
+
+        $value = $default;
+        if (is_array($data) && array_key_exists($name, $data)) {
+            $value = $data[$name];
+        }
+
+        return $value;
     }
 }

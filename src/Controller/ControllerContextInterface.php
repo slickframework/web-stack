@@ -126,4 +126,13 @@ interface ControllerContextInterface
      * @return boolean
      */
     public function handlesResponse();
+
+    /**
+     * Checks the request method
+     *
+     * @param string $methodName
+     *
+     * @return boolean
+     */
+    public function requestIs($methodName);
 }

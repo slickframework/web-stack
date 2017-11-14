@@ -56,6 +56,9 @@ trait ControllerMethods
      */
     public function set($name, $value = null)
     {
+        if (is_array($name)) {
+            return $this->setValues($name);
+        }
         $this->data[$name] = $value;
         return $this;
     }
@@ -68,5 +71,20 @@ trait ControllerMethods
     public function data()
     {
         return $this->data;
+    }
+
+    /**
+     * Adds a multiple values from an associative array
+     *
+     * @param array $data
+     *
+     * @return self|ControllerInterface
+     */
+    private function setValues(array $data)
+    {
+        foreach ($data as $key => $datum) {
+            $this->set($key, $datum);
+        }
+        return $this;
     }
 }
