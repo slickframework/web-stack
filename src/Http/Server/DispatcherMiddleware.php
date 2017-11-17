@@ -53,8 +53,7 @@ class DispatcherMiddleware implements MiddlewareInterface
         ControllerDispatchInflectorInterface $inflector,
         ControllerInvokerInterface $invoker,
         ContextCreator $contextCreator
-    )
-    {
+    ) {
         $this->inflector = $inflector;
         $this->invoker = $invoker;
         $this->contextCreator = $contextCreator;

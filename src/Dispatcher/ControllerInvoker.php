@@ -47,8 +47,7 @@ class ControllerInvoker implements ControllerInvokerInterface
     public function invoke(
         ControllerContextInterface $context,
         ControllerDispatch $dispatch
-    )
-    {
+    ) {
         /** @var ControllerInterface $controller */
         $controller = $this->createController($dispatch->controllerClass());
         $controller->runWithContext($context);
@@ -71,5 +70,4 @@ class ControllerInvoker implements ControllerInvokerInterface
         $controller = $this->container->make($controllerName->getName());
         return $controller;
     }
-
 }

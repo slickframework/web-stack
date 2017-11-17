@@ -12,7 +12,6 @@ namespace Slick\WebStack\Exception;
 use RuntimeException;
 use Slick\WebStack\Exception;
 
-
 /**
  * Missing Response Exception
  *

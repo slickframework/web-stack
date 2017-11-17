@@ -11,7 +11,6 @@ namespace Slick\WebStack;
 
 use Slick\WebStack\Controller\ControllerContextInterface;
 
-
 /**
  * Controller Interface
  *

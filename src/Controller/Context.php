@@ -13,6 +13,7 @@ use Aura\Router\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\Message\Response;
+use Slick\WebStack\Service\UriGeneratorInterface;
 
 /**
  * Controller Context
@@ -42,15 +43,22 @@ class Context implements ControllerContextInterface
     private $handleResponse = false;
 
     /**
+     * @var UriGeneratorInterface
+     */
+    private $uriGenerator;
+
+    /**
      * Creates a controller context
      *
      * @param ServerRequestInterface $request
-     * @param Route                  $route
+     * @param Route $route
+     * @param UriGeneratorInterface $uriGenerator
      */
-    public function __construct(ServerRequestInterface $request, Route $route)
+    public function __construct(ServerRequestInterface $request, Route $route, UriGeneratorInterface $uriGenerator)
     {
         $this->request = $request;
         $this->route = $route;
+        $this->uriGenerator = $uriGenerator;
     }
 
     /**
@@ -123,6 +131,7 @@ class Context implements ControllerContextInterface
     public function redirect($location, array $options = [])
     {
         $this->disableRendering();
+        $location = (string) $this->uriGenerator->generate($location, $options);
         $response = new Response(302, '', ['Location' => $location]);
         $this->setResponse($response);
     }
@@ -147,7 +156,8 @@ class Context implements ControllerContextInterface
      */
     public function useTemplate($template)
     {
-        // TODO: Implement useTemplate() method.
+        $this->request = $this->request->withAttribute('template', $template);
+        return $this;
     }
 
     /**
@@ -160,7 +170,7 @@ class Context implements ControllerContextInterface
     public function setResponse(ResponseInterface $response)
     {
         $this->response = $response;
-        returN $this;
+        return $this;
     }
 
     /**
@@ -172,7 +182,8 @@ class Context implements ControllerContextInterface
      */
     public function changeRequest(ServerRequestInterface $request)
     {
-        // TODO: Implement changeRequest() method.
+        $this->request = $request;
+        return $this;
     }
 
     /**
@@ -229,7 +240,9 @@ class Context implements ControllerContextInterface
      */
     private function getData($data, $name = null, $default = null)
     {
-        if ($name == null) return $data;
+        if ($name == null) {
+            return $data;
+        }
 
         $value = $default;
         if (is_array($data) && array_key_exists($name, $data)) {

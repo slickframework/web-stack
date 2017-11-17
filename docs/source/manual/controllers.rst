@@ -281,3 +281,46 @@ Redirect the user to another page is very simple. Check it out:
 
 `Context::redirect()` accept a route name and an optional associative array with route parameters. It also
 accepts any string representing the path or URL of the page you want your user redirected to.
+
+Setting response template
+.........................
+
+By default the template is created using the controller name and the handle method name.
+
+For example the dispatcher is dispatching the handler `MyController::view()` it will look for the template
+that is in `<templates-dir>/my-controller/view.twig`.
+
+If you want to change the template you want the late render middleware to use do the following:
+
+.. code-block:: php
+
+    use Slick\WebStack\Controller;
+
+    class MyController extends Controller
+    {
+        public function view()
+        {
+            $this->context->useTemplate('blog/posts/edit');
+        }
+    }
+
+Note that the path is within the `<templates-dir>` directory and you don't need to set the `.twig` extension.
+
+Adding request attributes
+-------------------------
+
+In some cases it is useful to add request attributes that can be used by a later or following middleware in the stack.
+For those cases you can set the server request like this:
+
+.. code-block:: php
+
+    use Slick\WebStack\Controller;
+
+    class MyController extends Controller
+    {
+        public function action()
+        {
+            $request = $this->context->request()->withAttribute('clearCache', true);
+            $this->context->changeRequest($request);
+        }
+    }

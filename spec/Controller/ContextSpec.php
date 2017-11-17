@@ -12,9 +12,11 @@ namespace spec\Slick\WebStack\Controller;
 use Aura\Router\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slick\Http\Message\Uri;
 use Slick\WebStack\Controller\Context;
 use PhpSpec\ObjectBehavior;
 use Slick\WebStack\Controller\ControllerContextInterface;
+use Slick\WebStack\Service\UriGeneratorInterface;
 
 /**
  * ContextSpec specs
@@ -24,10 +26,10 @@ use Slick\WebStack\Controller\ControllerContextInterface;
 class ContextSpec extends ObjectBehavior
 {
 
-    function let(ServerRequestInterface $request)
+    function let(ServerRequestInterface $request, UriGeneratorInterface $uriGenerator)
     {
         $route = (new Route())->attributes(['foo' =>'bar', 'bar' => 'baz']);
-        $this->beConstructedWith($request, $route);
+        $this->beConstructedWith($request, $route, $uriGenerator);
     }
 
     function its_a_controller_context()
@@ -100,13 +102,32 @@ class ContextSpec extends ObjectBehavior
         $this->response()->shouldBe($response);
     }
 
-    function it_can_set_a_redirect_response()
+    function it_can_set_a_redirect_response(UriGeneratorInterface $uriGenerator)
     {
-        $this->redirect('/some/page');
+        $uriGenerator->generate('/some/page', ['foo' => 'bar'])
+            ->shouldBeCalled()
+            ->willReturn(new Uri('http://example.com/some/page?foo=bar'));
+
+        $this->redirect('/some/page', ['foo' => 'bar']);
         $response = $this->response();
         $response->shouldBeAnInstanceOf(ResponseInterface::class);
         $response->getStatusCode()->shouldBe(302);
-        $response->getHeaderLine('Location')->shouldBe('/some/page');
+        $response->getHeaderLine('Location')->shouldBe('http://example.com/some/page?foo=bar');
         $this->handlesResponse()->shouldBe(true);
+    }
+
+    function it_can_set_the_template_to_be_used(ServerRequestInterface $request)
+    {
+        $request->withAttribute('template', 'some/path')
+            ->shouldBeCalled()
+            ->willReturn($request);
+        $this->useTemplate('some/path')->shouldBe($this->getWrappedObject());
+    }
+
+    function it_can_change_the_request(ServerRequestInterface $otherRequest, ServerRequestInterface $request)
+    {
+        $this->changeRequest($otherRequest)->shouldBe($this->getWrappedObject());
+        $this->request()->shouldBe($otherRequest);
+        $this->request()->shouldNotBe($request);
     }
 }

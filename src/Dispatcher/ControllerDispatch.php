@@ -114,8 +114,7 @@ class ControllerDispatch
      */
     private function checkClassIsAController($controllerClassName)
     {
-        if (! is_subclass_of($controllerClassName, ControllerInterface::class))
-        {
+        if (! is_subclass_of($controllerClassName, ControllerInterface::class)) {
             throw new BadControllerClassException(
                 sprintf(
                     "The provided class cannot be used as a controller. ".
