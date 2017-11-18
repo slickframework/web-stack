@@ -30,7 +30,7 @@
     "slick/di": "^2.2",
     "slick/http": "^2.0",
     "slick/configuration": "^1.2",
-    "symfony/yaml": "^3.2",
+    "symfony/yaml": "3.4.x-dev",
     "aura/router": "^3.0",
     "slick/template": "^1.2"
   },
