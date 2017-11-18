@@ -218,8 +218,8 @@ attribute. For example:
     /wild/foo/bar : ['card' => ['foo', 'bar']]
     /wild/foo/bar/baz : ['card' => ['foo', 'bar', 'baz']]
 
-Wildcard as arguments
-~~~~~~~~~~~~~~~~~~~~~
+Wildcards as arguments
+~~~~~~~~~~~~~~~~~~~~~~
 
 There is a special case that you can use the wildcard entry to pass arguments to the calling controller handler method:
 
