@@ -12,12 +12,12 @@ All Notable changes to `Slick/WebStack` will be documented in this file.
 
 ### Changed
 - Context changed some method names to be more verbose
-    - ``ControllerContextInterface::getPost()`` changed to ``ControllerContextInterface::postParam()``
-    - ``ControllerContextInterface::getQuery()`` changed to ``ControllerContextInterface::queryParam()``
-    - ``ControllerContextInterface::setView()`` changed to ``ControllerContextInterface::useTemplate()``
-    - ``ControllerContextInterface::getRequest()`` changed to ``ControllerContextInterface::request()``
-    - ``ControllerContextInterface::getRequest()`` changed to ``ControllerContextInterface::request()``
-    - ``ControllerContextInterface::getResponse()`` changed to ``ControllerContextInterface::response()``
+- ``ControllerContextInterface::getPost()`` changed to ``ControllerContextInterface::postParam()``
+- ``ControllerContextInterface::getQuery()`` changed to ``ControllerContextInterface::queryParam()``
+- ``ControllerContextInterface::setView()`` changed to ``ControllerContextInterface::useTemplate()``
+- ``ControllerContextInterface::getRequest()`` changed to ``ControllerContextInterface::request()``
+- ``ControllerContextInterface::getRequest()`` changed to ``ControllerContextInterface::request()``
+- ``ControllerContextInterface::getResponse()`` changed to ``ControllerContextInterface::response()``
     
 ### Removed
 - ``ControllerContextInterface::register()`` was removed and the context is instantiated with a ``ServerReqeustInterface``

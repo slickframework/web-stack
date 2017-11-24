@@ -72,7 +72,7 @@ class RouteFactory implements FactoryInterface
     {
         $methods = get_class_methods(Route::class);
         $methods = array_diff($methods, ["allows", "path"]);
-        foreach($data as $method => $args) {
+        foreach ($data as $method => $args) {
             if (in_array($method, $methods)) {
                 $route->$method($args);
             }

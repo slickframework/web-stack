@@ -78,5 +78,4 @@ class RouterMiddleware implements MiddlewareInterface
         }
         return $response;
     }
-
 }

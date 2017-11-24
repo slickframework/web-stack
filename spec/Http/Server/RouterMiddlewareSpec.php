@@ -32,7 +32,6 @@ class RouterMiddlewareSpec extends ObjectBehavior
         ServerRequestInterface $request,
         RequestHandlerInterface $handler,
         ResponseInterface $response,
-        RouterContainer $routerContainer,
         Matcher $matcher
     )
     {
