@@ -24,7 +24,7 @@ class FlashMessagesSpec extends ObjectBehavior
 {
     function let(SessionDriverInterface $sessionDriver)
     {
-        $sessionDriver->get('_messages_')->shouldBeCalled()->willReturn([]);
+        $sessionDriver->get('_messages_', [])->shouldBeCalled()->willReturn([]);
         $sessionDriver->set(Argument::type('string'), Argument::any())->willReturn($sessionDriver);
         $sessionDriver->erase(Argument::type('string'))->willReturn($sessionDriver);
 
