@@ -13,7 +13,6 @@ namespace Slick\WebStack;
  * Slick\WebStack generic exception
  *
  * @package Slick\WebStack
- * @author  Filipe Silva <filipe.silva@sata.pt>
  */
 interface Exception
 {

@@ -9,31 +9,39 @@
 
 namespace Slick\WebStack\Controller;
 
-use Interop\Container\ContainerInterface as InteropContainer;
+use Aura\Router\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Slick\Di\ContainerInjectionInterface;
+use Slick\Http\Message\Response;
 use Slick\WebStack\Service\UriGeneratorInterface;
 
 /**
- * Context
+ * Controller Context
  *
  * @package Slick\WebStack\Controller
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
-class Context implements
-    ControllerContextInterface,
-    ContainerInjectionInterface
+class Context implements ControllerContextInterface
 {
+    /**
+     * @var ServerRequestInterface
+     */
+    private $request;
+
     /**
      * @var ResponseInterface
      */
     private $response;
 
     /**
-     * @var ServerRequestInterface
+     * @var Route
      */
-    private $request;
+    private $route;
+
+    /**
+     * @var bool
+     */
+    private $handleResponse = false;
+
     /**
      * @var UriGeneratorInterface
      */
@@ -42,48 +50,15 @@ class Context implements
     /**
      * Creates a controller context
      *
+     * @param ServerRequestInterface $request
+     * @param Route $route
      * @param UriGeneratorInterface $uriGenerator
      */
-    public function __construct(UriGeneratorInterface $uriGenerator)
-    {
-        $this->uriGenerator = $uriGenerator;
-    }
-
-    /**
-     * Instantiates a new instance of this class.
-     *
-     * This is a factory method that returns a new instance of this class. The
-     * factory should pass any needed dependencies into the constructor of this
-     * class, but not the container itself. Every call to this method must return
-     * a new instance of this class; that is, it may not implement a singleton.
-     *
-     * @param InteropContainer $container
-     *   The service container this instance should use.
-     *
-     * @return Context
-     */
-    public static function create(InteropContainer $container)
-    {
-        return new Context($container->get(UriGeneratorInterface::class));
-    }
-
-    /**
-     * Registers the HTTP request and response to this context
-     *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     *
-     * @return Context|ControllerContextInterface
-     */
-    public function register(
-        ServerRequestInterface $request,
-        ResponseInterface $response
-    )
+    public function __construct(ServerRequestInterface $request, Route $route, UriGeneratorInterface $uriGenerator)
     {
         $this->request = $request;
-        $this->setResponse($response);
-        $this->uriGenerator->setRequest($request);
-        return $this;
+        $this->route = $route;
+        $this->uriGenerator = $uriGenerator;
     }
 
     /**
@@ -94,14 +69,17 @@ class Context implements
      * be returned. In this case the default value is ignored.
      *
      * @param null|string $name
-     * @param mixed       $default
+     * @param mixed $default
      *
      * @return array|string
      */
-    public function getPost($name = null, $default = null)
+    public function postParam($name = null, $default = null)
     {
-        $parameters = $this->request->getServerParams();
-        return $this->getDataFrom($parameters, $name, $default);
+        return $this->getData(
+            $this->request->getParsedBody(),
+            $name,
+            $default
+        );
     }
 
     /**
@@ -112,59 +90,73 @@ class Context implements
      * be returned. In this case the default value is ignored.
      *
      * @param null|string $name
-     * @param mixed       $default
+     * @param mixed $default
      *
      * @return array|string
      */
-    public function getQuery($name = null, $default = null)
+    public function queryParam($name = null, $default = null)
     {
-        $parameters = $this->request->getQueryParams();
-        return $this->getDataFrom($parameters, $name, $default);
+        return $this->getData(
+            $this->request->getQueryParams(),
+            $name,
+            $default
+        );
+    }
+
+    /**
+     * Gets the route parameter with provided name
+     *
+     * If its not submitted the default value will be returned.
+     * If no arguments are passed the full URL query parameters from request will
+     * be returned. In this case the default value is ignored.
+     *
+     * @param null|string $name
+     * @param mixed $default
+     *
+     * @return array|string
+     */
+    public function routeParam($name = null, $default = null)
+    {
+        return $this->getData($this->route->attributes, $name, $default);
     }
 
     /**
      * Sets a redirection header in the HTTP response
      *
      * @param string $location Location name, path or identifier
-     * @param array  $options  Filter options
+     * @param array $options Filter options
      *
      * @return void
      */
     public function redirect($location, array $options = [])
     {
-        $location = $this->uriGenerator
-            ->generate($location, $options)
-            ->__toString();
-
-        $this->setResponse(
-            $this->response
-                ->withStatus(302)
-                ->withHeader('location', $location)
-        );
+        $this->disableRendering();
+        $location = (string) $this->uriGenerator->generate($location, $options);
+        $response = new Response(302, '', ['Location' => $location]);
+        $this->setResponse($response);
     }
 
     /**
      * Disables response rendering
      *
-     * @return Context|ControllerContextInterface
+     * @return self|ControllerContextInterface
      */
     public function disableRendering()
     {
-        $this->request = $this->request->withAttribute('rendering', false);
+        $this->handleResponse = true;
         return $this;
     }
 
     /**
-     * Sets the view that will be rendered
+     * Sets the view template to use by render process
      *
-     * @param string $viewPath
+     * @param string $template
      *
-     * @return Context|ControllerContextInterface
+     * @return self|ControllerContextInterface
      */
-    public function setView($viewPath)
+    public function useTemplate($template)
     {
-        $this->request = $this->request
-            ->withAttribute('view', $viewPath);
+        $this->request = $this->request->withAttribute('template', $template);
         return $this;
     }
 
@@ -173,7 +165,7 @@ class Context implements
      *
      * @param ResponseInterface $response
      *
-     * @return Context|ControllerContextInterface
+     * @return self|ControllerContextInterface
      */
     public function setResponse(ResponseInterface $response)
     {
@@ -182,11 +174,24 @@ class Context implements
     }
 
     /**
+     * Sets a new or updated server request
+     *
+     * @param ServerRequestInterface $request
+     *
+     * @return self|ControllerContextInterface
+     */
+    public function changeRequest(ServerRequestInterface $request)
+    {
+        $this->request = $request;
+        return $this;
+    }
+
+    /**
      * Get current HTTP response
      *
      * @return ResponseInterface
      */
-    public function getResponse()
+    public function response()
     {
         return $this->response;
     }
@@ -196,34 +201,54 @@ class Context implements
      *
      * @return ServerRequestInterface
      */
-    public function getRequest()
+    public function request()
     {
         return $this->request;
     }
 
     /**
-     * Gets the parameters with provided name from parameters
+     * True when it handles the response
      *
-     * @param array       $parameters
-     * @param string|null $name
-     * @param mixed       $default
-     *
-     * @return array|string|mixed
+     * @return boolean
      */
-    private function getDataFrom(
-        array $parameters,
-        $name = null,
-        $default = null
-    ) {
-        if ($name === null) {
-            return $parameters;
+    public function handlesResponse()
+    {
+        return $this->handleResponse;
+    }
+
+    /**
+     * Checks the request method
+     *
+     * @param string $methodName
+     *
+     * @return boolean
+     */
+    public function requestIs($methodName)
+    {
+        $method = $this->request->getMethod();
+        return $method === strtoupper($methodName);
+    }
+
+    /**
+     * Gets the value(s) from provided data
+     *
+     * @param mixed       $data
+     * @param null|string $name
+     * @param null|string $default
+     *
+     * @return mixed
+     */
+    private function getData($data, $name = null, $default = null)
+    {
+        if ($name == null) {
+            return $data;
         }
 
-        $value = array_key_exists($name, $parameters)
-            ? $parameters[$name]
-            : $default;
+        $value = $default;
+        if (is_array($data) && array_key_exists($name, $data)) {
+            $value = $data[$name];
+        }
 
         return $value;
     }
-
 }

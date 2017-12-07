@@ -17,10 +17,8 @@ use Slick\WebStack\Service\UriGenerator\LocationTransformerInterface;
  * Abstract Location Transformer
  *
  * @package Slick\WebStack\Service\UriGenerator\Transformer
- * @author  Filipe Silva <filipe.silva@sata.pt>
  */
-abstract class AbstractLocationTransformer implements
-    LocationTransformerInterface
+abstract class AbstractLocationTransformer implements LocationTransformerInterface
 {
 
     /**
@@ -42,7 +40,7 @@ abstract class AbstractLocationTransformer implements
      *
      * @param ServerRequestInterface $request
      *
-     * @return BasePathTransformer|LocationTransformerInterface
+     * @return LocationTransformerInterface
      */
     public function setRequest(ServerRequestInterface $request)
     {
@@ -93,22 +91,17 @@ abstract class AbstractLocationTransformer implements
         if (!$this->options['reuseHostName']) {
             return $uri;
         }
-
         $params = $this->request->getServerParams();
-
         $hasPort = !in_array($params['SERVER_PORT'], ['80', '443']);
         if ($hasPort) {
             $uri = $uri->withPort($params['SERVER_PORT']);
         }
-
         $isSecure = array_key_exists('HTTPS', $params) &&
             $params['HTTPS'] != strtolower('off');
         $scheme =  $isSecure ? 'https' : 'http';
-
         /** @var UriInterface $uri */
         $uri = $uri->withHost($params['SERVER_NAME']);
         $uri = $uri->withScheme($scheme);
-
         return $uri;
     }
 }

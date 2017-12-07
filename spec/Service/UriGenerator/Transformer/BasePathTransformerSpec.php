@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file is part of slick/web_stack package
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\Slick\WebStack\Service\UriGenerator\Transformer;
 
 use PhpSpec\Exception\Example\FailureException;
@@ -11,12 +18,9 @@ use Slick\WebStack\Service\UriGenerator\Transformer\BasePathTransformer;
 use PhpSpec\ObjectBehavior;
 
 /**
- * BasePathTransformerSpec
+ * BasePathTransformerSpec specs
  *
  * @package spec\Slick\WebStack\Service\UriGenerator\Transformer
- * @author  Filipe Silva <filipe.silva@sata.pt>
- *
- * @method boolean shouldBeAnUriWithPath()
  */
 class BasePathTransformerSpec extends ObjectBehavior
 {
@@ -47,7 +51,6 @@ class BasePathTransformerSpec extends ObjectBehavior
     )
     {
         $this->prepareRequest($request);
-
         $this->transform('controller/action')
             ->shouldBeAnUriWithPath('/base/controller/action');
     }
@@ -66,7 +69,6 @@ class BasePathTransformerSpec extends ObjectBehavior
     )
     {
         $this->prepareRequest($request);
-
         $this->transform('controller/action', ['reuseHostName' => 1])
             ->shouldBeAnUriWithPath(
                 'https://localhost:12541/base/controller/action'
@@ -78,7 +80,6 @@ class BasePathTransformerSpec extends ObjectBehavior
     )
     {
         $this->prepareRequest($request);
-
         $this->transform('controller/action', [
             'reuseParams' => 1,
             'query' => ['foo' => 'bar']
@@ -122,7 +123,6 @@ class BasePathTransformerSpec extends ObjectBehavior
                         "Expected {$class} instance, but got '{$type}'"
                     );
                 }
-
                 if ($uri->__toString() !== $path) {
                     throw new FailureException(
                         "Expected URI with path '{$path}', but got '{$uri}'"

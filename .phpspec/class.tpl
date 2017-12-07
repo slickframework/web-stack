@@ -11,7 +11,6 @@
  * %name%
  *
  * @package %namespace%
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
 class %name%
 {

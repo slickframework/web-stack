@@ -10,19 +10,16 @@
 namespace Slick\WebStack\Service\UriGenerator\Transformer;
 
 use Psr\Http\Message\UriInterface;
-use Slick\Http\Uri;
 use Slick\WebStack\Service\UriGenerator\LocationTransformerInterface;
 
 /**
- * Base Path Transformer
+ * BasePathTransformer
  *
  * @package Slick\WebStack\Service\UriGenerator\Transformer
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
 class BasePathTransformer extends AbstractLocationTransformer implements
     LocationTransformerInterface
 {
-
     /**
      * Tries to transform the provided location data into a server URI
      *
@@ -37,9 +34,8 @@ class BasePathTransformer extends AbstractLocationTransformer implements
         if (!$this->request) {
             return null;
         }
-
         $path = str_replace('//', '/', $this->getBasePath()."/$location");
-        $uri = (new Uri())->withPath($path);
+        $uri = (new CustomUri())->withPath($path);
         $uri = $this->updateOptions($uri);
         return $uri;
     }
@@ -54,5 +50,4 @@ class BasePathTransformer extends AbstractLocationTransformer implements
         $name = $this->request->getServerParams()['SCRIPT_NAME'];
         return preg_replace('/(\w+\.php)/i', '', $name);
     }
-
 }

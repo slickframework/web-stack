@@ -9,16 +9,15 @@
 
 namespace Slick\WebStack\Exception;
 
-use RuntimeException;
+use InvalidArgumentException;
 use Slick\WebStack\Exception;
 
 /**
  * Routes File Parser Exception
  *
  * @package Slick\WebStack\Exception
- * @author  Filipe Silva <filipe.silva@sata.pt>
  */
-class RoutesFileParserException extends RuntimeException implements Exception
+class RoutesFileParserException extends InvalidArgumentException implements Exception
 {
 
 }

@@ -1,17 +1,13 @@
 language: php
-sudo: required
-services:
-  - docker
+#sudo: required
+#services:
+#  - docker
 env:
   COMPOSE_VERSION: 1.11.1
 php:
   - 5.6
   - 7.0
   - 7.1
-  - hhvm
-matrix:
-  allow_failures:
-    - php: hhvm
 
 before_install:
  - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
@@ -24,9 +20,7 @@ before_script:
 
 script:
   - vendor/bin/phpspec run --format=dot
-  - docker-compose up -d
-  - vendor/bin/behat -f progress
-  - docker-compose stop
+#  - docker-compose up -d
+#  - vendor/bin/behat -f progress
+#  - docker-compose stop
 
-after_script:
-  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi

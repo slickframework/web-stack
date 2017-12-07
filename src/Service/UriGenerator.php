@@ -15,10 +15,9 @@ use Slick\WebStack\Service\UriGenerator\LocationTransformerInterface;
 use Slick\WebStack\Service\UriGenerator\UriDecoratorInterface;
 
 /**
- * Uri Generator
+ * UriGenerator
  *
  * @package Slick\WebStack\Service
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
 class UriGenerator implements UriGeneratorInterface
 {
@@ -44,7 +43,7 @@ class UriGenerator implements UriGeneratorInterface
      * @param string $location Location name, path or identifier
      * @param array $options Filter options
      *
-     * @return UriInterface|null
+     * @return UriInterface|string|null
      */
     public function generate($location, array $options = [])
     {
@@ -108,7 +107,6 @@ class UriGenerator implements UriGeneratorInterface
         foreach ($this->transformers as $transformer) {
             $this->setContext($transformer);
             $object = $transformer->transform($location, $options);
-
             if ($object instanceof UriInterface) {
                 $uri = $object;
                 break;

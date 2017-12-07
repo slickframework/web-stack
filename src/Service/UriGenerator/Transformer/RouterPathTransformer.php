@@ -12,19 +12,15 @@ namespace Slick\WebStack\Service\UriGenerator\Transformer;
 use Aura\Router\Exception\RouteNotFound;
 use Aura\Router\RouterContainer;
 use Psr\Http\Message\UriInterface;
-use Slick\Http\Uri;
 use Slick\WebStack\Service\UriGenerator\LocationTransformerInterface;
 
 /**
  * RouterPathTransformer
  *
  * @package Slick\WebStack\Service\UriGenerator\Transformer
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
-class RouterPathTransformer extends AbstractLocationTransformer implements
-    LocationTransformerInterface
+class RouterPathTransformer extends AbstractLocationTransformer implements LocationTransformerInterface
 {
-
     /**
      * @var RouterContainer
      */
@@ -57,8 +53,7 @@ class RouterPathTransformer extends AbstractLocationTransformer implements
         } catch (RouteNotFound $caught) {
             return null;
         }
-
-        $uri = (new Uri())->withPath($path);
+        $uri = (new CustomUri())->withPath($path);
         $uri = $this->updateOptions($uri);
         return $uri;
     }

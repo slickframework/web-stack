@@ -1,18 +1,24 @@
 <?php
 
+/**
+ * This file is part of slick/web_stack package
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\Slick\WebStack\Service;
 
-use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\ServerRequestInterface;
-use Slick\Http\Uri;
+use Slick\Http\Message\Uri;
 use Slick\WebStack\Service\UriGenerator;
+use PhpSpec\ObjectBehavior;
 use Slick\WebStack\Service\UriGeneratorInterface;
 
 /**
- * UriGeneratorSpec
+ * UriGeneratorSpec specs
  *
  * @package spec\Slick\WebStack\Service
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
 class UriGeneratorSpec extends ObjectBehavior
 {
@@ -48,17 +54,14 @@ class UriGeneratorSpec extends ObjectBehavior
     {
         $location = 'test';
         $options = ['foo' => 'bar'];
-        $uri = new Uri();
+        $uri = new Uri('http://example.com');
         $transformerActive->transform($location, $options)
             ->shouldBeCalled()
             ->willReturn($uri);
-
         $this->addTransformer($transformerInactive)
             ->addTransformer($transformerActive);
         $this->addDecorator($decorator);
-
         $this->generate($location, $options)->shouldBe($uri);
-
         $transformerInactive->transform($location, $options)->shouldHaveBeenCalled();
         $decorator->decorate($uri)->shouldHaveBeenCalled();
     }
@@ -70,12 +73,11 @@ class UriGeneratorSpec extends ObjectBehavior
     {
         $location = 'test';
         $options = ['foo' => 'bar'];
-        $uri = new Uri();
+        $uri = new Uri('http://example.com');
         $transformer->transform($location, $options)
             ->shouldBeCalled()
             ->willReturn($uri);
         $transformer->setRequest($request)->shouldBeCalled();
-
         $this->setRequest($request)->shouldBe($this->getWrappedObject());
         $this->addTransformer($transformer);
         $this->generate($location, $options);

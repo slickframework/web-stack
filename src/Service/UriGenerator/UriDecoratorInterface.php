@@ -15,7 +15,6 @@ use Psr\Http\Message\UriInterface;
  * URI Decorator Interface
  *
  * @package Slick\WebStack\Service\UriGenerator
- * @author  Filipe Silva <filipe.silva@sata.pt>
  */
 interface UriDecoratorInterface
 {

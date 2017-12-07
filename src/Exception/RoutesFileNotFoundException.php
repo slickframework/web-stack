@@ -16,10 +16,8 @@ use Slick\WebStack\Exception;
  * Routes File Not Found Exception
  *
  * @package Slick\WebStack\Exception
- * @author  Filipe Silva <filipe.silva@sata.pt>
  */
-class RoutesFileNotFoundException extends InvalidArgumentException implements
-    Exception
+class RoutesFileNotFoundException extends InvalidArgumentException implements Exception
 {
 
 }
