@@ -1,5 +1,6 @@
-{% extends 'default-layout.twig' %}
+{% extends 'default-template.twig' %}
 
 {% block main_content %}
     <p>Argument was: {{ arg }}</p>
+    <a href="{{ url('home') }}">Go back</a>
 {% endblock %}

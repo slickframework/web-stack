@@ -137,9 +137,9 @@ class ControllerDispatch
         if (! $this->controllerClass->hasMethod($method)) {
             throw new MissingControllerMethodException(
                 sprintf(
-                    "Method '%s' not found in controller %s.",
-                    $method,
-                    $this->controllerClass->getShortName()
+                    "Method %s::%s() is not defined in controller.",
+                    $this->controllerClass->getShortName(),
+                    $method
                 )
             );
         }

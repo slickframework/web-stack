@@ -68,7 +68,7 @@ class ControllerDispatchInflector implements ControllerDispatchInflectorInterfac
                 "{$arguments['namespace']}"."\\"."{$arguments['controller']}",
                 "\\"
             ),
-            'method' => $this->filterName($arguments['action']),
+            'method' => lcfirst($this->filterName($arguments['action'])),
             'arguments' => $arguments['args']
         ];
         $reflection = new \ReflectionClass(ControllerDispatch::class);

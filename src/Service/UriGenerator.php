@@ -43,7 +43,7 @@ class UriGenerator implements UriGeneratorInterface
      * @param string $location Location name, path or identifier
      * @param array $options Filter options
      *
-     * @return UriInterface|null
+     * @return UriInterface|string|null
      */
     public function generate($location, array $options = [])
     {

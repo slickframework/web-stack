@@ -5,8 +5,15 @@ services:
   php:
     build: docker/php
     ports:
-      - 8880:80
+      - 80
     volumes:
       - ./:/var/www/app
     environment:
       - USE_XDEBUG=yes
+
+  docs:
+    image: nginx:latest
+    ports:
+      - 80
+    volumes:
+      - ./docs/build:/usr/share/nginx/html:ro

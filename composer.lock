@@ -626,12 +626,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/http.git",
-                "reference": "267aee1b3b80db2774188755d8c252d87fe82312"
+                "reference": "5dcc1a13227a98de40d6f107d70b50e0cecdfca5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/http/zipball/267aee1b3b80db2774188755d8c252d87fe82312",
-                "reference": "267aee1b3b80db2774188755d8c252d87fe82312",
+                "url": "https://api.github.com/repos/slickframework/http/zipball/5dcc1a13227a98de40d6f107d70b50e0cecdfca5",
+                "reference": "5dcc1a13227a98de40d6f107d70b50e0cecdfca5",
                 "shasum": ""
             },
             "require": {
@@ -674,7 +674,7 @@
                 "request",
                 "slick"
             ],
-            "time": "2017-11-05T00:06:34+00:00"
+            "time": "2017-12-06T15:34:31+00:00"
         },
         {
             "name": "slick/template",

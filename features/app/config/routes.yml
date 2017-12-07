@@ -1,6 +1,6 @@
 routes:
     home:
-        allows: [POST, GET]
+        method: GET
         path: /
         defaults:
             action: home

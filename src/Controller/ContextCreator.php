@@ -11,6 +11,7 @@ namespace Slick\WebStack\Controller;
 
 use Aura\Router\Route;
 use Psr\Http\Message\ServerRequestInterface;
+use Slick\WebStack\Service\UriGeneratorInterface;
 
 /**
  * Context Creator
@@ -19,6 +20,20 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class ContextCreator
 {
+    /**
+     * @var UriGeneratorInterface
+     */
+    private $uriGenerator;
+
+    /**
+     * Creates a ContextCreator
+     *
+     * @param UriGeneratorInterface $uriGenerator
+     */
+    public function __construct(UriGeneratorInterface $uriGenerator)
+    {
+        $this->uriGenerator = $uriGenerator;
+    }
 
     /**
      * Creates a container context for provided request and route
@@ -30,6 +45,7 @@ class ContextCreator
      */
     public function create(ServerRequestInterface $request, Route $route)
     {
-        return new Context($request, $route);
+        $this->uriGenerator->setRequest($request);
+        return new Context($request, $route, $this->uriGenerator);
     }
 }

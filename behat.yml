@@ -4,12 +4,11 @@ default:
     default:
       contexts:
         - FeatureContext
-        - CommandLine\CommandLineContext
       paths:
         - %paths.base%/features
   extensions:
     Behat\MinkExtension:
-      base_url: 'http://0.0.0.0:8880'
+      base_url: 'http://php'
       sessions:
         default:
           goutte: ~
