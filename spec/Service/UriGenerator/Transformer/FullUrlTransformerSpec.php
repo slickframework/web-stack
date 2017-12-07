@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file is part of slick/web_stack package
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\Slick\WebStack\Service\UriGenerator\Transformer;
 
 use PhpSpec\Exception\Example\FailureException;
@@ -7,8 +14,12 @@ use Psr\Http\Message\UriInterface;
 use Slick\WebStack\Service\UriGenerator\LocationTransformerInterface;
 use Slick\WebStack\Service\UriGenerator\Transformer\FullUrlTransformer;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
+/**
+ * FullUrlTransformerSpec specs
+ *
+ * @package spec\Slick\WebStack\Service\UriGenerator\Transformer
+ */
 class FullUrlTransformerSpec extends ObjectBehavior
 {
     function it_is_initializable()
@@ -39,7 +50,6 @@ class FullUrlTransformerSpec extends ObjectBehavior
                         "Expected {$class} instance, but got '{$type}'"
                     );
                 }
-
                 if ($uri->__toString() !== $path) {
                     throw new FailureException(
                         "Expected URI with path '{$path}', but got '{$uri}'"

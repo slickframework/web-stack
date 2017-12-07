@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file is part of slick/web_stack package
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\Slick\WebStack\Service\UriGenerator\Transformer;
 
 use Aura\Router\Exception\RouteNotFound;
@@ -15,10 +22,9 @@ use Slick\WebStack\Service\UriGenerator\Transformer\RouterPathTransformer;
 use PhpSpec\ObjectBehavior;
 
 /**
- * RouterPathTransformerSpec
+ * RouterPathTransformerSpec specs
  *
  * @package spec\Slick\WebStack\Service\UriGenerator\Transformer
- * @author  Filipe Silva <filipe.silva@sata.pt>
  */
 class RouterPathTransformerSpec extends ObjectBehavior
 {

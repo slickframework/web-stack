@@ -18,7 +18,6 @@ use Slick\WebStack\Service\UriGenerator\UriDecoratorInterface;
  * URI Generator Interface
  *
  * @package Slick\WebStack\Service
- * @author  Filipe Silva <filipe.silva@sata.pt>
  */
 interface UriGeneratorInterface
 {
@@ -29,7 +28,7 @@ interface UriGeneratorInterface
      * @param string $location Location name, path or identifier
      * @param array  $options  Filter options
      *
-     * @return UriInterface|null
+     * @return UriInterface|string|null
      */
     public function generate($location, array $options = []);
 

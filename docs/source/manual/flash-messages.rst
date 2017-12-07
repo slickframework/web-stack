@@ -11,17 +11,15 @@ Add it to your controller
 -------------------------
 
 In order to use the `FlashMessages` service you will need to inject it to your
-controller. You can achieve this by implementing the `ContainerInjectionInterface`
-from `slick/di` package.
+controller. You can achieve this by specifying the dependency in your controller
+constructor.
 
 .. code-block:: php
 
-    use Interop\Container\ContainerInterface as InteropContainer;
-    use Slick\Di\ContainerInjectionInterface;
     use Slick\WebStack\Controller;
     use Slick\WebStack\Service\FlashMessages;
 
-    class MyController extends Controller implements ContainerInjectionInterface
+    class MyController extends Controller
     {
 
         private $flashMessages;
@@ -29,13 +27,6 @@ from `slick/di` package.
         public function __construct(FlashMessages $flashMessages)
         {
             $this->flashMessages = $flashMessages;
-        }
-
-        public static function create(InteropContainer $container)
-        {
-            return new MyController(
-                $container->get(FlashMessages::class)
-            );
         }
     }
 

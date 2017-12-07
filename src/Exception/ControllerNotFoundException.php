@@ -16,10 +16,8 @@ use Slick\WebStack\Exception;
  * Controller Not Found Exception
  *
  * @package Slick\WebStack\Exception
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
-class ControllerNotFoundException extends InvalidArgumentException implements
-    Exception
+class ControllerNotFoundException extends InvalidArgumentException implements Exception
 {
 
 }

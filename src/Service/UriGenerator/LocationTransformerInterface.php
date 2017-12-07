@@ -16,7 +16,6 @@ use Psr\Http\Message\UriInterface;
  * Location Transformer Interface
  *
  * @package Slick\WebStack\Service\UriGenerator
- * @author  Filipe Silva <filipe.silva@sata.pt>
  */
 interface LocationTransformerInterface
 {

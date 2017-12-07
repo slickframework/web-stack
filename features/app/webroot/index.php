@@ -1,22 +1,32 @@
 <?php
 
 /**
- * Features application front controller
- *
- * This file is part of Features\App
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Application startup script
  */
 
-use Slick\WebStack\Application;
+namespace Test\App;
 
-define('ROOT_PATH', dirname(dirname(dirname(__DIR__))));
-require ROOT_PATH . '/vendor/autoload.php';
+use Slick\Di\ContainerBuilder;
+use Slick\Http\Message\Response;
+use Slick\Http\Message\Server\Request;
+use Slick\Http\Message\Uri;
+use Slick\Http\Server\MiddlewareStack;
 
-$application = new Application(
-    ROOT_PATH . '/features/app/src/Service/Definition'
-);
-$response = $application->run();
+require dirname(dirname(dirname(__DIR__))).'/vendor/autoload.php';
 
-$response->send();
+/** Application root directory */
+define('APP_ROOT', dirname(__DIR__));
+
+$container = (new ContainerBuilder(APP_ROOT.'/config/services'))->getContainer();
+
+/** @var Response $response */
+$response = $container->get(MiddlewareStack::class)
+    ->process(new Request());
+
+
+foreach ($response->getHeaders() as $name => $value) {
+    $line = implode(', ', $value);
+    header("{$name}: $line");
+}
+
+echo $response->getBody();

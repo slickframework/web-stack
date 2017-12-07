@@ -10,18 +10,16 @@
 namespace Slick\WebStack\Service\UriGenerator\Transformer;
 
 use Psr\Http\Message\UriInterface;
-use Slick\WebStack\Http\UrlRewriter\Uri;
 use Slick\WebStack\Service\UriGenerator\LocationTransformerInterface;
 
 /**
  * Full URL Transformer
  *
  * @package Slick\WebStack\Service\UriGenerator\Transformer
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
-class FullUrlTransformer extends AbstractLocationTransformer implements
-    LocationTransformerInterface
+class FullUrlTransformer extends AbstractLocationTransformer implements LocationTransformerInterface
 {
+
     /**
      * Tries to transform the provided location data into a server URI
      *
@@ -34,7 +32,7 @@ class FullUrlTransformer extends AbstractLocationTransformer implements
     {
         $regexp = '/((https?\:|\/\/).*)/i';
         if (preg_match($regexp, $location)) {
-            return new Uri($location);
+            return new CustomUri($location);
         }
         return null;
     }

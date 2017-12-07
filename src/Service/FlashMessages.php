@@ -9,14 +9,12 @@
 
 namespace Slick\WebStack\Service;
 
-use Slick\Filter\StaticFilter;
-use Slick\Http\SessionDriverInterface;
+use Slick\Http\Session\SessionDriverInterface;
 
 /**
  * FlashMessages
  *
  * @package Slick\WebStack\Service
- * @author  Filipe Silva <silvam.filipe@gmail.com>
  */
 class FlashMessages
 {
@@ -24,6 +22,14 @@ class FlashMessages
      * @var SessionDriverInterface
      */
     private $sessionDriver;
+
+    /**
+     * @var string[]
+     */
+    private $types = [
+        self::TYPE_ERROR, self::TYPE_INFO, self::TYPE_SUCCESS,
+        self::TYPE_WARNING
+    ];
 
     /**#@+
      * @const string TYPE for message type constants
@@ -47,6 +53,7 @@ class FlashMessages
     public function __construct(SessionDriverInterface $sessionDriver)
     {
         $this->sessionDriver = $sessionDriver;
+        self::$messages = $sessionDriver->get('_messages_', []);
     }
 
     /**
@@ -59,27 +66,11 @@ class FlashMessages
      */
     public function set($type, $message)
     {
-        $types = [
-            self::TYPE_ERROR, self::TYPE_INFO, self::TYPE_SUCCESS,
-            self::TYPE_WARNING
-        ];
-        if (!in_array($type, $types)) {
-            $type = self::TYPE_INFO;
-        }
+
+        $type = in_array($type, $this->types) ? $type : self::TYPE_INFO;
+
         self::$messages[$type][] = $message;
         $this->sessionDriver->set('_messages_', self::$messages);
-        return $this;
-    }
-
-    /**
-     * clears all messages
-     *
-     * @return FlashMessages
-     */
-    public function flush()
-    {
-        self::$messages = [];
-        $this->sessionDriver->erase('_messages_');
         return $this;
     }
 
@@ -90,9 +81,21 @@ class FlashMessages
      */
     public function messages()
     {
-        $messages = $this->sessionDriver->get('_messages_', []);
+        $messages = self::$messages;
         $this->flush();
         return $messages;
+    }
+
+    /**
+     * Clears all messages
+     *
+     * @return FlashMessages
+     */
+    public function flush()
+    {
+        self::$messages = [];
+        $this->sessionDriver->erase('_messages_');
+        return $this;
     }
 
     /**
@@ -105,6 +108,7 @@ class FlashMessages
     {
         return $this->set(FlashMessages::TYPE_INFO, $message);
     }
+
     /**
      * Add a warning flash message
      *
@@ -115,6 +119,7 @@ class FlashMessages
     {
         return $this->set(FlashMessages::TYPE_WARNING, $message);
     }
+
     /**
      * Add an error flash message
      *
@@ -125,6 +130,7 @@ class FlashMessages
     {
         return $this->set(FlashMessages::TYPE_ERROR, $message);
     }
+
     /**
      * Add a success flash message
      *

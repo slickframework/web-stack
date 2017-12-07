@@ -27,7 +27,7 @@ interface ControllerInterface
      *
      * @return self|ControllerInterface
      */
-    public function setContext(ControllerContextInterface $context);
+    public function runWithContext(ControllerContextInterface $context);
 
     /**
      * Sets a variable to the view data model
@@ -48,5 +48,5 @@ interface ControllerInterface
      *
      * @return array
      */
-    public function getViewData();
+    public function data();
 }
