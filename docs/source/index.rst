@@ -18,6 +18,7 @@ Packages
     manual/routes
     manual/controllers
     manual/flash-messages
+    manual/views
     manual/contrib
     manual/license
 

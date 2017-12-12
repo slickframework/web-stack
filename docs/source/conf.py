@@ -50,8 +50,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Slick framework'
-copyright = u'2014 - 2017, Slick Team'
-author = u'Filipe Silva <silvam.filipe@gmail.com>'
+copyright = u'2014 - 2018, Slick Team'
+author = u'Slick Team <slick.framework@gmail.com>'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -305,7 +305,8 @@ html_context = {
   "github_version": "master",
   "conf_py_path": "/doc/",
   "source_suffix": source_suffix,
-  "disqus_shortname": "slick-framework"
+  "disqus_shortname": "slick-framework",
+  "mailto": "slick.framework@gmail.com"
 }
 
 highlight_language = 'php'

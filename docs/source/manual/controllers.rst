@@ -34,6 +34,8 @@ has the implemented methods for `ControllerInterface` interface:
         use ControllerMethods;
     }
 
+.. _adding-data-to-view-section:
+
 Adding data to the view
 -----------------------
 

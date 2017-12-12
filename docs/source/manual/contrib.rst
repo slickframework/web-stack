@@ -19,7 +19,7 @@ Pull requests
 Running tests
 -------------
 We use `Behat`_ to describe features and and for acceptance tests
-and `PHPUnit`_ for integration and unit testing.
+and `PHPSpec`_ for integration and unit testing.
 
 .. code-block:: bash
 
@@ -33,11 +33,11 @@ Security
 --------
 
 If you discover any security related issues, please email
-`silvam.filipe@gmail.com <mailto:silvam.filipe@gmail.com>`_ instead of using the issue tracker.
+`slick.framework@gmail.com <mailto:slick.framework@gmail.com>`_ instead of using the issue tracker.
 
-.. _Github: https://github.com/slickframework/di
+.. _Github: https://github.com/slickframework/web-stack
 .. _PSR-2 Coding Standard: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 .. _PHP Code Sniffer: http://pear.php.net/package/PHP_CodeSniffer
 .. _SemVer v2.0.0: http://semver.org
 .. _Behat: http://behat.org/en/latest/index.html
-.. _PHPUnit: https://phpunit.de/
+.. _PHPSpec: http://www.phpspec.net/en/stable/
