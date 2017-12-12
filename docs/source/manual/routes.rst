@@ -16,6 +16,14 @@ to determine the one that will be used by the dispatcher.
 Create the RouterContainer
 --------------------------
 
+.. important::
+
+    If you have created your project using the project template form :ref:`getting-started-section`
+    you can skip the creation of the `RouterContainer` as this is already done.
+    There's also a routes file already created in `config/routes.yml` that you will need to edit
+    to match your requirements.
+
+
 To create a `RouterContainer` you need to do the following:
 
 .. code-block:: php

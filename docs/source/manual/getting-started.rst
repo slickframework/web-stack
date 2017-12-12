@@ -1,5 +1,7 @@
 .. title:: Getting started: Slick Web Stack
 
+.. _getting-started-section:
+
 Getting started
 ===============
 
@@ -20,62 +22,80 @@ environment. Before you begin, ensure that you have PHP 5.6 or higher installed.
 You can install `slick/webstack` with all its dependencies through Composer. Follow
 instructions on the `composer website`_ if you don’t have it installed yet.
 
-You can use this Composer command to install `slick/webstack`:
+You can use this Composer command to get started:
 
 .. code-block:: bash
 
-    $ composer require slick/webstack
+    $ composer create-project slick/webapp:^2.0@dev ./my-project
 
-Application bootstrap
----------------------
 
-It is very easy to get started with `slick/webstack` as it comes with a `slick/console` command
-that will create the directory structure and set the very basic routes, services and controller
-in place from where you can start building your web application.
-
-First you will need to install the `slick/console` package with Composer. You should install it
-as a `DEV` dependency as you do not need it when your application is in production.
-
-You can use this Composer command to install `slick/console`:
-
-.. code-block:: bash
-
-    $ composer require slick/console --dev
-
-Now lets execute the `init` command and get our application up and running:
-
-.. code-block:: bash
-
-    $ vendor/bin/slick init Infrastructure/WebUI
-
-The base usage is `slick init <path>` where path is the directory where you application
-source files will live in. The result will be `<vendor>\\<namespace>\\Infrastructure\\WebUI`
-for all `slick/webstack` source files.
-
-Set the application document root:
-
-.. code-block:: bash
-
-    Slick web application initialization
-    ------------------------------------
-    What's the application document root? (webroot):
-
-Pressing enter will set the document root to the current working directory `/webroot` folder.
-In this folder you should put all your web related files like `CSS` and `javascript` files.
-You also have to set your http server document root to this folder.
-
-.. code-block:: bash
-
-    Please select the namespace to use (Slick\WebStack):
-      [0] Slick\WebStack
-      [1] Vendor\App
-     >
-
-Select the PSR-0/PSR-4 namespace you are working with and the application will be bootstrapped
-for you!
-If you point your browser to the server that is targeting the `/webroot` folder you should see
-something like this:
-
-.. figure:: firefox-index.png
 
 .. _composer website: https://getcomposer.org/download/
+
+Developing environment
+----------------------
+
+The project template used in the above command is prepared to run with *docker* and
+*docker-compose*.
+
+There are other options like *vagrant* or even a (M|X|W|L)AMP stack installed on your
+developing environment.
+
+We choose to use the *docker* as it is very flexible and lightweight. It gives you
+the possibility to configure your environment with a very little afford.
+
+We also use a PHP image that comes with some useful tools like composer and xdebug.
+
+All the examples that we used in this site were made with docker-compose and for that
+we create a set of *nix compatible alias to help you with the command line:
+
+.. code-block:: bash
+
+    # Docker and docker-compose alias
+
+    function docker-host {
+      type docker-machine >/dev/null 2>&1 && docker-machine ip $DOCKER_MACHINE_NAME || \
+        ip a | sed -En 's/.*inet (addr:)?((10|192)(\.[0-9]*){3}).*/\2/p' | head -n1
+    }
+
+    function dc-port {
+      echo `docker-compose port $1 $2 | cut -d: -f2`
+    }
+
+    function dc-open {
+      local _open=open
+      type xdg-open >/dev/null 2>&1 && _open=xdg-open
+      $_open http://${DC_HOST:-`docker-host`}:`dc-port ${1:-web} ${2:-80}`$3 >/dev/null 2>&1
+    }
+
+    alias dc="docker-compose"
+    alias dc-run="dc run --rm"
+    alias dc-php="dc-run php gosu www-data php "
+    alias dc-composer='dc-run -e USE_XDEBUG=no php gosu www-data composer'
+    alias dc-phpspec='dc-run -e USE_XDEBUG=no php gosu www-data vendor/bin/phpspec'
+    alias dc-behat='dc-run -e USE_XDEBUG=no php gosu www-data vendor/bin/behat'
+
+Just copy the above code to a startup script of your favorite shell (usually ~/.profile, ~/.bashrc, etc...)
+
+Fire it up
+----------
+
+In order to run the application (assuming you already set your environment to use the suggested alias above)
+you just need to initiate the container that is configured in the template project lik this:
+
+.. code-block:: bash
+
+    dc up -d
+
+This command will start a PHP:7.1 container and link your working directory to the server webroot path so
+that any change in the files you are working is available to the apache running in the container.
+
+Lets open a browser pointing to our running container:
+
+.. code-block:: bash
+
+    dc-open php
+
+You should get the welcome page from template project.
+
+.. figure:: firefox-index.png
