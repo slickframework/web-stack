@@ -3,7 +3,7 @@
   "description": "MVC implementation for Slick Framework.",
   "minimum-stability": "dev",
   "license": "MIT",
-  "version": "v1.1.0-RC3",
+  "version": "v1.1.0-RC4",
   "keywords": [
     "slick",
     "PSR-7 stack"
