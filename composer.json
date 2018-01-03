@@ -3,7 +3,7 @@
   "description": "MVC implementation for Slick Framework.",
   "minimum-stability": "dev",
   "license": "MIT",
-  "version": "v1.1.0-RC3",
+  "version": "v1.1.0-RC4",
   "keywords": [
     "slick",
     "PSR-7 stack"
@@ -30,7 +30,7 @@
     "slick/di": "^2.4@dev",
     "slick/http": "^2.0",
     "slick/configuration": "^1.2",
-    "symfony/yaml": "^3.4",
+    "symfony/yaml": ">=3.4",
     "aura/router": "^3.0",
     "slick/template": "^1.3@dev"
   },
