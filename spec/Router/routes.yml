@@ -1,5 +1,7 @@
 routes:
 
+  articles: routes/articles
+
   home:
     allows: [POST, GET]
     path: /

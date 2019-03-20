@@ -9,7 +9,7 @@
 
 namespace spec\Slick\WebStack\Http\Server;
 
-use Interop\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use PhpSpec\ObjectBehavior;
 use Slick\WebStack\Http\Server\FlashMessagesMiddleware;
 use Slick\WebStack\Service\FlashMessages;

@@ -16,4 +16,4 @@ services:
     ports:
       - 80
     volumes:
-      - ./docs/build:/usr/share/nginx/html:ro
+      - ./docs/build/html:/usr/share/nginx/html:ro

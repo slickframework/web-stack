@@ -5,7 +5,7 @@ License
 
 Licensed using the `MIT license <http://opensource.org/licenses/MIT>`_.
 
-Copyright (c) 2014-2018 `The Slick Team <https://github.com/orgs/slickframework/people>`_
+Copyright (c) 2014-2019 `The Slick Team <https://github.com/orgs/slickframework/people>`_
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
