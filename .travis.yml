@@ -17,5 +17,5 @@ before_script:
 script:
     - vendor/bin/phpspec run --format=dot
     - docker-compose up -d
-    - vendor/bin/behat -f progress
+    - docker-compose run --rm -e USE_XDEBUG=no php gosu www-data behat -f progress
     - docker-compose stop
