@@ -7,7 +7,8 @@ Getting started
 
 ``slick/webstack package`` is a PSR-7 HTTP middleware stack that can help you create
 web applications or web services for HTTP protocol.
-It offers a router, dispatcher and view mechanism that returns PSR-7 Responses for
+
+It offers a router, a dispatcher and view mechanism that returns PSR-7 Responses for
 HTTP Requests (usually through a web server).
 
 You can change (add or remove) the HTTP stack by adding your own middleware making
@@ -16,8 +17,8 @@ this library very flexible and suitable for almost any HTTP handling needs.
 Installation
 ------------
 
-`slick/webstack` is a php 5.6+ library that you’ll have in your project development
-environment. Before you begin, ensure that you have PHP 5.6 or higher installed.
+`slick/webstack` is a php 7.1+ library that you’ll have in your project development
+environment. Before you begin, ensure that you have PHP 7.1 or higher installed.
 
 You can install `slick/webstack` with all its dependencies through Composer. Follow
 instructions on the `composer website`_ if you don’t have it installed yet.
@@ -26,7 +27,7 @@ You can use this Composer command to get started:
 
 .. code-block:: bash
 
-    $ composer create-project slick/webapp:^2.0@dev ./my-project
+    $ composer create-project slick/webapp ./my-project
 
 
 
@@ -81,13 +82,13 @@ Fire it up
 ----------
 
 In order to run the application (assuming you already set your environment to use the suggested alias above)
-you just need to initiate the container that is configured in the template project lik this:
+you just need to initiate the container that is configured in the template project like this:
 
 .. code-block:: bash
 
     dc up -d
 
-This command will start a PHP:7.1 container and link your working directory to the server webroot path so
+This command will start a PHP:7.3 container and link your working directory to the server *webroot* path so
 that any change in the files you are working is available to the apache running in the container.
 
 Lets open a browser pointing to our running container:

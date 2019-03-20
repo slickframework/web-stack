@@ -5,7 +5,7 @@ One of the main goals of the `front controller <https://en.wikipedia.org/wiki/Fr
 pattern is to handle a request by delivering the execution to a specific controller that will
 process the incoming request.
 
-The ability to determine witch controller will handle the incoming request is do by a `Router`.
+The ability to determine witch controller will handle the incoming request is done by a `Router`.
 
 The `Router` has a collection of `Route` s with request target patterns and the corresponding
 `Controller`'s names, handler method and arguments to be called by the `Dispatcher`.
@@ -41,13 +41,15 @@ To create a `RouterContainer` you need to do the following:
 
 It not so simple, I admit! But putting it in simple words you need a file with your route definitions, a
 parser for that file (YAML in this case) and a route factory that will create Routes from the file definitions.
+
 Then you register it as a route builder in the routes container.
+
 Every time you try to match a request it will recreate the routes you define before it.
 
 .. note::
 
     We create a simple route builder to the very well done `Aura.Router <https://github.com/auraphp/Aura.Router>`_ package.
-    The `Route`, `Matcher` and `RouterContainer` are objects that we use as is from that package.
+    The `Route`, `Matcher` and `RouterContainer` are objects that we use *as is* from that package.
 
 Defining routes
 ---------------
@@ -245,3 +247,48 @@ A request with the target `/posts/read/23` will be dispatched as:
 
     Controller\Posts::read(23);
 
+Nested definition files
+.......................
+
+You can organize your route definitions in multiple files that you can add to the main routes file.
+
+For example: if you want to have a group of route definitions for a *blog* resource you can do like this:
+
+.. code-block:: yaml
+
+    routes:
+        blog: blog/routes
+        home:
+            method: GET
+            path: /
+            defaults:
+                action: home
+        catchall:
+            allows: [POST, GET]
+            path: "{/controller,action}"
+            wildcard: args
+    defaults:
+        namespace: Controller
+        action: index
+        controller: pages
+
+Please note the route named `blog`. It has just the name of the routes file to import into that position.
+The `RouteBuilder` will look for the file in `config/blog/routes.yml` and it will throw an exception if
+the file is not found.
+
+The `config/blog/routes.yml` could be something like:
+
+.. code-block:: yaml
+
+    blog.read:
+        method: GET
+        path: /blog/{id}{format}
+        tokens:
+            id: '\d+'
+            format: '(\.[^/]+)?'
+        defaults:
+            format: '.html'
+
+.. note::
+
+    **Nested files** feature is only available with version `v1.2.0` or higher.

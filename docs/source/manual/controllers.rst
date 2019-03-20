@@ -217,7 +217,7 @@ To check the request method do as follows:
 Route parameters
 ................
 
-Routes can also have have parameters. Lets consider the following route definition:
+Routes can also have parameters. Lets consider the following route definition:
 
 .. code-block:: yaml
 
@@ -246,7 +246,7 @@ To have access to the `{slug}` parameter for example you can do the following:
     }
 
 
-.. warning::
+.. danger::
 
     Remember that its always advisable that you filter all the input data. Query, post or route parameters are also a way
     to send data to the server. Those methods do not filter any data so its up to you to handle this security issues.
