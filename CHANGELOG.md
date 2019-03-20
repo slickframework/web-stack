@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v1.2.0] - 2019-03-20
 ### Added
 - Nested route files
 ### Changed
@@ -38,6 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.1.0-RC4...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.2.0...HEAD
+[v1.2.0]: https://github.com/slickframework/web-stack/compare/v1.1.0-RC4...v1.2.0
 [v1.1.0-RC4]: https://github.com/slickframework/web-stack/compare/v1.0.0...v1.1.0-RC4
 [v1.0.0]: https://github.com/slickframework/web-stack/compare/2d2872...v1.0.0
