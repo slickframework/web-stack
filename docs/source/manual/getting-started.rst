@@ -47,7 +47,7 @@ the possibility to configure your environment with a very little afford.
 We also use a PHP image that comes with some useful tools like composer and xdebug.
 
 All the examples that we used in this site were made with docker-compose and for that
-we create a set of *nix compatible alias to help you with the command line:
+we create a set of *nix* compatible alias to help you with the command line:
 
 .. code-block:: bash
 

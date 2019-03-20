@@ -26,8 +26,8 @@
     }
   },
   "require": {
-    "php" : ">=5.6",
-    "slick/di": "^2.4@dev",
+    "php" : ">=7.1",
+    "slick/di": "^2.5",
     "slick/http": "^2.0",
     "slick/configuration": "^1.2",
     "symfony/yaml": ">=3.4",
@@ -50,5 +50,12 @@
     "test": "phpspec run -fdot",
     "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src",
     "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src"
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true,
+    "optimize-autoloader": true
   }
 }

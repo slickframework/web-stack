@@ -10,8 +10,8 @@
 namespace Slick\WebStack\Http\Server;
 
 use Aura\Router\Route;
-use Interop\Http\Server\MiddlewareInterface;
-use Interop\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\WebStack\Controller\ContextCreator;
@@ -71,7 +71,7 @@ class DispatcherMiddleware implements MiddlewareInterface
      * @throws BadHttpStackConfigurationException When the need route is missing from the request
      * @throws MissingResponseException When context has disabled the rendering and has no response object to return
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $this->route($request);
         $controllerDispatch = $this->inflector->inflect($route);
