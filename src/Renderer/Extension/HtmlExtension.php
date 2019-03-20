@@ -149,5 +149,4 @@ class HtmlExtension extends AbstractTwigExtension implements EngineExtensionInte
             );
         };
     }
-
 }

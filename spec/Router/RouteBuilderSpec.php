@@ -12,6 +12,7 @@ namespace spec\Slick\WebStack\Router;
 use Aura\Router\Map;
 use Aura\Router\Route;
 use Aura\Router\RouterContainer;
+use Prophecy\Argument;
 use Slick\WebStack\Exception\RoutesFileNotFoundException;
 use Slick\WebStack\Exception\RoutesFileParserException;
 use Slick\WebStack\Router\Builder\FactoryInterface;
@@ -43,14 +44,15 @@ class RouteBuilderSpec extends ObjectBehavior
     {
         $this->shouldBeAnInstanceOf(RouteBuilderInterface::class);
     }
+
     function it_registers_itself_to_a_router_container(
         RouterContainer $container
-    )
-    {
+    ) {
         $this->register($container)->shouldBe($this->getWrappedObject());
         $container->setMapBuilder([$this->getWrappedObject(), 'build'])
             ->shouldHaveBeenCalled();
     }
+
     function it_can_parse_yml_files(
         Parser $parser,
         FactoryInterface $routeFactory,
@@ -63,11 +65,11 @@ class RouteBuilderSpec extends ObjectBehavior
         $this->build($map);
         $parser->parse(file_get_contents($file))->shouldHaveBeenCalled();
     }
+
     function it_can_set_router_defaults(
         Parser $parser,
         FactoryInterface $routeFactory
-    )
-    {
+    ) {
         $map = new Map(new Route());
         $file = __DIR__ . '/routes.yml';
         $defaults = [
@@ -81,6 +83,7 @@ class RouteBuilderSpec extends ObjectBehavior
         $this->beConstructedWith($file, $parser, $routeFactory);
         $this->build($map);
     }
+
     function it_can_parser_routes_from_yml(
         Parser $parser,
         FactoryInterface $routeFactory,
@@ -104,6 +107,7 @@ class RouteBuilderSpec extends ObjectBehavior
         $this->build($map);
         $routeFactory->parse('home', $routes['routes']['home'], $map)->shouldHaveBeenCalled();
     }
+
     function it_throws_exception_when_routes_file_is_not_found(
         Parser $parser,
         FactoryInterface $routeFactory,
@@ -114,17 +118,25 @@ class RouteBuilderSpec extends ObjectBehavior
         $this->shouldThrow(RoutesFileNotFoundException::class)
             ->during('build',  [$map]);
     }
+
     function it_throws_exception_for_yml_parsing_errors(
         Parser $parser,
         FactoryInterface $routeFactory,
         Map $map
-    )
-    {
+    ) {
         $file = __DIR__ . '/routes.yml';
         $parser->parse(file_get_contents($file))
             ->willThrow(new ParseException('test'));
         $this->beConstructedWith($file, $parser, $routeFactory);
         $this->shouldThrow(RoutesFileParserException::class)
             ->during('build',  [$map]);
+    }
+
+    function it_reads_multiple_definition_files(FactoryInterface $routeFactory, Map $map)
+    {
+        $file = __DIR__ . '/routes.yml';
+        $this->beConstructedWith($file, new Parser(), $routeFactory);
+        $this->build($map);
+        $routeFactory->parse('articles:article.read', Argument::type('array'), $map)->shouldHaveBeenCalled();
     }
 }

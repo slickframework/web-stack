@@ -50,7 +50,10 @@ class FlashMessagesMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $request = $request->withAttribute('viewData', $this->merge($request, ['flashMessages' => $this->flashMessages]));
+        $request = $request->withAttribute(
+            'viewData',
+            $this->merge($request, ['flashMessages' => $this->flashMessages])
+        );
         return $handler->handle($request);
     }
 

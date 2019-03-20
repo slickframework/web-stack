@@ -46,6 +46,11 @@ class RouteBuilder implements RouteBuilderInterface
     private $parsedData;
 
     /**
+     * @var array
+     */
+    private $defaults = ['tokens', 'defaults', 'host', 'accepts'];
+
+    /**
      * Creates a route builder
      *
      * @param string           $routesFile
@@ -101,9 +106,15 @@ class RouteBuilder implements RouteBuilderInterface
             return $this->parsedData;
         }
 
+        $this->parsedData = [
+            'routes' => []
+        ];
+
         $content = $this->getYmlFileContent();
         try {
             $parsedData = $this->parser->parse($content);
+            $this->addGeneralDefaults($parsedData);
+            $this->addDataRoutes($parsedData);
         } catch (ParseException $caught) {
             throw new RoutesFileParserException(
                 $caught->getMessage(),
@@ -111,24 +122,25 @@ class RouteBuilder implements RouteBuilderInterface
                 $caught
             );
         }
-        $this->parsedData = $parsedData;
-        return $parsedData;
+        return $this->parsedData;
     }
 
     /**
      * Get contents form YML file
      *
+     * @param string|null $fileName
      * @return string
      */
-    private function getYmlFileContent()
+    private function getYmlFileContent(string $fileName = null): string
     {
-        if (!is_file($this->routesFile)) {
+        $fileName = $fileName ?: $this->routesFile;
+        if (!is_file($fileName)) {
             throw new RoutesFileNotFoundException(
-                "The routes file is not found on your system."
+                "The routes file '{$fileName}' was not found on your system."
             );
         }
 
-        return file_get_contents($this->routesFile);
+        return file_get_contents($fileName);
     }
 
     /**
@@ -138,9 +150,8 @@ class RouteBuilder implements RouteBuilderInterface
      */
     private function setDefaults(Map $map)
     {
-        $defaults = ['tokens', 'defaults', 'host', 'accepts'];
         foreach ($this->getParsedData() as $name => $value) {
-            if (in_array($name, $defaults)) {
+            if (in_array($name, $this->defaults)) {
                 $map->$name($value);
             }
         }
@@ -160,5 +171,43 @@ class RouteBuilder implements RouteBuilderInterface
         foreach ($routes as $name => $definition) {
             $this->routeFactory->parse($name, $definition, $map);
         }
+    }
+
+    private function addGeneralDefaults($parsedData)
+    {
+        foreach ($parsedData as $name => $value) {
+            if (in_array($name, $this->defaults)) {
+                $this->parsedData[$name] = $value;
+            }
+        }
+    }
+
+    private function addDataRoutes($parsedData, string $prefix = '', string $parent = ''): void
+    {
+        if (!is_array($parsedData)) {
+            return;
+        }
+
+        $routes = (array_key_exists('routes', $parsedData))
+            ? $parsedData['routes']
+            : $parsedData;
+
+        foreach ($routes as $name => $data) {
+            if (is_array($data)) {
+                $this->parsedData['routes'][ltrim("{$prefix}:{$name}", ':')] = $data;
+                continue;
+            }
+
+            $this->addChildFile($name, $data, $parent);
+        }
+    }
+
+    private function addChildFile(string $name, string $fileName, string $parent = '')
+    {
+        $basePath = dirname($this->routesFile);
+
+        $childFile = str_replace('//', '/', "{$basePath}/{$parent}/{$fileName}.yml");
+        $data = $this->parser->parse($this->getYmlFileContent($childFile));
+        $this->addDataRoutes($data, $name, str_replace($basePath, '', dirname($childFile)));
     }
 }

@@ -26,24 +26,25 @@ class RouteFactorySpec extends ObjectBehavior
     {
         $this->shouldHaveType(RouteFactory::class);
     }
+
     function its_a_route_factory()
     {
         $this->shouldBeAnInstanceOf(FactoryInterface::class);
     }
+
     function it_parses_simple_route_definitions(
         Map $map,
         Route $route
-    )
-    {
+    ) {
         $map->get('blog.read', '/blog/{id}')->willReturn($route);
         $this->parse('blog.read', '/blog/{id}', $map)->shouldBe($route);
         $map->get('blog.read', '/blog/{id}')->shouldHaveBeenCalled();
     }
+
     function it_can_parse_complex_route_definitions(
         Map $map,
         Route $route
-    )
-    {
+    ) {
         $data = [
             'name' => 'blog.edit',
             'data' => [
@@ -57,11 +58,11 @@ class RouteFactorySpec extends ObjectBehavior
         $map->route($data['name'], $data['data']['path'])->shouldHaveBeenCalled();
         $route->allows(['PUT', 'POST'])->shouldHaveBeenCalled();
     }
+
     function it_can_add_all_known_route_properties(
         Map $map,
         Route $route
-    )
-    {
+    ) {
         $data = [
             'name' => 'blog.edit',
             'data' => [
@@ -78,5 +79,4 @@ class RouteFactorySpec extends ObjectBehavior
         $route->defaults($data['data']['defaults'])->shouldHaveBeenCalled();
         $route->host($data['data']['host'])->shouldHaveBeenCalled();
     }
-
 }

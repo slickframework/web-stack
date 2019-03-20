@@ -1,4 +1,5 @@
 routes:
+    example: example-routes
     home:
         method: GET
         path: /
