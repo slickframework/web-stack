@@ -1,4 +1,4 @@
-version: '2'
+version: '3.2'
 
 services:
 
@@ -16,4 +16,4 @@ services:
     ports:
       - 80
     volumes:
-      - ./docs/build/html:/usr/share/nginx/html:ro
+      - ./docs/build:/usr/share/nginx/html:ro

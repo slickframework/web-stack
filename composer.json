@@ -1,12 +1,14 @@
 {
   "name": "slick/webstack",
-  "description": "MVC implementation for Slick Framework.",
+  "description": "PSR-15 HTTP middleware stack that can help you create web applications or web services for HTTP protocol.",
   "minimum-stability": "dev",
   "license": "MIT",
-  "version": "v1.2.0",
+  "version": "v1.2.1",
   "keywords": [
     "slick",
-    "PSR-7 stack"
+    "PSR-15",
+    "PSR-7",
+    "http"
   ],
   "authors": [
     {

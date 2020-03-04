@@ -5,10 +5,10 @@
 Getting started
 ===============
 
-``slick/webstack package`` is a PSR-7 HTTP middleware stack that can help you create
-web applications or web services for HTTP protocol.
+``slick/webstack`` is a `PSR-15`_ HTTP middleware stack that can help you create
+web applications or web services using the HTTP protocol.
 
-It offers a router, a dispatcher and view mechanism that returns PSR-7 Responses for
+It offers a router, a dispatcher and view mechanism that returns `PSR-7`_ Responses for
 HTTP Requests (usually through a web server).
 
 You can change (add or remove) the HTTP stack by adding your own middleware making
@@ -32,17 +32,19 @@ You can use this Composer command to get started:
 
 
 .. _composer website: https://getcomposer.org/download/
+.. _PSR-15: https://www.php-fig.org/psr/psr-15/
+.. _PSR-7: https://www.php-fig.org/psr/psr-7/
 
 Developing environment
 ----------------------
 
-The project template used in the above command is prepared to run with *docker* and
-*docker-compose*.
+The project template used in the above command is prepared to run with `docker`_ and
+`docker-compose`_.
 
 There are other options like *vagrant* or even a (M|X|W|L)AMP stack installed on your
 developing environment.
 
-We choose to use the *docker* as it is very flexible and lightweight. It gives you
+We choose to use the `docker`_ as it is very flexible and lightweight. It gives you
 the possibility to configure your environment with a very little afford.
 
 We also use a PHP image that comes with some useful tools like composer and xdebug.
@@ -77,6 +79,9 @@ we create a set of *nix* compatible alias to help you with the command line:
     alias dc-behat='dc-run -e USE_XDEBUG=no php gosu www-data vendor/bin/behat'
 
 Just copy the above code to a startup script of your favorite shell (usually ~/.profile, ~/.bashrc, etc...)
+
+.. _docker: https://www.docker.com/get-started
+.. _docker-compose: https://docs.docker.com/compose/
 
 Fire it up
 ----------

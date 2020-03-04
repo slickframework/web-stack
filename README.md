@@ -6,10 +6,10 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/slickframework/web-stack/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/slickframework/web-stack?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/slick/webstack.svg?style=flat-square)](https://packagist.org/packages/slick/webstack)
 
-``slick/webstack`` is a PSR-7 HTTP middleware stack that can help you create
+``slick/webstack`` is a [PSR-15](https://www.php-fig.org/psr/psr-15/) HTTP middleware stack that can help you create
 web applications or web services for HTTP protocol.
 
-It offers a router, a dispatcher and view mechanism that returns PSR-7 Responses for
+It offers a router, a dispatcher and view mechanism that returns [PSR-7](https://www.php-fig.org/psr/psr-7/) Responses for
 HTTP Requests (usually through a web server).
 
 You can change (add or remove) the HTTP stack by adding your own middleware making
@@ -27,6 +27,8 @@ $ composer require slick/webstack
 ```
 
 ## Usage
+A full [documentation site](http://www.slick-framework.com/en/latest/manual/getting-started.html)
+is available to support this package usage.
 
 ## Testing
 
