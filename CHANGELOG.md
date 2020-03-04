@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.2.1] - 2020-03-04
+### Changed
+- Readme package description and usage
+- License year update
+- Dependencies update
+### Added
+- Contributing information file
+
 ## [v1.2.0] - 2019-03-20
 ### Added
 - Nested route files
@@ -40,7 +48,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.2.1...HEAD
+[v1.2.1]: https://github.com/slickframework/web-stack/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/slickframework/web-stack/compare/v1.1.0-RC4...v1.2.0
 [v1.1.0-RC4]: https://github.com/slickframework/web-stack/compare/v1.0.0...v1.1.0-RC4
 [v1.0.0]: https://github.com/slickframework/web-stack/compare/2d2872...v1.0.0

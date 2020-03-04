@@ -1,4 +1,4 @@
-.. title:: Slick framework documentation
+.. title:: Slick documentation
 
 .. raw:: html
     :file: features.html
