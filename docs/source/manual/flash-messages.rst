@@ -4,7 +4,7 @@ Displaying flash messages
 A flash message is used in order to keep a message in session through one or
 several requests of the same user. By default, it is removed from session after
 it has been displayed to the user. Flash messages are usually used in
-combination with HTTP redirections, because in this case there is no view, so
+combination with HTTP redirects, because in this case there is no view, so
 messages can only be displayed in the request that follows redirection.
 
 Add it to your controller
@@ -67,6 +67,8 @@ Flash messages API
 
 .. php:class:: FlashMessages
 
+    FlashMessage class
+
     .. php:method:: addInfo($message)
 
         Adds an informational message to the messages stack
@@ -94,3 +96,4 @@ Flash messages API
 
         :param string $message: The message to display
         :returns: The FlashMessages service itself. Useful for other method calls.
+

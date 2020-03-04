@@ -4,9 +4,10 @@ php:
     - 7.1
     - 7.2
     - 7.3
+    - 7.4
 
 before_install:
-    - curl -L https://github.com/docker/compose/releases/download/1.11.1/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` > docker-compose
     - chmod +x docker-compose
     - sudo mv docker-compose /usr/local/bin
 
