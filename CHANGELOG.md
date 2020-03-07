@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.2.2] - 2020-03-06
+### Fixes
+- `ControllerContextInterface::useTemplate()` has no effect
+- Documentation search javascript tool
+
 ## [v1.2.1] - 2020-03-04
 ### Changed
 - Readme package description and usage
