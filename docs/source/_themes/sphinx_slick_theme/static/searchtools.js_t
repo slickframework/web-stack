@@ -260,7 +260,7 @@ var Search = {
                 } else {
                     // normal html builders
                     itemTitle.html(jQuery('<a/>').attr('href',
-                        item[0] + DOCUMENTATION_OPTIONS.FILE_SUFFIX +
+                        item[0].replace('.rst', '') + DOCUMENTATION_OPTIONS.FILE_SUFFIX +
                         highlightstring + item[2]).html(item[1]));
                     listItem.append(itemTitle);
                 }
@@ -488,4 +488,3 @@ var Search = {
 jQuery(document).ready(function() {
     Search.init();
 });
-

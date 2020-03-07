@@ -62,6 +62,8 @@ class DispatcherMiddlewareSpec extends ObjectBehavior
         $invoker->invoke($context, $controllerDispatch)
             ->willReturn($this->controllerData);
 
+        $context->request()->willReturn($request);
+
         $this->beConstructedWith($inflector, $invoker, $contextCreator);
     }
 

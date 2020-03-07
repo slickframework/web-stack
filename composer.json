@@ -3,7 +3,7 @@
   "description": "PSR-15 HTTP middleware stack that can help you create web applications or web services for HTTP protocol.",
   "minimum-stability": "dev",
   "license": "MIT",
-  "version": "v1.2.1",
+  "version": "v1.2.2",
   "keywords": [
     "slick",
     "PSR-15",

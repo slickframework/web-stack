@@ -83,7 +83,7 @@ class DispatcherMiddleware implements MiddlewareInterface
             return $this->responseFrom($context);
         }
 
-        $request = $request->withAttribute('viewData', $this->merge($request, $data));
+        $request = $context->request()->withAttribute('viewData', $this->merge($request, $data));
 
         return $handler->handle($request);
     }
