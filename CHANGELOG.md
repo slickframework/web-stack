@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.3.0] - 2020-04-28
+### Changed
+- Support new versions of `slick/http`
+### Removed
+- Drop support for PHP < 7.2 
+
 ## [v1.2.2] - 2020-03-06
 ### Fixes
 - `ControllerContextInterface::useTemplate()` has no effect
@@ -53,7 +59,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.3.0...HEAD
+[v1.3.0]: https://github.com/slickframework/web-stack/compare/v1.2.1...v1.3.0
 [v1.2.1]: https://github.com/slickframework/web-stack/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/slickframework/web-stack/compare/v1.1.0-RC4...v1.2.0
 [v1.1.0-RC4]: https://github.com/slickframework/web-stack/compare/v1.0.0...v1.1.0-RC4
