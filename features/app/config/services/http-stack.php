@@ -22,11 +22,9 @@ use Slick\WebStack\Http\Server\RouterMiddleware;
 use Slick\WebStack\Renderer\ViewInflector;
 use Slick\WebStack\Router\Builder\RouteFactory;
 use Slick\WebStack\Router\Parsers\PhpYmlParser;
-use Slick\WebStack\Router\Parsers\SymfonyYmlParser;
 use Slick\WebStack\Router\RouteBuilder;
 use Slick\WebStack\Service\FlashMessages;
 use Slick\WebStack\Service\UriGenerator;
-use Symfony\Component\Yaml\Parser;
 
 $services = [];
 

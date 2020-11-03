@@ -32,9 +32,10 @@ To create a `RouterContainer` you need to do the following:
     use Slick\WebStack\Http\Router\Builder\RouteFactory;
     use Slick\WebStack\Http\Router\RouteBuilder;
     use Slick\WebStack\Http\RouterMiddleware;
-    use Symfony\Component\Yaml\Parser;
+    use Slick\WebStack\Router\Parsers\PhpYmlParser;
 
-    $routeBuilder = new RouteBuilder(__DIR__.'/routes.yml', new Parser(), new RouteFactory());
+
+    $routeBuilder = new RouteBuilder(__DIR__.'/routes.yml', new PhpYmlParser(), new RouteFactory());
     $routerContainer = new RouterContainer();
     $routeBuilder->register($routerContainer);
 
