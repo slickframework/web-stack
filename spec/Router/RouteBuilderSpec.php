@@ -16,9 +16,11 @@ use Prophecy\Argument;
 use Slick\WebStack\Exception\RoutesFileNotFoundException;
 use Slick\WebStack\Exception\RoutesFileParserException;
 use Slick\WebStack\Router\Builder\FactoryInterface;
+use Slick\WebStack\Router\Parsers\SymfonyYmlParser;
 use Slick\WebStack\Router\RouteBuilder;
 use PhpSpec\ObjectBehavior;
 use Slick\WebStack\Router\RouteBuilderInterface;
+use Slick\WebStack\Router\RoutesParser;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
 
@@ -29,7 +31,7 @@ use Symfony\Component\Yaml\Parser;
  */
 class RouteBuilderSpec extends ObjectBehavior
 {
-    function let(Parser $parser, FactoryInterface $routeFactory)
+    function let(RoutesParser $parser, FactoryInterface $routeFactory)
     {
         $file = __DIR__ . '/routes.yml';
         $this->beConstructedWith($file, $parser, $routeFactory);
@@ -54,7 +56,7 @@ class RouteBuilderSpec extends ObjectBehavior
     }
 
     function it_can_parse_yml_files(
-        Parser $parser,
+        RoutesParser $parser,
         FactoryInterface $routeFactory,
         Map $map
     ) {
@@ -67,7 +69,7 @@ class RouteBuilderSpec extends ObjectBehavior
     }
 
     function it_can_set_router_defaults(
-        Parser $parser,
+        RoutesParser $parser,
         FactoryInterface $routeFactory
     ) {
         $map = new Map(new Route());
@@ -85,7 +87,7 @@ class RouteBuilderSpec extends ObjectBehavior
     }
 
     function it_can_parser_routes_from_yml(
-        Parser $parser,
+        RoutesParser $parser,
         FactoryInterface $routeFactory,
         Map $map
     ) {
@@ -109,7 +111,7 @@ class RouteBuilderSpec extends ObjectBehavior
     }
 
     function it_throws_exception_when_routes_file_is_not_found(
-        Parser $parser,
+        RoutesParser $parser,
         FactoryInterface $routeFactory,
         Map $map
     ) {
@@ -120,7 +122,7 @@ class RouteBuilderSpec extends ObjectBehavior
     }
 
     function it_throws_exception_for_yml_parsing_errors(
-        Parser $parser,
+        RoutesParser $parser,
         FactoryInterface $routeFactory,
         Map $map
     ) {
@@ -135,7 +137,7 @@ class RouteBuilderSpec extends ObjectBehavior
     function it_reads_multiple_definition_files(FactoryInterface $routeFactory, Map $map)
     {
         $file = __DIR__ . '/routes.yml';
-        $this->beConstructedWith($file, new Parser(), $routeFactory);
+        $this->beConstructedWith($file, new SymfonyYmlParser(new Parser()), $routeFactory);
         $this->build($map);
         $routeFactory->parse('articles:article.read', Argument::type('array'), $map)->shouldHaveBeenCalled();
     }

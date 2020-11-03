@@ -16,4 +16,16 @@ services:
     ports:
       - 80
     volumes:
-      - ./docs/build:/usr/share/nginx/html:ro
+      - ./docs/build/html:/usr/share/nginx/html:ro
+
+  build-docs:
+    build: docker/build-docs
+    volumes:
+    - ./docs:/docs
+
+  webgrind:
+    image: jokkedk/webgrind:latest
+    volumes:
+      - ./tmp:/tmp
+    ports:
+      - 8888:80
