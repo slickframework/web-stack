@@ -15,7 +15,6 @@ use Slick\WebStack\Exception\RoutesFileNotFoundException;
 use Slick\WebStack\Exception\RoutesFileParserException;
 use Slick\WebStack\Router\Builder\FactoryInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
-use Symfony\Component\Yaml\Parser;
 
 /**
  * RouteBuilder
@@ -31,7 +30,7 @@ class RouteBuilder implements RouteBuilderInterface
     private $routesFile;
 
     /**
-     * @var Parser
+     * @var RoutesParser
      */
     private $parser;
 
@@ -54,12 +53,12 @@ class RouteBuilder implements RouteBuilderInterface
      * Creates a route builder
      *
      * @param string           $routesFile
-     * @param Parser           $parser
+     * @param RoutesParser     $parser
      * @param FactoryInterface $routeFactory
      */
     public function __construct(
         $routesFile,
-        Parser $parser,
+        RoutesParser $parser,
         FactoryInterface $routeFactory
     ) {
         $this->routesFile = $routesFile;

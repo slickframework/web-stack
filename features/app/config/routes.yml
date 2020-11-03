@@ -1,5 +1,6 @@
 routes:
     example: example-routes
+    legacy: routes/legacy
     home:
         method: GET
         path: /

@@ -21,6 +21,8 @@ use Slick\WebStack\Http\Server\RendererMiddleware;
 use Slick\WebStack\Http\Server\RouterMiddleware;
 use Slick\WebStack\Renderer\ViewInflector;
 use Slick\WebStack\Router\Builder\RouteFactory;
+use Slick\WebStack\Router\Parsers\PhpYmlParser;
+use Slick\WebStack\Router\Parsers\SymfonyYmlParser;
 use Slick\WebStack\Router\RouteBuilder;
 use Slick\WebStack\Service\FlashMessages;
 use Slick\WebStack\Service\UriGenerator;
@@ -55,7 +57,7 @@ $services['router.container'] = ObjectDefinition::create(RouterContainer::class)
 $services['router.middleware'] = function (Container $container) {
     $routeBuilder = new RouteBuilder(
         dirname(__DIR__).'/routes.yml',
-        new Parser(),
+        new PhpYmlParser(),
         new RouteFactory()
     );
     $routerContainer = $container->get('router.container');
