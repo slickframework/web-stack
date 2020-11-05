@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23bb1901baf03edbd1854c3c002923ff",
+    "content-hash": "b128fff9fcb9d72076a3bf96bf205329",
     "packages": [
         {
             "name": "aura/router",
@@ -2320,12 +2320,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "dbfd9e6ae07c0ee3a65e5adc3a1dbf9faddcfed0"
+                "reference": "99b0339bce7eaae8b5285398d5f1492da734d1ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/dbfd9e6ae07c0ee3a65e5adc3a1dbf9faddcfed0",
-                "reference": "dbfd9e6ae07c0ee3a65e5adc3a1dbf9faddcfed0",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/99b0339bce7eaae8b5285398d5f1492da734d1ac",
+                "reference": "99b0339bce7eaae8b5285398d5f1492da734d1ac",
                 "shasum": ""
             },
             "require": {
@@ -2369,7 +2369,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2020-11-02T21:27:24+00:00"
+            "time": "2020-11-03T22:22:47+00:00"
         },
         {
             "name": "symfony/browser-kit",
