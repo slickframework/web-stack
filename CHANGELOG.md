@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.4.1] - 2020-11-04
+### Fixes
+- Composer lock file error.
+
 ## [v1.4.0] - 2020-11-03
 ### Added
 - Routes parser interface
@@ -66,8 +70,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.4.0...HEAD
-[v1.4.0]: https://github.com/slickframework/web-stack/compare/v1.3.1...v1.4.0
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.4.1...HEAD
+[v1.4.1]: https://github.com/slickframework/web-stack/compare/v1.4.0...v1.4.1
+[v1.4.0]: https://github.com/slickframework/web-stack/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/slickframework/web-stack/compare/v1.2.1...v1.3.0
 [v1.2.1]: https://github.com/slickframework/web-stack/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/slickframework/web-stack/compare/v1.1.0-RC4...v1.2.0
