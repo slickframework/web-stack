@@ -72,7 +72,7 @@ class ControllerDispatchInflector implements ControllerDispatchInflectorInterfac
             'arguments' => $arguments['args']
         ];
         $reflection = new \ReflectionClass(ControllerDispatch::class);
-        return $reflection->newInstanceArgs($data);
+        return $reflection->newInstanceArgs(array_values($data));
     }
 
     /**
