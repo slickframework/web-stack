@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.5.0] - 2023-02-22
+### Adds
+- PHP 8.X support
+### Changes
+- ``slick/template`` version to v2.0.0 for better PHP 8.X support
+### Removes
+- PHP 7.X support
+
+
 ## [v1.4.1] - 2020-11-04
 ### Fixes
 - Composer lock file error.

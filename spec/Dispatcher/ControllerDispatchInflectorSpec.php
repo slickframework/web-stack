@@ -67,7 +67,7 @@ class ControllerDispatchInflectorSpec extends ObjectBehavior
         ]);
         $this->inflect($route)->shouldHaveControllerNamed('spec\Slick\WebStack\Dispatcher\YellowPages');
     }
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
             'haveControllerNamed' => function (ControllerDispatch $subject, $name) {

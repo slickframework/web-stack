@@ -1,4 +1,4 @@
-FROM fsilva/php:7.2
+FROM fsilva/php:8.0-apache
 
 RUN apt-install libyaml-dev
 

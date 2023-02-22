@@ -1,8 +1,0 @@
-read.article:
-    method: GET
-    path: /article/{articleId}
-    auth: true
-    defaults:
-        namespace: Features\App\Articles\Controller
-        action: handle
-        controller: ReadArticle

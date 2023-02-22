@@ -64,7 +64,7 @@ class ControllerDispatchInflector implements ControllerDispatchInflectorInterfac
     {
         $arguments['controller'] = $this->filterName($arguments['controller']);
         $data = [
-            'className' => ltrim(
+            'controllerClassName' => ltrim(
                 "{$arguments['namespace']}"."\\"."{$arguments['controller']}",
                 "\\"
             ),
