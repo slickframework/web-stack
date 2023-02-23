@@ -20,19 +20,14 @@ use Slick\WebStack\Service\UriGeneratorInterface;
  */
 class ContextCreator
 {
-    /**
-     * @var UriGeneratorInterface
-     */
-    private $uriGenerator;
 
     /**
      * Creates a ContextCreator
      *
      * @param UriGeneratorInterface $uriGenerator
      */
-    public function __construct(UriGeneratorInterface $uriGenerator)
+    public function __construct(private UriGeneratorInterface $uriGenerator)
     {
-        $this->uriGenerator = $uriGenerator;
     }
 
     /**
@@ -43,7 +38,7 @@ class ContextCreator
      *
      * @return ControllerContextInterface
      */
-    public function create(ServerRequestInterface $request, Route $route)
+    public function create(ServerRequestInterface $request, Route $route): ControllerContextInterface
     {
         $this->uriGenerator->setRequest($request);
         return new Context($request, $route, $this->uriGenerator);

@@ -111,7 +111,7 @@ class BasePathTransformerSpec extends ObjectBehavior
         $this->setRequest($request);
     }
 
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
             'beAnUriWithPath' => function ($uri, $path)

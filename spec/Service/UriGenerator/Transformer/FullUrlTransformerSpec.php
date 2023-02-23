@@ -38,7 +38,7 @@ class FullUrlTransformerSpec extends ObjectBehavior
             ->shouldBeAnUriLike('http://test.com/path');
     }
 
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
             'beAnUriLike' => function ($uri, $path)

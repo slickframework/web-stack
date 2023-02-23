@@ -19,24 +19,17 @@ use Slick\WebStack\ControllerInterface;
 trait ControllerMethods
 {
 
-    /**
-     * @var ControllerContextInterface
-     */
-    protected $context;
-
-    /**
-     * @var array
-     */
-    protected $data = [];
+    protected ?ControllerContextInterface $context = null;
+    protected array $data = [];
 
     /**
      * Sets te context for this controller execution
      *
      * @param ControllerContextInterface $context
      *
-     * @return self|ControllerInterface
+     * @return ControllerInterface
      */
-    public function runWithContext(ControllerContextInterface $context)
+    public function runWithContext(ControllerContextInterface $context): ControllerInterface
     {
         $this->context = $context;
         return $this;
@@ -52,9 +45,9 @@ trait ControllerMethods
      * @param string|array $name
      * @param mixed $value
      *
-     * @return self|ControllerInterface
+     * @return ControllerInterface
      */
-    public function set($name, $value = null)
+    public function set(string|array $name, mixed $value = null): ControllerInterface
     {
         if (is_array($name)) {
             return $this->setValues($name);
@@ -68,7 +61,7 @@ trait ControllerMethods
      *
      * @return array
      */
-    public function data()
+    public function data(): array
     {
         return $this->data;
     }
@@ -78,9 +71,9 @@ trait ControllerMethods
      *
      * @param array $data
      *
-     * @return self|ControllerInterface
+     * @return ControllerInterface
      */
-    private function setValues(array $data)
+    private function setValues(array $data): ControllerInterface
     {
         foreach ($data as $key => $datum) {
             $this->set($key, $datum);

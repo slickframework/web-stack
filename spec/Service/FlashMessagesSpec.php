@@ -75,7 +75,7 @@ class FlashMessagesSpec extends ObjectBehavior
         $sessionDriver->erase('_messages_')->shouldHaveBeenCalled();
     }
 
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
             'beEmpty' => function(array $subject) {
