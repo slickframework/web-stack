@@ -9,6 +9,8 @@
 
 namespace Slick\WebStack\Dispatcher;
 
+use ReflectionClass;
+use ReflectionException;
 use Slick\Di\ContainerInterface;
 use Slick\WebStack\Controller\ControllerContextInterface;
 use Slick\WebStack\ControllerInterface;
@@ -22,18 +24,12 @@ class ControllerInvoker implements ControllerInvokerInterface
 {
 
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * Creates a Controller Invoker
      *
      * @param ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(private ContainerInterface $container)
     {
-        $this->container = $container;
     }
 
     /**
@@ -43,31 +39,29 @@ class ControllerInvoker implements ControllerInvokerInterface
      * @param ControllerDispatch $dispatch
      *
      * @return array
+     * @throws ReflectionException
      */
     public function invoke(
         ControllerContextInterface $context,
         ControllerDispatch $dispatch
-    ) {
-        /** @var ControllerInterface $controller */
+    ): array {
         $controller = $this->createController($dispatch->controllerClass());
         $controller->runWithContext($context);
 
         $method = $dispatch->handlerMethod();
-        $method->invokeArgs($controller, $dispatch->arguments());
-
-        return $controller->data();
+        $response = $method->invokeArgs($controller, $dispatch->arguments()) ?: null;
+        return [$response, $controller->data()];
     }
 
     /**
      * Uses the dependency container to create the controller
      *
-     * @param \ReflectionClass $controllerName
+     * @param ReflectionClass $controllerName
      *
      * @return ControllerInterface
      */
-    private function createController(\ReflectionClass $controllerName)
+    private function createController(ReflectionClass $controllerName): ControllerInterface
     {
-        $controller = $this->container->make($controllerName->getName());
-        return $controller;
+        return $this->container->make($controllerName->getName());
     }
 }

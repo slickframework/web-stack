@@ -26,5 +26,5 @@ interface ControllerDispatchInflectorInterface
      *
      * @return ControllerDispatch
      */
-    public function inflect(Route $route);
+    public function inflect(Route $route): ControllerDispatch;
 }

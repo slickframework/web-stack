@@ -9,6 +9,9 @@
 
 namespace Slick\WebStack\Dispatcher;
 
+use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
 use Slick\WebStack\ControllerInterface;
 use Slick\WebStack\Exception\BadControllerClassException;
 use Slick\WebStack\Exception\ControllerNotFoundException;
@@ -21,50 +24,35 @@ use Slick\WebStack\Exception\MissingControllerMethodException;
  */
 class ControllerDispatch
 {
-    /**
-     * @var \ReflectionClass
-     */
-    private $controllerClass;
 
-    /**
-     * @var \ReflectionMethod
-     */
-    private $method;
-
-    /**
-     * @var array
-     */
-    private $arguments;
+    private ReflectionClass $controllerClass;
+    private ReflectionMethod $method;
 
     /**
      * Creates a Controller Dispatch
      *
      * @param string $controllerClassName
      * @param string $method
-     * @param array  $arguments
+     * @param array|null $arguments
      *
-     * @throws ControllerNotFoundException      If controller class name does ot exits
-     * @throws BadControllerClassException      If the provided class does not implement ControllerInterface
-     * @throws MissingControllerMethodException If provided method is not defined within the class
+     * @throws ReflectionException
      */
-    public function __construct($controllerClassName, $method, array $arguments = [])
+    public function __construct(string $controllerClassName, string $method, private ?array $arguments = [])
     {
         $this->checkClassExists($controllerClassName);
         $this->checkClassIsAController($controllerClassName);
-        $this->controllerClass = new \ReflectionClass($controllerClassName);
+        $this->controllerClass = new ReflectionClass($controllerClassName);
 
         $this->checkMethodExists($method);
         $this->method = $this->controllerClass->getMethod($method);
-
-        $this->arguments = $arguments;
     }
 
     /**
      * Controller class name
      *
-     * @return \ReflectionClass
+     * @return ReflectionClass
      */
-    public function controllerClass()
+    public function controllerClass(): ReflectionClass
     {
         return $this->controllerClass;
     }
@@ -72,9 +60,9 @@ class ControllerDispatch
     /**
      * The method name that will be called to handle the request
      *
-     * @return \ReflectionMethod
+     * @return ReflectionMethod
      */
-    public function handlerMethod()
+    public function handlerMethod(): ReflectionMethod
     {
         return $this->method;
     }
@@ -84,7 +72,7 @@ class ControllerDispatch
      *
      * @return array
      */
-    public function arguments()
+    public function arguments(): array
     {
         return $this->arguments;
     }
@@ -92,15 +80,15 @@ class ControllerDispatch
     /**
      * Check if controller class exists
      *
-     * @param $controllerClassName
+     * @param string $controllerClassName
      *
      * @throws ControllerNotFoundException if controller class name does ot exits
      */
-    private function checkClassExists($controllerClassName)
+    private function checkClassExists(string $controllerClassName): void
     {
         if (! class_exists($controllerClassName)) {
             throw new ControllerNotFoundException(
-                "The controller class {$controllerClassName} does not exists or cannot be loaded."
+                "The controller class $controllerClassName does not exists or cannot be loaded."
             );
         }
     }
@@ -108,11 +96,11 @@ class ControllerDispatch
     /**
      * Check if controller class implements the ControllerInterface
      *
-     * @param $controllerClassName
+     * @param string $controllerClassName
      *
      * @throws BadControllerClassException If the provided class does not implement ControllerInterface
      */
-    private function checkClassIsAController($controllerClassName)
+    private function checkClassIsAController(string $controllerClassName): void
     {
         if (! is_subclass_of($controllerClassName, ControllerInterface::class)) {
             throw new BadControllerClassException(
@@ -132,7 +120,7 @@ class ControllerDispatch
      *
      * @throws MissingControllerMethodException If provided method is not defined within the class
      */
-    private function checkMethodExists($method)
+    private function checkMethodExists(string $method): void
     {
         if (! $this->controllerClass->hasMethod($method)) {
             throw new MissingControllerMethodException(

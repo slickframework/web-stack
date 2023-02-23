@@ -29,34 +29,16 @@ use Slick\WebStack\Exception\MissingResponseException;
 class DispatcherMiddleware implements MiddlewareInterface
 {
     /**
-     * @var ControllerDispatchInflectorInterface
-     */
-    private $inflector;
-
-    /**
-     * @var ControllerInvokerInterface
-     */
-    private $invoker;
-
-    /**
-     * @var ContextCreator
-     */
-    private $contextCreator;
-
-    /**
      * DispatcherMiddleware constructor.
      * @param ControllerDispatchInflectorInterface $inflector
      * @param ControllerInvokerInterface $invoker
      * @param ContextCreator $contextCreator
      */
     public function __construct(
-        ControllerDispatchInflectorInterface $inflector,
-        ControllerInvokerInterface $invoker,
-        ContextCreator $contextCreator
+        private ControllerDispatchInflectorInterface $inflector,
+        private ControllerInvokerInterface $invoker,
+        private ContextCreator $contextCreator
     ) {
-        $this->inflector = $inflector;
-        $this->invoker = $invoker;
-        $this->contextCreator = $contextCreator;
     }
 
     /**
@@ -77,7 +59,9 @@ class DispatcherMiddleware implements MiddlewareInterface
         $controllerDispatch = $this->inflector->inflect($route);
         $context = $this->contextCreator->create($request, $route);
 
-        $data = $this->invoker->invoke($context, $controllerDispatch);
+        $invoke = $this->invoker->invoke($context, $controllerDispatch);
+        list($response, $data) = $invoke;
+
 
         if ($context->handlesResponse()) {
             return $this->responseFrom($context);
@@ -85,7 +69,7 @@ class DispatcherMiddleware implements MiddlewareInterface
 
         $request = $context->request()->withAttribute('viewData', $this->merge($request, $data));
 
-        return $handler->handle($request);
+        return $response instanceof ResponseInterface ? $response : $handler->handle($request);
     }
 
     /**
@@ -136,7 +120,7 @@ class DispatcherMiddleware implements MiddlewareInterface
     private function responseFrom(ControllerContextInterface $context)
     {
         $response = $context->response();
-        if (! $response instanceof ResponseInterface) {
+        if (!$response instanceof ResponseInterface) {
             throw new MissingResponseException(
                 "Missing response object after handle the request. If you disabled rendering you need to ".
                 "provide an HTTP response object to be returned to the client. Use Context::setResponse() ".

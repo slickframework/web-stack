@@ -9,6 +9,8 @@
 
 namespace Slick\WebStack\Router\Builder;
 
+use Aura\Router\Exception\ImmutableProperty;
+use Aura\Router\Exception\RouteAlreadyExists;
 use Aura\Router\Map;
 use Aura\Router\Route;
 
@@ -24,12 +26,14 @@ class RouteFactory implements FactoryInterface
      * Receives an array with parameters to create a route or route group
      *
      * @param string $name The route name
-     * @param string|array $data Meta data fo the route
+     * @param array|string $data Meta data fo the route
      * @param Map $map The route map to populate
      *
      * @return Route
+     * @throws ImmutableProperty
+     * @throws RouteAlreadyExists
      */
-    public function parse($name, $data, Map $map)
+    public function parse(string $name, array|string $data, Map $map): Route
     {
         if (is_array($data)) {
             return $this->complexRoute($name, $data, $map);
@@ -41,12 +45,14 @@ class RouteFactory implements FactoryInterface
      * Route construct chain start
      *
      * @param string $name The route name
-     * @param string|array $data Meta data fo the route
+     * @param array $data Meta data fo the route
      * @param Map $map The route map to populate
      *
      * @return Route
+     * @throws ImmutableProperty
+     * @throws RouteAlreadyExists
      */
-    private function complexRoute($name, array $data, Map $map)
+    private function complexRoute(string $name, array $data, Map $map): Route
     {
         $route = $map->route($name, $data['path']);
         $method = array_key_exists('method', $data)
@@ -66,9 +72,9 @@ class RouteFactory implements FactoryInterface
      * @param Route $route
      * @param array $data
      *
-     * @return Route
+     * @return void
      */
-    private function addProperties(Route $route, array $data)
+    private function addProperties(Route $route, array $data): void
     {
         $methods = get_class_methods(Route::class);
         $methods = array_diff($methods, ["allows", "path"]);
@@ -77,6 +83,5 @@ class RouteFactory implements FactoryInterface
                 $route->$method($args);
             }
         }
-        return $route;
     }
 }

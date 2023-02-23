@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.5.0] - 2023-02-22
+### Adds
+- Controller dispatcher and middleware returns the controller method response is exists.
+- PHP 8.X support
+### Deprecates
+- ``ControllerContextInterface::disableRendering()`` Controller shouldn't control what is handled by
+  a further middleware in stack.
+- ``ControllerContextInterface::useTemplate()`` Controller shouldn't control what is handled by
+  a further middleware in stack.
+- ``ControllerContextInterface::setResponse()`` Use the controller handler method to return a PSR-7 response message.
+- ``ControllerContextInterface::response()`` Use the controller handler method to return a PSR-7 response message.
+- ``ControllerContextInterface::handlesResponse()`` Use the controller handler method to return a PSR-7 response message.
+- ``RendererMiddleware`` User should handle/install rendering middleware.
+- ``FlashMessagesMiddleware`` User should handle session messages.
+
+### Changes
+- ``slick/template`` version to v2.0.0 for better PHP 8.X support
+### Removes
+- PHP 7.X support
+
+
 ## [v1.4.1] - 2020-11-04
 ### Fixes
 - Composer lock file error.
@@ -70,7 +91,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.5.0...HEAD
+[v1.5.0]: https://github.com/slickframework/web-stack/compare/v1.4.1...v1.5.0
 [v1.4.1]: https://github.com/slickframework/web-stack/compare/v1.4.0...v1.4.1
 [v1.4.0]: https://github.com/slickframework/web-stack/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/slickframework/web-stack/compare/v1.2.1...v1.3.0

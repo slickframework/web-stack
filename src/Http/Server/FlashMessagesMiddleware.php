@@ -20,6 +20,7 @@ use Slick\WebStack\Service\FlashMessages;
  * Flash Messages Middleware
  *
  * @package Slick\WebStack\Http\Server
+ * @deprecated User should handle session messages.
  */
 class FlashMessagesMiddleware implements MiddlewareInterface
 {
