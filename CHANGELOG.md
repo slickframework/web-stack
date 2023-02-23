@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [v1.5.0] - 2023-02-22
+## [v1.5.1] - 2023-02-22
 ### Adds
 - Controller dispatcher and middleware returns the controller method response is exists.
 - PHP 8.X support
@@ -91,8 +91,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.5.0...HEAD
-[v1.5.0]: https://github.com/slickframework/web-stack/compare/v1.4.1...v1.5.0
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.5.1...HEAD
+[v1.5.1]: https://github.com/slickframework/web-stack/compare/v1.4.1...v1.5.1
 [v1.4.1]: https://github.com/slickframework/web-stack/compare/v1.4.0...v1.4.1
 [v1.4.0]: https://github.com/slickframework/web-stack/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/slickframework/web-stack/compare/v1.2.1...v1.3.0
