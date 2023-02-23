@@ -2,7 +2,7 @@ FROM fsilva/php:8.0-apache
 
 RUN apt-install libyaml-dev
 
-# Install APCu
+# Install YAML
 RUN pecl install yaml \
     && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/yaml.ini
 
