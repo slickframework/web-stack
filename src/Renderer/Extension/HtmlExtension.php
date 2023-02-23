@@ -11,6 +11,7 @@ namespace Slick\WebStack\Renderer\Extension;
 
 use Slick\Template\EngineExtensionInterface;
 use Slick\Template\Extension\AbstractTwigExtension;
+use Slick\Template\TemplateEngineInterface;
 use Slick\WebStack\Service\UriGeneratorInterface;
 use Twig\TwigFunction;
 
@@ -148,5 +149,10 @@ class HtmlExtension extends AbstractTwigExtension implements EngineExtensionInte
                 $this->attributesStr($attr)
             );
         };
+    }
+
+    public function appliesTo(TemplateEngineInterface $engine): bool
+    {
+        return true;
     }
 }

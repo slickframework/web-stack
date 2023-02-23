@@ -11,6 +11,7 @@ namespace spec\Slick\WebStack\Controller;
 
 use Slick\WebStack\Controller\ControllerMethods;
 use PhpSpec\ObjectBehavior;
+use Slick\WebStack\ControllerInterface;
 
 /**
  * ControllerMethodsSpec specs
@@ -50,7 +51,7 @@ class ControllerMethodsSpec extends ObjectBehavior
     }
 }
 
-class MyController
+class MyController implements ControllerInterface
 {
     use ControllerMethods;
 }

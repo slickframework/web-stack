@@ -33,7 +33,7 @@ use PhpSpec\ObjectBehavior;
 class DispatcherMiddlewareSpec extends ObjectBehavior
 {
 
-    private $controllerData = ['foo' => 'bar'];
+    private $controllerData = [null, ['foo' => 'bar']];
     private $assignData = ['bar' => 'baz', 'foo' => 'bar'];
 
     function let(
@@ -110,13 +110,30 @@ class DispatcherMiddlewareSpec extends ObjectBehavior
 
     function it_stores_the_dispatch_data_into_request_for_next_handler(
         ServerRequestInterface $request,
-        RequestHandlerInterface $handler
+        RequestHandlerInterface $handler,
+        ResponseInterface $response
     )
     {
+        $handler->handle($request)->willReturn($response);
         $request->withAttribute('viewData', $this->assignData)
             ->shouldBeCalled()
             ->willReturn($request);
-        $this->process($request, $handler);
+        $this->process($request, $handler)->shouldBe($response);
+    }
+
+    function it_return_the_response_from_controller(
+        ServerRequestInterface $request,
+        RequestHandlerInterface $handler,
+        ControllerInvokerInterface $invoker,
+        ResponseInterface $controllerResponse,
+        ControllerContextInterface $context,
+        ControllerDispatch $controllerDispatch
+    ) {
+        $invoker->invoke($context, $controllerDispatch)->willReturn([$controllerResponse, $this->assignData]);
+        $request->withAttribute('viewData', $this->assignData)
+            ->shouldBeCalled()
+            ->willReturn($request);
+        $this->process($request, $handler)->shouldBe($controllerResponse);
     }
 
     function it_returns_the_context_response_when_available(
@@ -134,7 +151,8 @@ class DispatcherMiddlewareSpec extends ObjectBehavior
     function it_throws_an_exception_if_render_is_disabled_and_no_response_is_given(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler,
-        ControllerContextInterface $context
+        ControllerContextInterface $context,
+        ResponseInterface $response
     )
     {
         $context->handlesResponse()->willReturn(true);

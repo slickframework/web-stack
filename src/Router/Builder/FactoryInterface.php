@@ -23,11 +23,11 @@ interface FactoryInterface
     /**
      * Receives an array with parameters to create a route or route group
      *
-     * @param string       $name The route name
-     * @param string|array $data Meta data fo the route
+     * @param string $name The route name
+     * @param array|string $data Meta data fo the route
      * @param Map          $map  The route map to populate
      *
      * @return Route
      */
-    public function parse($name, $data, Map $map);
+    public function parse(string $name, array|string $data, Map $map): Route;
 }

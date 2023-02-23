@@ -30,5 +30,5 @@ interface ControllerInvokerInterface
     public function invoke(
         ControllerContextInterface $context,
         ControllerDispatch $dispatch
-    );
+    ): array;
 }

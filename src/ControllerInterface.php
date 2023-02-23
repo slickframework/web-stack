@@ -25,9 +25,9 @@ interface ControllerInterface
      *
      * @param ControllerContextInterface $context
      *
-     * @return self|ControllerInterface
+     * @return ControllerInterface
      */
-    public function runWithContext(ControllerContextInterface $context);
+    public function runWithContext(ControllerContextInterface $context): ControllerInterface;
 
     /**
      * Sets a variable to the view data model
@@ -39,14 +39,14 @@ interface ControllerInterface
      * @param string|array $name
      * @param mixed$value
      *
-     * @return self|ControllerInterface
+     * @return ControllerInterface
      */
-    public function set($name, $value = null);
+    public function set(string|array $name, mixed $value = null): ControllerInterface;
 
     /**
      * A view data model used by renderer
      *
      * @return array
      */
-    public function data();
+    public function data(): array;
 }

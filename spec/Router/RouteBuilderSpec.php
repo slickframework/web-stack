@@ -31,8 +31,13 @@ use Symfony\Component\Yaml\Parser;
  */
 class RouteBuilderSpec extends ObjectBehavior
 {
-    function let(RoutesParser $parser, FactoryInterface $routeFactory)
+    function let(RoutesParser $parser, FactoryInterface $routeFactory, Route $route)
     {
+        $routeFactory->parse(
+            Argument::type('string'),
+            Argument::any(),
+            Argument::type(Map::class),
+        )->willReturn($route);
         $file = __DIR__ . '/routes.yml';
         $this->beConstructedWith($file, $parser, $routeFactory);
     }

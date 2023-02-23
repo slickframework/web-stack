@@ -9,7 +9,9 @@
 
 namespace spec\Slick\WebStack\Dispatcher;
 
+use Psr\Http\Message\ResponseInterface;
 use Slick\Di\ContainerInterface;
+use Slick\Http\Message\Response;
 use Slick\WebStack\Controller\ControllerContextInterface;
 use Slick\WebStack\Controller\ControllerMethods;
 use Slick\WebStack\ControllerInterface;
@@ -45,18 +47,33 @@ class ControllerInvokerSpec extends ObjectBehavior
     function it_uses_the_controller_dispatch_to_invoke_the_controller_handler(
         ContainerInterface $container,
         ControllerContextInterface $context
-    )
-    {
+    ) {
         $controller = new InvokedController();
         $container->make(InvokedController::class)->willReturn($controller);
-        $data = ['foo' => 'bar'];
+        $data = [null, ['foo' => 'bar']];
         $controllerDispatch = new ControllerDispatch(
             InvokedController::class,
             'index',
             ['bar']
         );
 
-        $this->invoke($context, $controllerDispatch)->shouldReturn($data);
+        $this->invoke($context, $controllerDispatch)->shouldBe($data);
+    }
+
+    function it_can_returns_the_method_return_as_response(
+        ContainerInterface $container,
+        ControllerContextInterface $context
+    ) {
+        $controller = new InvokedController();
+        $container->make(InvokedController::class)->willReturn($controller);
+        $controllerDispatch = new ControllerDispatch(
+            InvokedController::class,
+            'responsive'
+        );
+        $response = $this->invoke($context, $controllerDispatch);
+        $response->shouldHaveCount(2);
+        $response[1]->shouldBe([]);
+        $response[0]->shouldBeAnInstanceOf(ResponseInterface::class);
     }
 }
 
@@ -67,5 +84,10 @@ class InvokedController implements ControllerInterface
     public function index($test)
     {
         $this->set('foo', $test);
+    }
+
+    public function responsive(): ResponseInterface
+    {
+        return new Response(200);
     }
 }

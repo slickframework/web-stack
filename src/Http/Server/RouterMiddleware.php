@@ -15,6 +15,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slick\Http\Message\Message;
 use Slick\Http\Message\Response;
 
 /**
@@ -24,19 +25,14 @@ use Slick\Http\Message\Response;
  */
 class RouterMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var RouterContainer
-     */
-    private $routerContainer;
 
     /**
      * Creates a Router Middleware
      *
      * @param RouterContainer $routerContainer
      */
-    public function __construct(RouterContainer $routerContainer)
+    public function __construct(private RouterContainer $routerContainer)
     {
-        $this->routerContainer = $routerContainer;
     }
 
     /**
@@ -61,21 +57,13 @@ class RouterMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    private function handleFailedRoute(Route $failedRoute)
+    private function handleFailedRoute(Route $failedRoute): Response|Message
     {
-        switch ($failedRoute->failedRule) {
-            case 'Aura\Router\Rule\Allows':
-                $response = (new Response(405))
-                    ->withHeader('Allow', $failedRoute->allows);
-                break;
-
-            case 'Aura\Router\Rule\Accepts':
-                $response = new Response(406);
-                break;
-
-            default:
-                $response = new Response(404);
-        }
-        return $response;
+        return match ($failedRoute->failedRule) {
+            'Aura\Router\Rule\Allows' => (new Response(405))
+                ->withHeader('Allow', $failedRoute->allows),
+            'Aura\Router\Rule\Accepts' => new Response(406),
+            default => new Response(404),
+        };
     }
 }

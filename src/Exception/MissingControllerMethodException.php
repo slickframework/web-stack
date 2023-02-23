@@ -19,4 +19,5 @@ use Slick\WebStack\Exception;
  */
 class MissingControllerMethodException extends InvalidArgumentException implements Exception
 {
+
 }

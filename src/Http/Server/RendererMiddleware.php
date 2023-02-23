@@ -21,6 +21,7 @@ use Slick\WebStack\Renderer\ViewInflectorInterface;
  * RendererMiddleware
  *
  * @package Slick\WebStack\Http\Server
+ * @deprecated User should handle/install rendering middleware
  */
 class RendererMiddleware implements MiddlewareInterface
 {

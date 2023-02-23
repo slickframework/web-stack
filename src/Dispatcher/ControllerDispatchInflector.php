@@ -10,6 +10,8 @@
 namespace Slick\WebStack\Dispatcher;
 
 use Aura\Router\Route;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * ControllerDispatchInflector
@@ -24,8 +26,9 @@ class ControllerDispatchInflector implements ControllerDispatchInflectorInterfac
      * @param Route $route
      *
      * @return ControllerDispatch
+     * @throws ReflectionException
      */
-    public function inflect(Route $route)
+    public function inflect(Route $route): ControllerDispatch
     {
         $arguments = $this->extractAttributes($route);
         return $this->createDispatch($arguments);
@@ -37,7 +40,7 @@ class ControllerDispatchInflector implements ControllerDispatchInflectorInterfac
      * @param Route $route
      * @return array
      */
-    private function extractAttributes(Route $route)
+    private function extractAttributes(Route $route): array
     {
         $arguments = [
             'namespace' => null,
@@ -58,9 +61,10 @@ class ControllerDispatchInflector implements ControllerDispatchInflectorInterfac
      *
      * @param array $arguments
      *
-     * @return ControllerDispatch|Object
+     * @return ControllerDispatch
+     * @throws ReflectionException
      */
-    private function createDispatch(array $arguments)
+    private function createDispatch(array $arguments): ControllerDispatch
     {
         $arguments['controller'] = $this->filterName($arguments['controller']);
         $data = [
@@ -71,7 +75,7 @@ class ControllerDispatchInflector implements ControllerDispatchInflectorInterfac
             'method' => lcfirst($this->filterName($arguments['action'])),
             'arguments' => $arguments['args']
         ];
-        $reflection = new \ReflectionClass(ControllerDispatch::class);
+        $reflection = new ReflectionClass(ControllerDispatch::class);
         return $reflection->newInstanceArgs($data);
     }
 
@@ -82,7 +86,7 @@ class ControllerDispatchInflector implements ControllerDispatchInflectorInterfac
      *
      * @return string
      */
-    private function filterName($name)
+    private function filterName(string $name): string
     {
         $name = str_replace(['-', '_'], ' ', $name);
         $words = explode(' ', $name);
