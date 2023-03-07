@@ -50,9 +50,9 @@ final class Context implements ControllerContextInterface
      * @param string|null $name
      * @param mixed|null $default
      *
-     * @return array|string
+     * @return mixed
      */
-    public function postParam(string $name = null, mixed $default = null): array|string
+    public function postParam(string $name = null, mixed $default = null): mixed
     {
         return $this->getData(
             $this->request->getParsedBody(),
@@ -71,9 +71,9 @@ final class Context implements ControllerContextInterface
      * @param string|null $name
      * @param mixed|null $default
      *
-     * @return array|string
+     * @return mixed
      */
-    public function queryParam(string $name = null, mixed $default = null): array|string
+    public function queryParam(string $name = null, mixed $default = null): mixed
     {
         return $this->getData(
             $this->request->getQueryParams(),
@@ -92,9 +92,9 @@ final class Context implements ControllerContextInterface
      * @param string|null $name
      * @param mixed|null $default
      *
-     * @return array|string
+     * @return mixed
      */
-    public function routeParam(string $name = null, mixed $default = null): array|string
+    public function routeParam(string $name = null, mixed $default = null): mixed
     {
         return $this->getData($this->route->attributes, $name, $default);
     }
@@ -214,11 +214,11 @@ final class Context implements ControllerContextInterface
      *
      * @param mixed       $data
      * @param string|null $name
-     * @param string|null $default
+     * @param mixed $default
      *
      * @return mixed
      */
-    private function getData(mixed $data, string $name = null, string $default = null): mixed
+    private function getData(mixed $data, string $name = null, mixed $default = null): mixed
     {
         if ($name == null) {
             return $data;

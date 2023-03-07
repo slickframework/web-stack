@@ -32,7 +32,7 @@ interface ControllerContextInterface
      *
      * @return array|string
      */
-    public function postParam(string $name = null, mixed $default = null): array|string;
+    public function postParam(string $name = null, mixed $default = null): mixed;
 
     /**
      * Gets the URL query parameter with provided name
@@ -46,7 +46,7 @@ interface ControllerContextInterface
      *
      * @return array|string
      */
-    public function queryParam(string $name = null, mixed $default = null): array|string;
+    public function queryParam(string $name = null, mixed $default = null): mixed;
 
     /**
      * Gets the route parameter with provided name
@@ -60,7 +60,7 @@ interface ControllerContextInterface
      *
      * @return array|string
      */
-    public function routeParam(string $name = null, mixed $default = null): array|string;
+    public function routeParam(string $name = null, mixed $default = null): mixed;
 
     /**
      * Sets a redirection header in the HTTP response
