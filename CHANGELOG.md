@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.5.3] - 2023-03-07
+### Fixes
+- Context getRouteParam(), getQueryParam() and getPostParam() now accept ``mixed`` as default value
+  and returns ``mixed`` as well.
+
 ## [v1.5.2] - 2023-02-23
 ### Removes
 - ``slick/configuration`` dependency as it isn't used anywhere.
@@ -95,7 +100,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.5.2...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.5.3...HEAD
+[v1.5.3]: https://github.com/slickframework/web-stack/compare/v1.5.2...v1.5.3
 [v1.5.2]: https://github.com/slickframework/web-stack/compare/v1.5.1...v1.5.2
 [v1.5.1]: https://github.com/slickframework/web-stack/compare/v1.4.1...v1.5.1
 [v1.4.1]: https://github.com/slickframework/web-stack/compare/v1.4.0...v1.4.1
