@@ -18,6 +18,7 @@ jobs:
           - "8.3"
         coverage:
           - xdebug
+          - xdebug
         dependencies: [ highest ]
 
     steps:
