@@ -19,17 +19,20 @@
   ],
   "autoload": {
     "psr-4": {
-      "Slick\\WebStack\\": "src"
+      "Slick\\WebStack\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Slick\\WebStack\\Tests\\": "tests",
+      "Test\\Slick\\WebStack\\": "tests/",
       "Features\\App\\": "features/app/src"
     }
   },
   "require": {
-    "php": ">=8.2"
+    "php": ">=8.2",
+    "psr/log": ">=2.0",
+    "slick/di": ">=2.9",
+    "slick/http": ">=3.0"
   },
   "require-dev": {
     "phpmd/phpmd": "dev-master",
