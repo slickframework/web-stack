@@ -14,9 +14,8 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - "8.0"
-          - "8.1"
           - "8.2"
+          - "8.3"
         dependencies: [ highest ]
 
     steps:
@@ -47,3 +46,17 @@ jobs:
 
       - name: "Run tests"
         run: "composer test"
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        # If you wish to fail your job when the Quality Gate is red, uncomment the
+        # following lines. This would typically be used to fail a deployment.
+      - uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

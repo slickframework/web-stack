@@ -1,31 +1,13 @@
-version: '3.2'
-
 services:
 
   php:
     build: docker/php
-    ports:
-      - 80
     volumes:
       - ./:/var/www/app
+    ports:
+      - 8080:80
     environment:
       - USE_XDEBUG=yes
-
-  docs:
-    image: nginx:latest
-    ports:
-      - 80
-    volumes:
-      - ./docs/build/html:/usr/share/nginx/html:ro
-
-  build-docs:
-    build: docker/build-docs
-    volumes:
-    - ./docs:/docs
-
-  webgrind:
-    image: jokkedk/webgrind:latest
-    volumes:
-      - ./tmp:/tmp
-    ports:
-      - 8888:80
+      - XDEBUG_MODE=develop,debug,coverage
+      - ENABLE_OPCACHE=no
+      - ENABLE_XDEBUG_FOR_MAC=yes
