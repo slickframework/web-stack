@@ -32,6 +32,12 @@
     "php": ">=8.2"
   },
   "require-dev": {
+    "phpmd/phpmd": "dev-master",
+    "phpspec/prophecy": "^1.0@dev",
+    "phpspec/prophecy-phpunit": "^2.0@dev",
+    "phpstan/phpstan": "2.0.x-dev",
+    "phpunit/phpunit": "^11.2@dev",
+    "squizlabs/php_codesniffer": "4.0.x-dev"
   },
   "extra": {
     "branch-alias": {
@@ -42,7 +48,8 @@
   "scripts": {
     "test": "phpunit",
     "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src",
-    "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src"
+    "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src",
+    "check-code": "phpmd --ignore-errors-on-exit src html build/phpmd.xml > build/phpmd.html && phpstan analyze"
   },
   "config": {
     "preferred-install": {

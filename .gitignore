@@ -4,3 +4,4 @@ composer.phar
 .DS_Store
 /tmp
 .scannerwork
+.phpunit.result.cache
