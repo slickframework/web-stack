@@ -19,8 +19,10 @@ jobs:
         dependencies: [ highest ]
 
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v2"
+      - uses: actions/checkout@v4
+        name: "Checkout"
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
@@ -47,9 +49,6 @@ jobs:
       - name: "Run tests"
         run: "composer test"
 
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
