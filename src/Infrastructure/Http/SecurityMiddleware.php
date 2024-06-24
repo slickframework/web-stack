@@ -40,7 +40,6 @@ final readonly class SecurityMiddleware implements MiddlewareInterface
         private SecurityAuthenticatorInterface $security,
         private AuthorizationCheckerInterface  $authorizationChecker
     ) {
-
     }
 
     /**
@@ -70,6 +69,6 @@ final readonly class SecurityMiddleware implements MiddlewareInterface
             return $response;
         }
 
-        return new Response(403,'Access denied.');
+        return new Response(403, 'Access denied.');
     }
 }

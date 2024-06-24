@@ -41,7 +41,7 @@ final class RememberMeAuthenticatorFactory implements AuthenticatorFactoryInterf
      * @inheritDoc
      * @phpstan-return RememberMeAuthenticator<UserInterface>
      */
-        public static function create(
+    public static function create(
         ContainerInterface $container,
         array $properties = [],
         ?EntryPointAwareInterface $factoryHandler = null

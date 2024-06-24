@@ -43,6 +43,7 @@ final class FrontControllerSlickModule implements SlickModuleInterface
 
     /**
      * @inheritDoc
+     * @return array<string, mixed>
      */
     public function services(): array
     {
@@ -58,6 +59,9 @@ final class FrontControllerSlickModule implements SlickModuleInterface
     }
 
 
+    /**
+     * @return array<string, mixed>
+     */
     public function settings(): array
     {
         return [];

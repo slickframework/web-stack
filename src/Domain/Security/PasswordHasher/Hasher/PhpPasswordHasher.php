@@ -86,7 +86,6 @@ final class PhpPasswordHasher implements PasswordHasherInterface
             'memory_cost' => $memLimit >> 10,
             'threads' => 1,
         ];
-
     }
 
     /**

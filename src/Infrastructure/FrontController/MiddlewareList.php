@@ -14,6 +14,7 @@ namespace Slick\WebStack\Infrastructure\FrontController;
 use ArrayIterator;
 use Doctrine\Common\Collections\ArrayCollection;
 use IteratorAggregate;
+use Psr\Http\Server\MiddlewareInterface;
 
 /**
  * MiddlewareList
@@ -35,6 +36,7 @@ final class MiddlewareList implements IteratorAggregate
 
     /**
      * @inheritDoc
+     * @return ArrayCollection<string, MiddlewareHandlerInterface>
      */
     public function getIterator(): ArrayCollection
     {
@@ -75,6 +77,4 @@ final class MiddlewareList implements IteratorAggregate
         $this->middlewares = new ArrayCollection($newList);
         return $this;
     }
-
-
 }

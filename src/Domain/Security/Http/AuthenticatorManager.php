@@ -52,7 +52,6 @@ final class AuthenticatorManager implements AuthenticatorManagerInterface
         private readonly PasswordHasherInterface $hasher,
         private readonly ?LoggerInterface $logger = null
     ) {
-
     }
 
     /**

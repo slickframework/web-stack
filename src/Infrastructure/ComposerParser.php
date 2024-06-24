@@ -13,6 +13,7 @@ namespace Slick\WebStack\Infrastructure;
 
 use JsonException;
 use RuntimeException;
+use Slick\WebStack\Infrastructure\Exception\InvalidComposerFile;
 
 /**
  * ComposerParser
@@ -36,7 +37,7 @@ final class ComposerParser
     public function __construct(string $composerFile)
     {
         if (!is_file($composerFile) || !$composerContents = file_get_contents($composerFile)) {
-            throw new RuntimeException("Composer file '$composerFile' does not exist or is not readable.");
+            throw new InvalidComposerFile("Composer file '$composerFile' does not exist or is not readable.");
         }
         $this->data = json_decode(json: $composerContents, flags: JSON_THROW_ON_ERROR);
     }

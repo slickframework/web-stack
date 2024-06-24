@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Domain\Security\Csrf;
 
-
 /**
  * CsrfTokenManager
  *

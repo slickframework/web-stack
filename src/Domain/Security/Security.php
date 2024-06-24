@@ -127,8 +127,7 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
     {
         $securityProfile = $this->profileFactory->createProfile($this->options, $request);
         if ($securityProfile) {
-            if (
-                $securityProfile instanceof StatefulSecurityProfileInterface &&
+            if ($securityProfile instanceof StatefulSecurityProfileInterface &&
                 $securityProfile->restoreToken()
             ) {
                 return null;

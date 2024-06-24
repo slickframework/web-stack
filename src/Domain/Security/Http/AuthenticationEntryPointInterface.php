@@ -43,5 +43,4 @@ interface AuthenticationEntryPointInterface
         ServerRequestInterface $request,
         ?AuthenticationException $authException = null
     ): ResponseInterface;
-
 }

@@ -58,13 +58,13 @@ final class FormLoginHandler implements AuthenticatorHandlerInterface
      */
     public function onAuthenticationSuccess(ServerRequestInterface $request, TokenInterface $token): ?ResponseInterface
     {
-       foreach ($this->handlers as $handler) {
-           $response = $handler->onAuthenticationSuccess($request, $token);
-           if ($response instanceof ResponseInterface) {
-               return $response;
-           }
-       }
-       return null;
+        foreach ($this->handlers as $handler) {
+            $response = $handler->onAuthenticationSuccess($request, $token);
+            if ($response instanceof ResponseInterface) {
+                return $response;
+            }
+        }
+        return null;
     }
 
     /**
@@ -86,7 +86,7 @@ final class FormLoginHandler implements AuthenticatorHandlerInterface
     /**
      * @inheritDoc
      */
-        public function onAuthenticate(ServerRequestInterface $request, PassportInterface $passport): PassportInterface
+    public function onAuthenticate(ServerRequestInterface $request, PassportInterface $passport): PassportInterface
     {
         foreach ($this->handlers as $handler) {
             $passport = $handler->onAuthenticate($request, $passport);

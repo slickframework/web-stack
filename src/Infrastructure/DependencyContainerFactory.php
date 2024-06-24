@@ -32,7 +32,6 @@ final class DependencyContainerFactory
     private ?ContainerInterface $container = null;
 
     private ContainerBuilderInterface $builder;
-
     /**
      *
      */
@@ -89,7 +88,14 @@ final class DependencyContainerFactory
         return $this;
     }
 
-    public function loadApplicationServices($sourcePath, $services): DependencyContainerFactory
+    /**
+     * Loads application services from given source path and services file.
+     *
+     * @param string $sourcePath Path to the directory containing service definitions
+     * @param array<string, mixed> $services Array of service definitions file paths
+     * @return DependencyContainerFactory
+     */
+    public function loadApplicationServices(string $sourcePath, array $services): DependencyContainerFactory
     {
         $this
             ->load(new DirectoryDefinitionLoader($sourcePath . '/config/services'))

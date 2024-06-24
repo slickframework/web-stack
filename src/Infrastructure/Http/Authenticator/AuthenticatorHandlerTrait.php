@@ -27,7 +27,7 @@ trait AuthenticatorHandlerTrait
     /**
      * @inheritDoc
      */
-        public function withHandler(AuthenticatorHandlerInterface $handler): AuthenticatorInterface
+    public function withHandler(AuthenticatorHandlerInterface $handler): AuthenticatorInterface
     {
         $this->handler = $handler;
         return $this;

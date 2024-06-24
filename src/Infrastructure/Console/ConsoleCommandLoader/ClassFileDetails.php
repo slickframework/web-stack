@@ -97,7 +97,7 @@ final class ClassFileDetails
      */
     private function parseFile(string $content): void
     {
-        $regex = '/class (?<name>\w*)?(\sextends\s(?<parent>\w*))?/i';
+        $regex = '/class (?<name>\w+)?(\sextends\s(?<parent>\w+))?/i';
         $success = preg_match($regex, $content, $matches);
         if ($success === false || !isset($matches['name'])) {
             return;

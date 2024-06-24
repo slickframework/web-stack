@@ -35,7 +35,6 @@ final class UserIntegrityTokenValidator implements TokenValidatorInterface
      */
     public function __construct(private readonly UserProviderInterface $provider)
     {
-
     }
 
     /**
@@ -53,8 +52,7 @@ final class UserIntegrityTokenValidator implements TokenValidatorInterface
         /** @var PasswordAuthenticatedUserInterface $user */
         $user = $this->provider->loadUserByIdentifier($storedUser->userIdentifier());
 
-        if (
-            $storedUser instanceof PasswordAuthenticatedUserInterface &&
+        if ($storedUser instanceof PasswordAuthenticatedUserInterface &&
             $user->password() !== $storedUser->password()
         ) {
             return false;

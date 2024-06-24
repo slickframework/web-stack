@@ -54,7 +54,8 @@ abstract class AbstractToken implements TokenInterface
         $class = substr($class, strrpos($class, '\\') + 1);
         return sprintf(
             '%s(user="%s", roles="%s")',
-            $class, $this->userIdentifier(),
+            $class,
+            $this->userIdentifier(),
             implode(', ', $this->roleNames)
         );
     }
