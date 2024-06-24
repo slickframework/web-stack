@@ -19,6 +19,8 @@ jobs:
         dependencies: [ highest ]
 
     steps:
+      - name: Clear workspace
+        run: rm -rf $GITHUB_WORKSPACE/*
       - uses: actions/checkout@v4
         name: "Checkout"
         with:
