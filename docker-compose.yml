@@ -17,10 +17,10 @@ services:
     ports:
       - 8880:80
     environment:
-      - USE_XDEBUG=no
+      - USE_XDEBUG=yes
       - XDEBUG_MODE=develop,debug,coverage
       - ENABLE_OPCACHE=no
-      - ENABLE_XDEBUG_FOR_MAC=no
+      - ENABLE_XDEBUG_FOR_MAC=yes
       - WEBROOT=features/app/webroot
 
   selenium:

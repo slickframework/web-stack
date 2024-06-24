@@ -24,7 +24,8 @@ final class ComposerParser
     /**
      * @var object{
      *     'name': string,
-     *     'version': string|int
+     *     'version': string|int,
+     *     'description': string
      * }
      */
     private object $data;
@@ -73,5 +74,15 @@ final class ComposerParser
         $owner = ucwords(trim($parts[0]));
         $app = ucfirst(trim($parts[1]));
         return "$owner's $app";
+    }
+
+    /**
+     * Returns the description of the application.
+     *
+     * @return string The description of the application.
+     */
+    public function description(): string
+    {
+        return (string) $this->data->description;
     }
 }

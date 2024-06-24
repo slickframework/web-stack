@@ -52,6 +52,15 @@ class ComposerParserTest extends TestCase
         $this->assertNull($parser);
     }
 
+    #[Test]
+    public function description(): void
+    {
+        $composer = dirname(__DIR__, 2) . '/composer.json';
+        $data = json_decode(file_get_contents($composer), true);
+        $parser = new ComposerParser($composer);
+        $this->assertSame($data["description"], $parser->description());
+    }
+
     private function readComposer(string $composerFile): array
     {
         $data = json_decode(file_get_contents($composerFile), true);

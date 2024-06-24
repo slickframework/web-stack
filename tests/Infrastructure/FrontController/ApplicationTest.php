@@ -23,7 +23,7 @@ class ApplicationTest extends TestCase
     public function runApplication(): void
     {
         $request = $this->prophesize(ServerRequestInterface::class)->reveal();
-        $app = new Application($request);
+        $app = new Application($request, dirname(__DIR__, 3).'/features/app');
         $this->assertInstanceOf(ResponseInterface::class, $app->run());
     }
 }

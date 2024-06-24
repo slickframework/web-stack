@@ -16,6 +16,8 @@ require dirname(__DIR__, 3).'/vendor/autoload.php';
 
 $request = new Request();
 
+$application = new Application($request, APP_ROOT);
+
 // ------------------------------------------------------
 //  Load any bootstrap actions
 // ------------------------------------------------------
@@ -24,7 +26,8 @@ if (is_file($bootstrapFile)) {
     require $bootstrapFile;
 }
 
-$response = (new Application($request))->run();
+
+$response = $application->run();
 
 // output the response status
 http_response_code($response->getStatusCode());

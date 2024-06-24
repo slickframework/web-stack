@@ -6,4 +6,4 @@ Feature: Application setup and start
   @webapp
   Scenario: Dispatch a simple controller
     Given I am on "/misc/check-status"
-    Then I should see "It works!"
+    Then I should see "Web stack application demo"

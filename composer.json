@@ -31,8 +31,9 @@
   },
   "require": {
     "php": ">=8.2",
+    "doctrine/collections": "3.0.x-dev",
     "psr/log": ">=2.0",
-    "slick/di": ">=2.9",
+    "slick/di": "^2.0@dev",
     "slick/fswatch": "^0.1.0@dev",
     "slick/http": ">=3.0",
     "symfony/console": "7.2.x-dev"
