@@ -49,11 +49,6 @@ jobs:
       - name: "Run tests"
         run: "composer test"
 
-      - name: Clean the workspace
-        uses: docker://alpine
-        with:
-          args: /bin/sh -c "find \"${GITHUB_WORKSPACE}\" -mindepth 1 ! -name . -prune -exec rm -rf {} +"
-
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
