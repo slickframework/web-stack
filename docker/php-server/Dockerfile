@@ -10,5 +10,5 @@ WORKDIR /var/www/app
 
 ENV PATH=./vendor/bin:/var/www/.composer/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-CMD ["apache2-foreground"]
 
+CMD ["apache2-foreground"]

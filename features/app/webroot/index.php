@@ -10,7 +10,7 @@
 use Slick\Http\Message\Server\Request;
 use Slick\WebStack\Infrastructure\FrontController\Application;
 
-require dirname(__DIR__, 3).'/vendor/autoload.php';
+require_once dirname(__DIR__, 3).'/vendor/autoload.php';
 
 // ------------------------------------------------------
 //  Initialize application
@@ -23,7 +23,7 @@ $application = new Application($request, dirname(__DIR__));
 // ------------------------------------------------------
 $bootstrapFile = APP_ROOT . '/config/bootstrap.php';
 if (is_file($bootstrapFile)) {
-    require $bootstrapFile;
+    include_once $bootstrapFile;
 }
 
 // ------------------------------------------------------

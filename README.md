@@ -4,7 +4,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/slickframework/web-stack/continuous-integration.yml?style=flat-square)](https://github.com/slickframework/web-stack/actions/workflows/continuous-integration.yml)
 [![Quality Score](https://img.shields.io/scrutinizer/g/slickframework/web-stack/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/slickframework/web-stack?branch=master)
-[![Quality Gate Status](https://sonarqube.fsilva.info/api/project_badges/measure?project=slickframework_web-stack_cdc9afed-0e9e-42ef-83a6-db3f934d9592&metric=alert_status&token=sqb_64f2dde98df223a9e07ac9e8e70fc5871f1eef72)](https://sonarqube.fsilva.info/dashboard?id=slickframework_web-stack_cdc9afed-0e9e-42ef-83a6-db3f934d9592)
+[![Quality Gate Status](https://sonarqube.fsilva.info/api/project_badges/measure?project=web-stack&metric=alert_status&token=sqb_e54d9740f9eab19793ca1fdad10ecedf08e7a06b)](https://sonarqube.fsilva.info/dashboard?id=web-stack)
 [![Total Downloads](https://img.shields.io/packagist/dt/slick/webstack.svg?style=flat-square)](https://packagist.org/packages/slick/webstack)
 
 ``slick/webstack`` is a [PSR-15](https://www.php-fig.org/psr/psr-15/) HTTP middleware stack that can help you create
