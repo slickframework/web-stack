@@ -10,13 +10,13 @@
 use Slick\Http\Message\Server\Request;
 use Slick\WebStack\Infrastructure\FrontController\Application;
 
-define('APP_ROOT', dirname(__DIR__));
-
 require dirname(__DIR__, 3).'/vendor/autoload.php';
 
+// ------------------------------------------------------
+//  Initialize application
+// ------------------------------------------------------
 $request = new Request();
-
-$application = new Application($request, APP_ROOT);
+$application = new Application($request, dirname(__DIR__));
 
 // ------------------------------------------------------
 //  Load any bootstrap actions
@@ -26,16 +26,7 @@ if (is_file($bootstrapFile)) {
     require $bootstrapFile;
 }
 
-
-$response = $application->run();
-
-// output the response status
-http_response_code($response->getStatusCode());
-
-// Send response headers
-foreach ($response->getHeaders() as $name => $value) {
-    $line = implode(', ', $value);
-    header("$name: $line");
-}
-// Send response body
-echo $response->getBody();
+// ------------------------------------------------------
+//  Run application and output the response.
+// ------------------------------------------------------
+$application->output($application->run());

@@ -43,7 +43,9 @@ final class RememberMeDetails implements Stringable
         }
 
         if (false === $cookieParts[1] = base64_decode(strtr($cookieParts[1], '-_~', '+/='), true)) {
-            throw new AuthenticationException('The user identifier contains a character from outside the base64 alphabet.');
+            throw new AuthenticationException(
+                'The user identifier contains a character from outside the base64 alphabet.'
+            );
         }
 
         $params = [

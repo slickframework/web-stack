@@ -41,7 +41,8 @@ interface AuthenticatorHandlerInterface
      * @param ServerRequestInterface $request The server request of the authentication failure
      * @param AuthenticationException $exception The authentication exception that caused the failure
      *
-     * @return ResponseInterface|null The response to be sent back to the client, or null if no response needs to be sent
+     * @return ResponseInterface|null The response to be sent back to the client, or null if no
+     * response needs to be sent
      */
     public function onAuthenticationFailure(
         ServerRequestInterface $request,

@@ -68,8 +68,11 @@ final class Pbkdf2PasswordHasher implements LegacyPasswordHasherInterface
     /**
      * @inheritDoc
      */
-    public function verify(string $hashedPassword, #[SensitiveParameter] string $plainPassword, ?string $salt = null): bool
-    {
+    public function verify(
+        string $hashedPassword,
+        #[SensitiveParameter] string $plainPassword,
+        ?string $salt = null
+    ): bool {
         if (\strlen($hashedPassword) !== $this->encodedLength || str_contains($hashedPassword, '$')) {
             return false;
         }

@@ -9,23 +9,24 @@
 
 declare(strict_types=1);
 
-namespace Test\Slick\WebStack\Infrastructure\Console;
+namespace Test\Slick\WebStack;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use function Slick\WebStack\Infrastructure\Console\constantValue;
+use function Slick\WebStack\constantValue;
 
 /**
- * ConsoleFunctionsTest
+ * FunctionsTest
  *
- * @package Test\Slick\WebStack\Infrastructure\Console
+ * @package Test\Slick\WebStack
  */
-final class ConsoleFunctionsTest extends TestCase
+class FunctionsTest extends TestCase
 {
+
     #[Test]
     public function checkConstant(): void
     {
-        $this->assertEquals(\APP_ROOT, constantValue('APP_ROOT', '/test'));
+        $this->assertEquals(APP_ROOT, constantValue('APP_ROOT', '/test'));
         $this->assertEquals('test', constantValue('_OTHER_CONST', 'test'));
     }
 }

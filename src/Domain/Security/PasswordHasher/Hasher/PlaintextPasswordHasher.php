@@ -42,8 +42,12 @@ final class PlaintextPasswordHasher implements LegacyPasswordHasherInterface
     /**
      * @inheritDoc
      */
-    public function verify(string $hashedPassword, #[SensitiveParameter] string $plainPassword, ?string $salt = null): bool
-    {
+    public function verify(
+        string $hashedPassword,
+        #[SensitiveParameter]
+        string $plainPassword,
+        ?string $salt = null
+    ): bool {
         if ($this->isPasswordTooLong($plainPassword)) {
             return false;
         }

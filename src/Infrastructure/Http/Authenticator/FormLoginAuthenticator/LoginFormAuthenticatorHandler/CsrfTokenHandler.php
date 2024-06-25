@@ -53,8 +53,10 @@ final readonly class CsrfTokenHandler implements AuthenticatorHandlerInterface
     /**
      * @inheritDoc
      */
-    public function onAuthenticationFailure(ServerRequestInterface $request, AuthenticationException $exception): ?ResponseInterface
-    {
+    public function onAuthenticationFailure(
+        ServerRequestInterface $request,
+        AuthenticationException $exception
+    ): ?ResponseInterface {
         return null;
     }
 

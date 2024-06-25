@@ -120,8 +120,10 @@ final class FormLoginAuthenticator implements AuthenticatorInterface
     /**
      * @inheritDoc
      */
-    public function onAuthenticationFailure(ServerRequestInterface $request, AuthenticationException $exception): ?ResponseInterface
-    {
+    public function onAuthenticationFailure(
+        ServerRequestInterface $request,
+        AuthenticationException $exception
+    ): ?ResponseInterface {
         if ($request->getMethod() !== "POST") {
             return null;
         }
@@ -149,7 +151,8 @@ final class FormLoginAuthenticator implements AuthenticatorInterface
         if (!is_array($parsedBody)) {
             $code = $request->getMethod() !== "POST";
             throw new AuthenticationException(
-                message: "The post data has no valid credentials. Please check your form field names in your security configuration and try again.",
+                message: "The post data has no valid credentials. Please check your form field names in ".
+                "your security configuration and try again.",
                 code: $code ? 1 : 0
             );
         }

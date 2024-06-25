@@ -33,8 +33,8 @@ interface TokenStorageInterface
      * Sets the value for the specified token ID.
      *
      * @param string $tokenId The ID of the token.
-     * @param string $token The value of the token.
-     *                      Please note that the $token is sensitive and should be treated with caution.
+     * @param string $token The value of the token. Please note that the $token is sensitive and
+     * should be treated with caution.
      * @return void
      */
     public function set(string $tokenId, #[SensitiveParameter] string $token): void;

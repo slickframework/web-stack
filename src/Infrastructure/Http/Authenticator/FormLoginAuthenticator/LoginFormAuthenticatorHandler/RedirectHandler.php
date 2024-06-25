@@ -52,10 +52,14 @@ final class RedirectHandler implements AuthenticatorHandlerInterface
     /**
      * @inheritDoc
      */
-    public function onAuthenticationFailure(ServerRequestInterface $request, AuthenticationException $exception): ?ResponseInterface
-    {
+    public function onAuthenticationFailure(
+        ServerRequestInterface $request,
+        AuthenticationException $exception
+    ): ?ResponseInterface {
         $shouldRedirect = !in_array($request->getUri()->getPath(), $this->properties->paths());
-        return $shouldRedirect ? new Response(status: 302, headers: ['Location' => $this->properties->path('login')]) : null;
+        return $shouldRedirect
+            ? new Response(status: 302, headers: ['Location' => $this->properties->path('login')])
+            : null;
     }
 
     /**

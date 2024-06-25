@@ -97,7 +97,8 @@ final class PhpPasswordHasher implements PasswordHasherInterface
             throw new InvalidPasswordException("Password too long.");
         }
 
-        if (PASSWORD_BCRYPT === $this->algorithm && (72 < strlen($plainPassword) || str_contains($plainPassword, "\0"))) {
+        $isBigOrHasNullByte = 72 < strlen($plainPassword) || str_contains($plainPassword, "\0");
+        if (PASSWORD_BCRYPT === $this->algorithm && $isBigOrHasNullByte) {
             $plainPassword = base64_encode(hash('sha512', $plainPassword, true));
         }
 
@@ -115,7 +116,8 @@ final class PhpPasswordHasher implements PasswordHasherInterface
 
         if (!str_starts_with($hashedPassword, '$argon')) {
             // Bcrypt cuts on NUL chars and after 72 bytes
-            if (str_starts_with($hashedPassword, '$2') && (72 < strlen($plainPassword) || str_contains($plainPassword, "\0"))) {
+            $isBigOrHasNullByte = 72 < strlen($plainPassword) || str_contains($plainPassword, "\0");
+            if (str_starts_with($hashedPassword, '$2') && ($isBigOrHasNullByte)) {
                 $plainPassword = base64_encode(hash('sha512', $plainPassword, true));
             }
 

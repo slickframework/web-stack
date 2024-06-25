@@ -124,16 +124,16 @@ final class RememberMeAuthenticator implements AuthenticatorInterface
     /**
      * @inheritDoc
      */
-    public function onAuthenticationFailure(ServerRequestInterface $request, AuthenticationException $exception): ?ResponseInterface
-    {
+    public function onAuthenticationFailure(
+        ServerRequestInterface $request,
+        AuthenticationException $exception
+    ): ?ResponseInterface {
         if ($exception instanceof UserNotFoundException) {
             $this->logger?->info('User for remember-me cookie not found.', ['exception' => $exception]);
             return null;
         }
 
-        if ($exception instanceof AuthenticationException) {
-            $this->logger?->debug('Remember me authentication failed.', ['exception' => $exception]);
-        }
+        $this->logger?->debug('Remember me authentication failed.', ['exception' => $exception]);
 
         return null;
     }

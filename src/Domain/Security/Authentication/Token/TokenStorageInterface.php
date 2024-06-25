@@ -34,7 +34,8 @@ interface TokenStorageInterface
      * Sets the authentication token.
      * @template T of UserInterface
      *
-     * @param TokenInterface<T>|null $token A TokenInterface token, or null if no further authentication information should be stored
+     * @param TokenInterface<T>|null $token A TokenInterface token, or null if no further
+     * authentication information should be stored
      */
     public function setToken(?TokenInterface $token): void;
 }

@@ -5,10 +5,10 @@ services:
     volumes:
       - ./:/var/www/app
     environment:
-      - USE_XDEBUG=yes
+      - USE_XDEBUG=no
       - XDEBUG_MODE=develop,debug,coverage
       - ENABLE_OPCACHE=no
-      - ENABLE_XDEBUG_FOR_MAC=yes
+      - ENABLE_XDEBUG_FOR_MAC=no
 
   php-server:
     build: docker/php-server

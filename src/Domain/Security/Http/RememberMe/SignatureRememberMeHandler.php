@@ -84,7 +84,11 @@ final class SignatureRememberMeHandler extends AbstractRememberMeHandler impleme
     public function consumeRememberMeCookie(RememberMeDetails $rememberMeDetails): UserInterface
     {
         try {
-            $this->hasher->acceptSignatureHash($rememberMeDetails->userIdentifier(), $rememberMeDetails->expires(), $rememberMeDetails->value());
+            $this->hasher->acceptSignatureHash(
+                $rememberMeDetails->userIdentifier(),
+                $rememberMeDetails->expires(),
+                $rememberMeDetails->value()
+            );
         } catch (InvalidSignatureException $e) {
             throw new AuthenticationException('The cookie\'s hash is invalid.', 0, $e);
         } catch (ExpiredSignatureException $e) {

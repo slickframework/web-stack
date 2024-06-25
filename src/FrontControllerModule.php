@@ -26,7 +26,7 @@ use Slick\WebStack\Infrastructure\FrontController\SlickModuleInterface;
  *
  * @package Slick\WebStack
  */
-final class FrontControllerSlickModule implements SlickModuleInterface
+final class FrontControllerModule implements SlickModuleInterface
 {
 
     private ComposerParser $composerParser;

@@ -72,7 +72,10 @@ final class AuthenticatorManager implements AuthenticatorManagerInterface
             }
 
             $skipped[] = $authenticator;
-            $this->logger?->debug('Authenticator does not support the request.', ['authenticator' => $authenticator::class]);
+            $this->logger?->debug(
+                'Authenticator does not support the request.',
+                ['authenticator' => $authenticator::class]
+            );
         }
 
         $request = $request->withAttribute(self::AUTHENTICATORS_ATTRIBUTE_KEY, $authenticators);

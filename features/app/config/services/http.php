@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Config;
+namespace Features\App\Config\Services;
 
 use Slick\Http\Message\Response;
 

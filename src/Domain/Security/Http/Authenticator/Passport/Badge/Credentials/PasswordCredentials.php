@@ -39,7 +39,9 @@ class PasswordCredentials implements CredentialsInterface
     public function password(): string
     {
         if (null === $this->password) {
-            throw new LogicException('The credentials are erased as another listener already verified these credentials.');
+            throw new LogicException(
+                'The credentials are erased as another listener already verified these credentials.'
+            );
         }
         return $this->password;
     }

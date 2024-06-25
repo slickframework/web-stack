@@ -18,7 +18,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Slick\Http\Server\Middleware\CallableMiddleware;
 use Slick\Http\Server\MiddlewareStack;
-use Slick\WebStack\FrontControllerSlickModule;
+use Slick\WebStack\DispatcherModule;
+use Slick\WebStack\FrontControllerModule;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 
 /**
@@ -39,9 +40,15 @@ final class Application
         private readonly ServerRequestInterface $request,
         private readonly string $rootPath
     ) {
+        if (!defined('APP_ROOT')) {
+            define("APP_ROOT", $this->rootPath);
+        }
         $this->middlewareList = new MiddlewareList();
         $this->containerFactory = DependencyContainerFactory::instance();
-        $this->modules = [new FrontControllerSlickModule()];
+        $this->modules = [
+            new FrontControllerModule(),
+            new DispatcherModule(),
+        ];
     }
 
     /**
@@ -66,6 +73,27 @@ final class Application
 
         return $this->startServerRequestHandler()
             ->process($this->request);
+    }
+
+    /**
+     * Outputs the response.
+     *
+     * @param ResponseInterface $response The response to output.
+     *
+     * @return void
+     */
+    public function output(ResponseInterface $response): void
+    {
+        // output the response status
+        http_response_code($response->getStatusCode());
+
+        // Send response headers
+        foreach ($response->getHeaders() as $name => $value) {
+            $line = implode(', ', $value);
+            header("$name: $line");
+        }
+        // Send response body
+        print $response->getBody();
     }
 
     /**
