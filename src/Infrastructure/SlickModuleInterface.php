@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Slick\WebStack\Infrastructure\FrontController;
+namespace Slick\WebStack\Infrastructure;
 
-use Slick\Di\DefinitionInterface;
+use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandlerInterface;
 
 /**
  * ModuleInterface
@@ -34,11 +34,4 @@ interface SlickModuleInterface
      * @return array<string, mixed> The array of application settings.
      */
     public function settings(): array;
-
-    /**
-     * Returns an array of middleware handlers used in the application.
-     *
-     * @return array<MiddlewareHandlerInterface> An array of middleware handlers used in the application.
-     */
-    public function middlewareHandlers(): array;
 }

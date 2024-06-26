@@ -15,15 +15,17 @@ use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandler;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewarePosition;
 use Slick\WebStack\Infrastructure\FrontController\Position;
+use Slick\WebStack\Infrastructure\FrontController\WebModuleInterface;
 use Slick\WebStack\Infrastructure\Http\DispatcherMiddleware;
 use Slick\WebStack\Infrastructure\Http\RoutingMiddleware;
+use Slick\WebStack\Infrastructure\SlickModuleInterface;
 
 /**
  * DispatcherSlickModule
  *
  * @package Slick\WebStack
  */
-final class DispatcherModule implements Infrastructure\FrontController\SlickModuleInterface
+final class DispatcherModule implements SlickModuleInterface, WebModuleInterface
 {
 
     /**
@@ -40,7 +42,7 @@ final class DispatcherModule implements Infrastructure\FrontController\SlickModu
     public function settings(): array
     {
         $custom = [];
-        $settingsFile = APP_ROOT .'/config/modules/dispatcher.php';
+        $settingsFile = APP_ROOT .'/config/settings/dispatcher.php';
         if (file_exists($settingsFile)) {
             $custom = require $settingsFile;
         }
@@ -71,5 +73,4 @@ final class DispatcherModule implements Infrastructure\FrontController\SlickModu
             ),
         ];
     }
-
 }

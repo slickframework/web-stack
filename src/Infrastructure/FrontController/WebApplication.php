@@ -18,47 +18,25 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Slick\Http\Server\Middleware\CallableMiddleware;
 use Slick\Http\Server\MiddlewareStack;
-use Slick\WebStack\DispatcherModule;
-use Slick\WebStack\FrontControllerModule;
-use Slick\WebStack\Infrastructure\DependencyContainerFactory;
+use Slick\WebStack\Infrastructure\AbstractApplication;
 
 /**
  * Application
  *
  * @package Slick\WebStack\Infrastructure\FrontController
  */
-final class Application
+final class WebApplication extends AbstractApplication
 {
-    private DependencyContainerFactory $containerFactory;
-
-    /** @var array<SlickModuleInterface>  */
-    private array $modules;
 
     private MiddlewareList $middlewareList;
 
     public function __construct(
         private readonly ServerRequestInterface $request,
-        private readonly string $rootPath
+        string $rootPath
     ) {
-        if (!defined('APP_ROOT')) {
-            define("APP_ROOT", $this->rootPath);
-        }
-        $this->middlewareList = new MiddlewareList();
-        $this->containerFactory = DependencyContainerFactory::instance();
-        $this->modules = [
-            new FrontControllerModule(),
-            new DispatcherModule(),
-        ];
-    }
 
-    /**
-     * Retrieves the root path of the application.
-     *
-     * @return string The root path.
-     */
-    public function rootPath(): string
-    {
-        return $this->rootPath;
+        $this->middlewareList = new MiddlewareList();
+        parent::__construct($rootPath);
     }
 
     /**
@@ -69,6 +47,10 @@ final class Application
     {
 
         $this->loadServices();
+        $container = $this->containerFactory->container();
+        $container->register(ServerRequestInterface::class, $this->request);
+        $container->register('http.request', $this->request);
+
         $this->loadMiddlewares();
 
         return $this->startServerRequestHandler()
@@ -109,36 +91,23 @@ final class Application
         return $middlewareStack;
     }
 
-
     private function loadMiddlewares(): void
     {
         foreach ($this->modules as $module) {
-            $this->updateMiddlewareList($module);
+            if ($module instanceof WebModuleInterface) {
+                $this->updateMiddlewareList($module);
+            }
         }
-    }
-
-    private function loadServices(): void
-    {
-        $services = [];
-        foreach ($this->modules as $module) {
-            $services = array_merge($services, $module->services());
-        }
-
-        $this->containerFactory->loadApplicationServices($this->rootPath(), $services);
-
-        $container = $this->containerFactory->container();
-        $container->register(ServerRequestInterface::class, $this->request);
-        $container->register('http.request', $this->request);
     }
 
     /**
      * Updates the middleware list for a given module.
      *
-     * @param SlickModuleInterface $module The module to update the middleware list for.
+     * @param WebModuleInterface $module The module to update the middleware list for.
      *
      * @return void
      */
-    private function updateMiddlewareList(SlickModuleInterface $module): void
+    private function updateMiddlewareList(WebModuleInterface $module): void
     {
         foreach ($module->middlewareHandlers() as $middleware) {
             $this->middlewareList->add($middleware);
@@ -163,14 +132,10 @@ final class Application
         $container = $this->containerFactory->container();
         $middlewareHandler = $middleware->handler();
 
-        if (is_string($middlewareHandler)) {
-            return $container->get($middlewareHandler);
-        }
-
         if (is_callable($middlewareHandler)) {
             return new CallableMiddleware($middlewareHandler);
         }
 
-        return $middlewareHandler;
+        return is_string($middlewareHandler) ? $container->get($middlewareHandler) : $middlewareHandler;
     }
 }

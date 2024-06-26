@@ -19,14 +19,15 @@ use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandler;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandlerInterface;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewarePosition;
 use Slick\WebStack\Infrastructure\FrontController\Position;
-use Slick\WebStack\Infrastructure\FrontController\SlickModuleInterface;
+use Slick\WebStack\Infrastructure\FrontController\WebModuleInterface;
+use Slick\WebStack\Infrastructure\SlickModuleInterface;
 
 /**
  * FrontControllerModule
  *
  * @package Slick\WebStack
  */
-final class FrontControllerModule implements SlickModuleInterface
+final class FrontControllerModule implements SlickModuleInterface, WebModuleInterface
 {
 
     private ComposerParser $composerParser;

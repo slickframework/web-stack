@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Features\App\Config\Modules;
+namespace Features\App\Config\Settings;
 
 $settings = [];
 

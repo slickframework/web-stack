@@ -9,7 +9,6 @@
 namespace Test\Slick\WebStack\Infrastructure\FrontController;
 
 use Features\App\UserInterface\CheckController;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\Test;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -17,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\Message\Response;
 use Slick\Http\Message\Uri;
-use Slick\WebStack\Infrastructure\FrontController\Application;
+use Slick\WebStack\Infrastructure\FrontController\WebApplication;
 use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
@@ -35,7 +34,7 @@ class ApplicationTest extends TestCase
             "_controller" => CheckController::class,
             "_action" => "handle",
         ]);
-        $app = new Application($request->reveal(), dirname(__DIR__, 3).'/features/app');
+        $app = new WebApplication($request->reveal(), dirname(__DIR__, 3).'/features/app');
         $this->assertInstanceOf(ResponseInterface::class, $app->run());
     }
 
@@ -43,7 +42,7 @@ class ApplicationTest extends TestCase
     public function outputResponse(): void
     {
         $request = $this->prophesize(ServerRequestInterface::class);
-        $app = new Application($request->reveal(), dirname(__DIR__, 3).'/features/app');
+        $app = new WebApplication($request->reveal(), dirname(__DIR__, 3).'/features/app');
         $response = new Response(200, 'test', ['content-type' => 'text/plain']);
         $this->expectOutputString('test');
         $app->output($response);
