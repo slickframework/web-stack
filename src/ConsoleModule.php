@@ -44,7 +44,7 @@ final class ConsoleModule implements Infrastructure\Console\ConsoleModuleInterfa
         $custom = [];
         $settingsFile = APP_ROOT .'/config/settings/console.php';
         if (file_exists($settingsFile)) {
-            $custom = require $settingsFile;
+            $custom = require_once $settingsFile;
         }
 
         $defaultSettings = [
