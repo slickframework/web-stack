@@ -8,12 +8,16 @@
 
 namespace Test\Slick\WebStack;
 
+use Dotenv\Dotenv;
 use PHPUnit\Framework\Attributes\Test;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Slick\WebStack\DispatcherModule;
 use PHPUnit\Framework\TestCase;
 
 class DispatcherSlickModuleTest extends TestCase
 {
+    use ProphecyTrait;
+
     private DispatcherModule $module;
 
     protected function setUp(): void
@@ -40,7 +44,7 @@ class DispatcherSlickModuleTest extends TestCase
                 'resources_path' => APP_ROOT . 'src/UserInterface'
             ]
         ];
-        $settings = $this->module->settings();
+        $settings = $this->module->settings($this->prophesize(Dotenv::class)->reveal());
         $this->assertEquals($expected, $settings);
     }
 }

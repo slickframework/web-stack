@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Infrastructure;
 
+use Dotenv\Dotenv;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandlerInterface;
 
 /**
@@ -29,9 +30,10 @@ interface SlickModuleInterface
     public function services(): array;
 
     /**
-     * Returns an array of module settings.
+     * Returns an array of module modules.
      *
-     * @return array<string, mixed> The array of application settings.
+     * @param Dotenv $dotenv Environment variables store.
+     * @return array<string, mixed> The array of application modules.
      */
-    public function settings(): array;
+    public function settings(Dotenv $dotenv): array;
 }

@@ -93,7 +93,7 @@ class SecurityProfileFactory
     }
 
     /**
-     * Create a stateless security profile based on a given profile settings.
+     * Create a stateless security profile based on a given profile modules.
      *
      * @param array<string, mixed> $profile The profile configuration.
      * @return SecurityProfileInterface A stateless security profile, or null if the profile is not stateless.

@@ -11,10 +11,13 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Infrastructure;
 
+use Dotenv\Dotenv;
+use Slick\Configuration\ConfigurationInterface;
+use Slick\Di\ContainerInterface;
 use Slick\WebStack\DispatcherModule;
 use Slick\WebStack\FrontControllerModule;
-use Slick\WebStack\Infrastructure\Console\ConsoleModuleInterface;
-use Slick\WebStack\Infrastructure\FrontController\WebModuleInterface;
+use function Slick\WebStack\importSettingsFile;
+use function Slick\WebStack\mergeArrays;
 
 /**
  * AbstractApplication
@@ -29,6 +32,8 @@ abstract class AbstractApplication
     /** @var array<SlickModuleInterface>  */
     protected array $modules;
 
+    protected Dotenv $dotenv;
+
     /**
      * Creates an AbstractApplication
      *
@@ -40,6 +45,7 @@ abstract class AbstractApplication
         if (!defined('APP_ROOT')) {
             define("APP_ROOT", $this->rootPath);
         }
+        $this->dotenv = Dotenv::createImmutable($this->rootPath);
         $this->containerFactory = DependencyContainerFactory::instance();
         $this->modules = [
             new FrontControllerModule(),
@@ -59,6 +65,17 @@ abstract class AbstractApplication
 
     abstract public function run(): mixed;
 
+    protected function prepareContainer(): ContainerInterface
+    {
+        $this->loadServices();
+        $container = $this->containerFactory->container();
+        $container->register('modules', new ArrayConfigurationDriver($this->loadSettings()));
+        $container->register(ConfigurationInterface::class, '@modules');
+        $container->register(ApplicationSettingsInterface::class, '@modules');
+        return $container;
+    }
+
+
     protected function loadServices(): void
     {
         $services = [];
@@ -67,5 +84,21 @@ abstract class AbstractApplication
         }
 
         $this->containerFactory->loadApplicationServices($this->rootPath(), $services);
+    }
+
+    /**
+     * Loads the settings from the modules and the external file
+     *
+     * @return array<string, mixed> The loaded settings
+     */
+    protected function loadSettings(): array
+    {
+        $settings = [];
+        foreach ($this->modules as $module) {
+            $moduleSettings = $module->settings($this->dotenv);
+            $settings = mergeArrays($moduleSettings, $settings);
+        }
+        $importSettingsFile = importSettingsFile(APP_ROOT . '/config/modules.php');
+        return mergeArrays($settings, $importSettingsFile);
     }
 }

@@ -45,9 +45,7 @@ final class WebApplication extends AbstractApplication
      */
     public function run(): ResponseInterface
     {
-
-        $this->loadServices();
-        $container = $this->containerFactory->container();
+        $container = $this->prepareContainer();
         $container->register(ServerRequestInterface::class, $this->request);
         $container->register('http.request', $this->request);
 

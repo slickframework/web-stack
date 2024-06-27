@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Slick\WebStack;
 
+use Dotenv\Dotenv;
 use JsonException;
 use Slick\Http\Message\Response;
 use Slick\WebStack\Infrastructure\ComposerParser;
@@ -63,7 +64,7 @@ final class FrontControllerModule implements SlickModuleInterface, WebModuleInte
     /**
      * @return array<string, mixed>
      */
-    public function settings(): array
+    public function settings(Dotenv $dotenv): array
     {
         return [];
     }

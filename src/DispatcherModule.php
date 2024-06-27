@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Slick\WebStack;
 
+use Dotenv\Dotenv;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandler;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewarePosition;
@@ -39,14 +40,10 @@ final class DispatcherModule implements SlickModuleInterface, WebModuleInterface
     /**
      * @inheritDoc
      */
-    public function settings(): array
+    public function settings(Dotenv $dotenv): array
     {
-        $custom = [];
-        $settingsFile = APP_ROOT .'/config/settings/dispatcher.php';
-        if (file_exists($settingsFile)) {
-            $custom = require $settingsFile;
-        }
 
+        $settingsFile = APP_ROOT .'/config/modules/dispatcher.php';
         $defaultSettings = [
             'router' => [
                 'cache' => [
@@ -56,7 +53,7 @@ final class DispatcherModule implements SlickModuleInterface, WebModuleInterface
                 'resources_path' => APP_ROOT . 'src/UserInterface'
             ]
         ];
-        return mergeArrays($defaultSettings, $custom);
+        return importSettingsFile($settingsFile, $defaultSettings);
     }
 
     /**

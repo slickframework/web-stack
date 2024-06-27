@@ -15,6 +15,7 @@ use Exception;
 use JsonException;
 use Slick\WebStack\ConsoleModule;
 use Slick\WebStack\Infrastructure\AbstractApplication;
+use Slick\WebStack\Infrastructure\ApplicationSettingsInterface;
 use Slick\WebStack\Infrastructure\ComposerParser;
 use Symfony\Component\Console\Application;
 use function Slick\WebStack\constantValue;
@@ -42,10 +43,10 @@ final class ConsoleApplication extends AbstractApplication
      */
     public function run(): null
     {
-        $this->loadServices();
-        $container = $this->containerFactory->container();
+        $container = $this->prepareContainer();
+        $commandsDir = $container->get(ApplicationSettingsInterface::class)->get('console.commands_dir');
 
-        $loader = new ConsoleCommandLoader($container, APP_ROOT . '/src/UserInterface/Console');
+        $loader = new ConsoleCommandLoader($container, APP_ROOT . $commandsDir);
         $cli = $this->commandLine();
 
         $cli->setCatchExceptions(true);

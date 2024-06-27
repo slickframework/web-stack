@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Slick\WebStack;
 
+use Dotenv\Dotenv;
 use Slick\WebStack\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\WebStack\Infrastructure\EnableModuleCommand;
 use Symfony\Component\Console\Application;
@@ -39,17 +40,12 @@ final class ConsoleModule implements Infrastructure\Console\ConsoleModuleInterfa
     /**
      * @inheritDoc
      */
-    public function settings(): array
+    public function settings(Dotenv $dotenv): array
     {
-        $custom = [];
-        $settingsFile = APP_ROOT .'/config/settings/console.php';
-        if (file_exists($settingsFile)) {
-            $custom = require_once $settingsFile;
-        }
-
+        $settingsFile = APP_ROOT .'/config/modules/console.php';
         $defaultSettings = [
             'console' => ['commands_dir' => '/src/UserInterface'],
         ];
-        return mergeArrays($defaultSettings, $custom);
+        return importSettingsFile($settingsFile, $defaultSettings);
     }
 }

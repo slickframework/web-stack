@@ -41,7 +41,7 @@ trait ProfileFactoryTrait
     ];
 
     /**
-     * Create a session driver based on a given profile settings.
+     * Create a session driver based on a given profile modules.
      *
      * @param array<string, mixed> $profile The profile configuration.
      * @return SessionDriverInterface The created session driver.

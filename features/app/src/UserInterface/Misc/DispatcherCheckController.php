@@ -14,6 +14,7 @@ namespace Features\App\UserInterface\Misc;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\Message\Response;
+use Slick\WebStack\Infrastructure\ApplicationSettingsInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
@@ -25,8 +26,11 @@ final class DispatcherCheckController
 {
 
     #[Route(path: '/misc/check-status/{param}', name: 'misc.checkStatus', methods: ['GET'])]
-    public function simple(ServerRequestInterface $request, string $param = null): ResponseInterface
-    {
+    public function simple(
+        ServerRequestInterface $request,
+        ApplicationSettingsInterface $settings,
+        string $param = null
+    ): ResponseInterface {
         return new Response(200, '
                 <h1>Web stack application demo</h1>
                 <dl>
@@ -34,6 +38,8 @@ final class DispatcherCheckController
                     <dd>' . $param . '</dd>
                     <dt>request:</dt>
                     <dd>' . $request->getMethod() ." ". $request->getUri()->getPath() . '</dd>
+                    <dt>config:</dt>
+                    <dd>' . $settings->get('router.cache.directory'). '</dd>
                 </dl>
             ', ['content-type' => 'text/html']);
     }

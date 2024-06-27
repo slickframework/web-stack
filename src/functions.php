@@ -35,6 +35,23 @@ function mergeArrays(array $default, array $custom): array
 }
 
 /**
+ * Import modules from a file and merge with default modules.
+ *
+ * @param string $file The file path of the modules file.
+ * @param array<string, mixed> $default The default modules array (optional).
+ * @return array<string, mixed> The merged modules array.
+ */
+function importSettingsFile(string $file, array $default = []): array
+{
+    if (!file_exists($file)) {
+        return $default;
+    }
+
+    $fromFile = include $file;
+    return mergeArrays($default, $fromFile);
+}
+
+/**
  * Check if a constant exists.
  *
  * @param string $name The name of the constant.

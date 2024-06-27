@@ -8,20 +8,23 @@
 
 namespace Test\Slick\WebStack;
 
+use Dotenv\Dotenv;
 use PHPUnit\Framework\Attributes\Test;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
 use Slick\WebStack\FrontControllerModule;
 use PHPUnit\Framework\TestCase;
 
 class FrontControllerSlickModuleTest extends TestCase
 {
+    use ProphecyTrait;
+
     private FrontControllerModule $module;
 
     protected function setUp(): void
     {
         $this->module = new FrontControllerModule();
     }
-
 
     #[Test]
     public function initializable(): void
@@ -40,6 +43,7 @@ class FrontControllerSlickModuleTest extends TestCase
     #[Test]
     public function emptySettings(): void
     {
-        $this->assertEmpty($this->module->settings());
+        $dotenv = $this->prophesize(Dotenv::class);
+        $this->assertEmpty($this->module->settings($dotenv->reveal()));
     }
 }
