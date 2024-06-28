@@ -12,7 +12,9 @@ declare(strict_types=1);
 namespace Slick\WebStack;
 
 use Dotenv\Dotenv;
+use Slick\Di\Definition\ObjectDefinition;
 use Slick\WebStack\Infrastructure\Console\ConsoleModuleInterface;
+use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\Infrastructure\EnableModuleCommand;
 use Symfony\Component\Console\Application;
 
@@ -26,7 +28,10 @@ final class ConsoleModule implements Infrastructure\Console\ConsoleModuleInterfa
 
     public function configureConsole(Application $cli): void
     {
-        $cli->add(new EnableModuleCommand());
+        $container = DependencyContainerFactory::instance()->container();
+        $cli->addCommands([
+            $container->get(EnableModuleCommand::class)
+        ]);
     }
 
     /**
@@ -34,7 +39,12 @@ final class ConsoleModule implements Infrastructure\Console\ConsoleModuleInterfa
      */
     public function services(): array
     {
-        return [];
+        return [
+            EnableModuleCommand::class => ObjectDefinition
+                ::create(EnableModuleCommand::class)
+                ->with('@app.root')
+            ,
+        ];
     }
 
     /**

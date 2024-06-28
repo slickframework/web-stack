@@ -13,7 +13,8 @@ xdebug.client_port=9003
 xdebug.idekey=PHPSTORM
 xdebug.max_nesting_level=1500
 xdebug.output_dir=/var/www/app/tmp
-xdebug.discover_client_host=1
+xdebug.discover_client_host=0
+xdebug.profiler_append=0
 
 EOL
 

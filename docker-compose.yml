@@ -34,5 +34,5 @@ services:
     volumes:
       - ./:/usr/src
     environment:
-      - SONAR_HOST_URL=https://sonarqube.fsilva.info
+      - SONAR_HOST_URL=http://sonarqube.fsilva.info
       - SONAR_TOKEN=sqp_29a5a35add3da58bd332016595bcb7f27935adeb

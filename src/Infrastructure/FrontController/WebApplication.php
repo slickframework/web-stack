@@ -18,7 +18,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Slick\Http\Server\Middleware\CallableMiddleware;
 use Slick\Http\Server\MiddlewareStack;
+use Slick\WebStack\DispatcherModule;
+use Slick\WebStack\FrontControllerModule;
 use Slick\WebStack\Infrastructure\AbstractApplication;
+use Slick\WebStack\SecurityModule;
 
 /**
  * Application
@@ -37,6 +40,10 @@ final class WebApplication extends AbstractApplication
 
         $this->middlewareList = new MiddlewareList();
         parent::__construct($rootPath);
+        $this->modules = [
+            new FrontControllerModule(),
+            new DispatcherModule(),
+        ];
     }
 
     /**

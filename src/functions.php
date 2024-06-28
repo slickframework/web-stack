@@ -22,8 +22,10 @@ namespace Slick\WebStack;
 function mergeArrays(array $default, array $custom): array
 {
     $base = [];
+    $names = [];
     foreach ($default as $name => $value) {
         $isPresent = array_key_exists($name, $custom);
+        $names[] = $name;
         if (is_array($value) && $isPresent) {
             $base[$name] = mergeArrays($value, $custom[$name]);
             continue;
@@ -31,6 +33,13 @@ function mergeArrays(array $default, array $custom): array
 
         $base[$name] = $isPresent ? $custom[$name] : $value;
     }
+
+    foreach ($custom as $other => $value) {
+        if (!in_array($other, $names)) {
+            $base[$other] = $value;
+        }
+    }
+
     return $base;
 }
 

@@ -50,7 +50,7 @@ final class DispatcherModule implements SlickModuleInterface, WebModuleInterface
                     'enabled' => true,
                     'directory' => sys_get_temp_dir() . '/cache/routes',
                 ],
-                'resources_path' => APP_ROOT . 'src/UserInterface'
+                'resources_path' => APP_ROOT . '/src/UserInterface'
             ]
         ];
         return importSettingsFile($settingsFile, $defaultSettings);

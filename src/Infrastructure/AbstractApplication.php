@@ -14,8 +14,6 @@ namespace Slick\WebStack\Infrastructure;
 use Dotenv\Dotenv;
 use Slick\Configuration\ConfigurationInterface;
 use Slick\Di\ContainerInterface;
-use Slick\WebStack\DispatcherModule;
-use Slick\WebStack\FrontControllerModule;
 use function Slick\WebStack\importSettingsFile;
 use function Slick\WebStack\mergeArrays;
 
@@ -27,10 +25,12 @@ use function Slick\WebStack\mergeArrays;
 abstract class AbstractApplication
 {
 
+    private const MODULES_PATH = "/config/modules/enabled.php";
+
     protected DependencyContainerFactory $containerFactory;
 
     /** @var array<SlickModuleInterface>  */
-    protected array $modules;
+    protected array $modules = [];
 
     protected Dotenv $dotenv;
 
@@ -47,10 +47,6 @@ abstract class AbstractApplication
         }
         $this->dotenv = Dotenv::createImmutable($this->rootPath);
         $this->containerFactory = DependencyContainerFactory::instance();
-        $this->modules = [
-            new FrontControllerModule(),
-            new DispatcherModule(),
-        ];
     }
 
     /**
@@ -63,19 +59,36 @@ abstract class AbstractApplication
         return $this->rootPath;
     }
 
+    /**
+     * Run the application and return the result.
+     *
+     * @return mixed The result of running the code.
+     */
     abstract public function run(): mixed;
 
+    /**
+     * Prepare the container by loading modules, settings, and services.
+     *
+     * @return ContainerInterface The prepared container.
+     */
     protected function prepareContainer(): ContainerInterface
     {
+        $this->loadModules();
+        $settingsDriver = new ArrayConfigurationDriver($this->loadSettings());
         $this->loadServices();
         $container = $this->containerFactory->container();
-        $container->register('modules', new ArrayConfigurationDriver($this->loadSettings()));
-        $container->register(ConfigurationInterface::class, '@modules');
-        $container->register(ApplicationSettingsInterface::class, '@modules');
+        $container->register('settings', $settingsDriver);
+        $container->register(ConfigurationInterface::class, '@settings');
+        $container->register(ApplicationSettingsInterface::class, '@settings');
+        $container->register('app.root', $this->rootPath());
         return $container;
     }
 
-
+    /**
+     * Load services from all modules and register them in the container.
+     *
+     * @return void
+     */
     protected function loadServices(): void
     {
         $services = [];
@@ -94,11 +107,31 @@ abstract class AbstractApplication
     protected function loadSettings(): array
     {
         $settings = [];
+        $this->dotenv->safeLoad();
         foreach ($this->modules as $module) {
             $moduleSettings = $module->settings($this->dotenv);
             $settings = mergeArrays($moduleSettings, $settings);
         }
         $importSettingsFile = importSettingsFile(APP_ROOT . '/config/modules.php');
         return mergeArrays($settings, $importSettingsFile);
+    }
+
+    /**
+     * Load modules into the application.
+     */
+    private function loadModules(): void
+    {
+        $file = $this->rootPath . self::MODULES_PATH;
+        if (!is_file($file)) {
+            return;
+        }
+
+        $modules = require $file;
+        foreach ($modules as $module) {
+            $loadedModule = new $module();
+            if ($loadedModule instanceof SlickModuleInterface) {
+                $this->modules[] = $loadedModule;
+            }
+        }
     }
 }

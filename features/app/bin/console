@@ -13,5 +13,12 @@ namespace Features\App\Console;
 require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
 
 use Slick\WebStack\Infrastructure\Console\ConsoleApplication;
+use Throwable;
 
-(new ConsoleApplication(dirname(__DIR__)))->run();
+try {
+    (new ConsoleApplication(dirname(__DIR__)))->run();
+} catch (Throwable $throwable) {
+    echo "\n-- ERROR --\n";
+    echo $throwable->getMessage();
+    echo "\n";
+}

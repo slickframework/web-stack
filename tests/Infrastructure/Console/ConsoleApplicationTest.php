@@ -32,6 +32,7 @@ class ConsoleApplicationTest extends TestCase
         $command->run()->shouldBeCalled();
         $command->setCatchExceptions(true)->shouldBeCalled();
         $command->setCommandLoader(Argument::type(CommandLoaderInterface::class))->shouldBeCalled();
+        $command->addCommands(Argument::type('array'))->shouldBeCalled();
         $command->add(Argument::type(Command::class))->shouldBeCalled();
         $application = new ConsoleApplication(dirname(__DIR__, 3).'/features/app');
         $application->useCommandLine($command->reveal());

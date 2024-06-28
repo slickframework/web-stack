@@ -41,7 +41,7 @@ class DispatcherSlickModuleTest extends TestCase
                     'enabled' => false,
                     'directory' => sys_get_temp_dir() . '/cache/routes',
                 ],
-                'resources_path' => APP_ROOT . 'src/UserInterface'
+                'resources_path' => APP_ROOT . '/src/UserInterface'
             ]
         ];
         $settings = $this->module->settings($this->prophesize(Dotenv::class)->reveal());

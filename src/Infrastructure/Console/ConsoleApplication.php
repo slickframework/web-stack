@@ -17,6 +17,7 @@ use Slick\WebStack\ConsoleModule;
 use Slick\WebStack\Infrastructure\AbstractApplication;
 use Slick\WebStack\Infrastructure\ApplicationSettingsInterface;
 use Slick\WebStack\Infrastructure\ComposerParser;
+use Slick\WebStack\SecurityModule;
 use Symfony\Component\Console\Application;
 use function Slick\WebStack\constantValue;
 
