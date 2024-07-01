@@ -83,8 +83,7 @@ class Pbkdf2PasswordHasherTest extends TestCase
         $this->assertEquals([
             'algorithm' => 'sha512',
             'iterations' => 1000,
-            'length' => 56,
-            'salt' => $str
+            'length' => 56
         ], $hasher->info());
     }
 

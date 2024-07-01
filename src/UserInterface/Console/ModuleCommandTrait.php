@@ -22,6 +22,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 trait ModuleCommandTrait
 {
+    /**
+     * @return array<string>
+     */
+    public function retrieveInstalledModules(): array
+    {
+        return file_exists($this->moduleListFile) ? require $this->moduleListFile : [];
+    }
 
     /**
      * Checks if a module does not exist in the given list of modules
@@ -162,7 +169,7 @@ trait ModuleCommandTrait
      */
     protected function renderTable(array $modules, SymfonyStyle $style): void
     {
-        $installedModules = file_exists($this->moduleListFile) ? require $this->moduleListFile : [];
+        $installedModules = $this->retrieveInstalledModules();
         $table = $style->createTable();
         $table->setHeaderTitle("Available Modules");
         $table->setHeaders(["Name", "Description", "Enabled"]);

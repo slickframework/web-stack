@@ -92,8 +92,7 @@ class PlaintextPasswordHasherTest extends TestCase
     {
         $hasher = new PlaintextPasswordHasher();
         $this->assertEquals([
-            'algorithm' => 'plaintext',
-            'salt' => null
+            'algorithm' => 'plaintext'
         ], $hasher->info());
     }
 

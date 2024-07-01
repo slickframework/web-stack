@@ -66,7 +66,7 @@ class EnableModuleCommand extends Command
         $moduleName = $input->getArgument('module');
         $this->checkConfigFile();
 
-        $modules = require $this->moduleListFile;
+        $modules = $this->retrieveInstalledModules();
         if (!$retrieveModuleName = $this->checkModuleNotExists($moduleName, $modules)) {
             return Command::FAILURE;
         }

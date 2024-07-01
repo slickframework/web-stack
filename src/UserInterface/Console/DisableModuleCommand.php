@@ -64,7 +64,7 @@ final class DisableModuleCommand extends Command
             return Command::FAILURE;
         }
 
-        $modules = require $this->moduleListFile;
+        $modules = $this->retrieveInstalledModules();
         if (!$className = $this->checkModuleExists($moduleName, $modules)) {
             return Command::FAILURE;
         }

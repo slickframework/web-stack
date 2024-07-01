@@ -95,8 +95,7 @@ final class Pbkdf2PasswordHasher implements LegacyPasswordHasherInterface
         return [
             'algorithm' => $this->algorithm,
             'iterations' => $this->iterations,
-            'length' => $this->encodedLength,
-            'salt' => $this->salt,
+            'length' => $this->encodedLength
         ];
     }
 }
