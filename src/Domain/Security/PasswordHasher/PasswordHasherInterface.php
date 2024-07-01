@@ -40,4 +40,11 @@ interface PasswordHasherInterface
      * Checks if a password hash would benefit from rehashing.
      */
     public function needsRehash(string $hashedPassword): bool;
+
+    /**
+     * Retrieves information about the hasher.
+     *
+     * @return array<string, mixed> The array containing the hasher information.
+     */
+    public function info(): array;
 }

@@ -28,6 +28,8 @@ final class PlaintextPasswordHasher implements LegacyPasswordHasherInterface
 {
     use CheckPasswordLengthTrait;
 
+    private ?string $salt = null;
+
     /**
      * @inheritDoc
      */
@@ -82,7 +84,16 @@ final class PlaintextPasswordHasher implements LegacyPasswordHasherInterface
         if (false !== strrpos($salt, '{') || false !== strrpos($salt, '}')) {
             throw new InvalidArgumentException('Cannot use { or } in salt.');
         }
+        $this->salt = $salt;
 
         return $password.'{'.$salt.'}';
+    }
+
+    public function info(): array
+    {
+        return [
+            'algorithm' => 'plaintext',
+            'salt' => $this->salt
+        ];
     }
 }

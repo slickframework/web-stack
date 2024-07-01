@@ -36,6 +36,15 @@ final class PhpPasswordHasher implements PasswordHasherInterface
     private array $options = [];
 
     /**
+     * @var array<string, string>
+     */
+    private array $algorithms = [
+        PASSWORD_BCRYPT => 'BCrypt',
+        PASSWORD_ARGON2I => 'Argon 2I',
+        PASSWORD_ARGON2ID => 'Argon 2ID',
+    ];
+
+    /**
      * Creates a PhpPasswordHasher
      *
      * @param int|null $opsLimit
@@ -66,17 +75,8 @@ final class PhpPasswordHasher implements PasswordHasherInterface
             throw new InvalidArgumentException('$cost must be in the range of 4-31.');
         }
 
+        $algorithms = $this->getSupportedAlgorithms();
         if (null !== $algorithm) {
-            $algorithms = [1 => PASSWORD_BCRYPT, '2y' => PASSWORD_BCRYPT];
-
-            if (defined('PASSWORD_ARGON2I')) {
-                $algorithms[2] = $algorithms['argon2i'] = PASSWORD_ARGON2I;
-            }
-
-            if (defined('PASSWORD_ARGON2ID')) {
-                $algorithms[3] = $algorithms['argon2id'] = PASSWORD_ARGON2ID;
-            }
-
             $this->algorithm = $algorithms[$algorithm] ?? $algorithm;
         }
 
@@ -133,5 +133,33 @@ final class PhpPasswordHasher implements PasswordHasherInterface
     public function needsRehash(string $hashedPassword): bool
     {
         return password_needs_rehash($hashedPassword, $this->algorithm, $this->options);
+    }
+
+    public function info(): array
+    {
+        return [
+            'algorithm' => $this->algorithms[$this->algorithm],
+            ...$this->options
+        ];
+    }
+
+    /**
+     * @return array<string|int, mixed>
+     */
+    public function getSupportedAlgorithms(): array
+    {
+        $algorithms = [1 => PASSWORD_BCRYPT, '2y' => PASSWORD_BCRYPT];
+        $this->algorithm = PASSWORD_BCRYPT;
+
+        if (defined('PASSWORD_ARGON2I')) {
+            $algorithms[2] = $algorithms['argon2i'] = PASSWORD_ARGON2I;
+            $this->algorithm = PASSWORD_ARGON2I;
+        }
+
+        if (defined('PASSWORD_ARGON2ID')) {
+            $algorithms[3] = $algorithms['argon2id'] = PASSWORD_ARGON2ID;
+            $this->algorithm = PASSWORD_ARGON2ID;
+        }
+        return $algorithms;
     }
 }

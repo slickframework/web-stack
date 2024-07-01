@@ -10,15 +10,20 @@
 
 namespace Features\App\Console;
 
-require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
+/** @var ClassLoader $classLoader */
+$classLoader = require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
 
+use Composer\Autoload\ClassLoader;
 use Slick\WebStack\Infrastructure\Console\ConsoleApplication;
 use Throwable;
 
 try {
-    (new ConsoleApplication(dirname(__DIR__)))->run();
+    $consoleApplication = new ConsoleApplication(dirname(__DIR__), $classLoader);
+    $consoleApplication->run();
 } catch (Throwable $throwable) {
     echo "\n-- ERROR --\n";
     echo $throwable->getMessage();
+    echo "\n";
+    echo $throwable->getFile() . ':' . $throwable->getLine();
     echo "\n";
 }

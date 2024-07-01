@@ -36,4 +36,18 @@ interface SlickModuleInterface
      * @return array<string, mixed> The array of application modules.
      */
     public function settings(Dotenv $dotenv): array;
+
+    /**
+     * Return the module's name
+     *
+     * @return string
+     */
+    public function name(): string;
+
+    /**
+     * Return the module's description
+     *
+     * @return string|null
+     */
+    public function description(): ?string;
 }

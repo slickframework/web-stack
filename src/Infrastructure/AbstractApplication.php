@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Infrastructure;
 
+use Composer\Autoload\ClassLoader;
 use Dotenv\Dotenv;
 use Slick\Configuration\ConfigurationInterface;
 use Slick\Di\ContainerInterface;
@@ -38,9 +39,11 @@ abstract class AbstractApplication
      * Creates an AbstractApplication
      *
      * @param string $rootPath
+     * @param ClassLoader|null $classLoader
      */
     public function __construct(
-        protected readonly string $rootPath
+        protected readonly string $rootPath,
+        protected readonly ?ClassLoader $classLoader = null
     ) {
         if (!defined('APP_ROOT')) {
             define("APP_ROOT", $this->rootPath);
@@ -81,6 +84,11 @@ abstract class AbstractApplication
         $container->register(ConfigurationInterface::class, '@settings');
         $container->register(ApplicationSettingsInterface::class, '@settings');
         $container->register('app.root', $this->rootPath());
+
+        if ($this->classLoader) {
+            $container->register(ClassLoader::class, $this->classLoader);
+        }
+
         return $container;
     }
 

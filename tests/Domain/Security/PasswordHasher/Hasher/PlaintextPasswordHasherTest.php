@@ -87,6 +87,16 @@ class PlaintextPasswordHasherTest extends TestCase
         $this->assertFalse($hasher->verify("Whatever", $password, "Whatever"));
     }
 
+    #[Test]
+    public function info(): void
+    {
+        $hasher = new PlaintextPasswordHasher();
+        $this->assertEquals([
+            'algorithm' => 'plaintext',
+            'salt' => null
+        ], $hasher->info());
+    }
+
     private function generateRandomString($nameLength = 8): string
     {
         $alphaNumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

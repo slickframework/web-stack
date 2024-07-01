@@ -14,6 +14,7 @@ namespace Slick\WebStack;
 use Dotenv\Dotenv;
 use JsonException;
 use Slick\Http\Message\Response;
+use Slick\WebStack\Infrastructure\AbstractModule;
 use Slick\WebStack\Infrastructure\ComposerParser;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandler;
@@ -28,7 +29,7 @@ use Slick\WebStack\Infrastructure\SlickModuleInterface;
  *
  * @package Slick\WebStack
  */
-final class FrontControllerModule implements SlickModuleInterface, WebModuleInterface
+final class FrontControllerModule extends AbstractModule implements SlickModuleInterface, WebModuleInterface
 {
 
     private ComposerParser $composerParser;
@@ -41,6 +42,11 @@ final class FrontControllerModule implements SlickModuleInterface, WebModuleInte
     public function __construct()
     {
         $this->composerParser = new ComposerParser(APP_ROOT.'/composer.json');
+    }
+
+    public function description(): ?string
+    {
+        return "Core module that initializes a web application using the front controller pattern.";
     }
 
     /**

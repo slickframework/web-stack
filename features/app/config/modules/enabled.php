@@ -1,3 +1,5 @@
 <?php
 
-return ['\Slick\WebStack\SecurityModule'];
+return [
+    \Slick\WebStack\SecurityModule::class
+];

@@ -34,6 +34,7 @@ final class Pbkdf2PasswordHasher implements LegacyPasswordHasherInterface
 
     private int $encodedLength = -1;
 
+
     public function __construct(
         private readonly string $algorithm = 'sha512',
         private readonly int $iterations = 1000,
@@ -57,7 +58,7 @@ final class Pbkdf2PasswordHasher implements LegacyPasswordHasherInterface
             throw new InvalidPasswordException("Password too long");
         }
 
-        if (!\in_array($this->algorithm, hash_algos(), true)) {
+        if (!in_array($this->algorithm, hash_algos(), true)) {
             throw new LogicException(sprintf('The algorithm "%s" is not supported.', $this->algorithm));
         }
 
@@ -87,5 +88,15 @@ final class Pbkdf2PasswordHasher implements LegacyPasswordHasherInterface
     public function needsRehash(string $hashedPassword): bool
     {
         return false;
+    }
+
+    public function info(): array
+    {
+        return [
+            'algorithm' => $this->algorithm,
+            'iterations' => $this->iterations,
+            'length' => $this->encodedLength,
+            'salt' => $this->salt,
+        ];
     }
 }

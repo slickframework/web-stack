@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Slick\WebStack;
 
 use Dotenv\Dotenv;
+use Slick\WebStack\Infrastructure\AbstractModule;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandler;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewarePosition;
@@ -26,8 +27,13 @@ use Slick\WebStack\Infrastructure\SlickModuleInterface;
  *
  * @package Slick\WebStack
  */
-final class DispatcherModule implements SlickModuleInterface, WebModuleInterface
+final class DispatcherModule extends AbstractModule implements SlickModuleInterface, WebModuleInterface
 {
+    public function description(): ?string
+    {
+        return "Core module that integrates routing and dispatching features as middleware for a web application.";
+    }
+
 
     /**
      * @inheritDoc

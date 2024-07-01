@@ -35,11 +35,12 @@ class HashPasswordTest extends TestCase
         $plainPassword = 'test';
         $hashedPassword = md5($plainPassword);
         $hasher->hash($plainPassword)->willReturn($hashedPassword);
+        $hasher->info()->willReturn(['algorithm' => 'sha256']);
         $container = $this->prophesize(ContainerInterface::class);
         $container->get(PasswordHasherInterface::class)->willReturn($hasher->reveal());
         $commandTester = new CommandTester(new HashPassword($container->reveal()));
         $commandTester->execute(['plainPassword' => $plainPassword], ['interactive' => false]);
-        $this->assertEquals("$hashedPassword\n", $commandTester->getDisplay());
+        $this->assertStringContainsString("$hashedPassword", $commandTester->getDisplay());
     }
 
     #[Test]

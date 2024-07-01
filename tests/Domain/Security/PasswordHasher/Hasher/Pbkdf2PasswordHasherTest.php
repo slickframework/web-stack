@@ -75,6 +75,19 @@ class Pbkdf2PasswordHasherTest extends TestCase
         $this->assertFalse($hasher->verify($hashedPassword.' ', $plainPassword, $salt));
     }
 
+    #[Test]
+    public function hasherInfo(): void
+    {
+        $str = 'some-salt';
+        $hasher = new Pbkdf2PasswordHasher(salt: $str);
+        $this->assertEquals([
+            'algorithm' => 'sha512',
+            'iterations' => 1000,
+            'length' => 56,
+            'salt' => $str
+        ], $hasher->info());
+    }
+
     private function generateRandomString($nameLength = 8): string
     {
         $alphaNumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

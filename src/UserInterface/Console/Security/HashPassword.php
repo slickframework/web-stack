@@ -73,7 +73,9 @@ final class HashPassword extends Command
         $style = new SymfonyStyle($input, $output);
         $inputPassword = $input->getArgument('plainPassword');
         try {
-            $style->writeln($this->retrieveHasher($input)->hash($inputPassword));
+            $passwordHasher = $this->retrieveHasher($input);
+            $hash = $passwordHasher->hash($inputPassword);
+            $this->renderInfo($style, $inputPassword, $hash, $passwordHasher);
         } catch (UnhandledMatchError) {
             $style->error('Unknown algorithm type');
             return Command::INVALID;
@@ -98,5 +100,22 @@ final class HashPassword extends Command
             "default" => $this->container->get(PasswordHasherInterface::class),
             default => throw new UnhandledMatchError()
         };
+    }
+
+    private function renderInfo(
+        SymfonyStyle $style,
+        string $inputPassword,
+        string $hash,
+        PasswordHasherInterface $passwordHasher
+    ): void {
+        $options = '';
+        foreach ($passwordHasher->info() as $name => $value) {
+            $options .= sprintf("<info>%s</info>: %s\n", $name, $value);
+        }
+        $table = $style->createTable();
+        $table->setHeaders(['Password', 'Hash', 'Hasher']);
+        $table->setHeaderTitle("Password hash utility");
+        $table->addRow([$inputPassword, $hash, trim($options)]);
+        $table->render();
     }
 }

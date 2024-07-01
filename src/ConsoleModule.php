@@ -11,11 +11,16 @@ declare(strict_types=1);
 
 namespace Slick\WebStack;
 
+use Composer\Autoload\ClassLoader;
 use Dotenv\Dotenv;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Slick\Di\Definition\ObjectDefinition;
-use Slick\WebStack\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
-use Slick\WebStack\Infrastructure\EnableModuleCommand;
+use Slick\WebStack\UserInterface\Console\DescribeModuleCommand;
+use Slick\WebStack\UserInterface\Console\DisableModuleCommand;
+use Slick\WebStack\UserInterface\Console\EnableModuleCommand;
+use Slick\WebStack\UserInterface\Console\ListModuleCommand;
 use Symfony\Component\Console\Application;
 
 /**
@@ -26,11 +31,20 @@ use Symfony\Component\Console\Application;
 final class ConsoleModule implements Infrastructure\Console\ConsoleModuleInterface
 {
 
+    private const APP_ROOT_KEY = '@app.root';
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function configureConsole(Application $cli): void
     {
         $container = DependencyContainerFactory::instance()->container();
         $cli->addCommands([
-            $container->get(EnableModuleCommand::class)
+            $container->get(EnableModuleCommand::class),
+            $container->get(DisableModuleCommand::class),
+            $container->get(DescribeModuleCommand::class),
+            $container->get(ListModuleCommand::class),
         ]);
     }
 
@@ -42,8 +56,19 @@ final class ConsoleModule implements Infrastructure\Console\ConsoleModuleInterfa
         return [
             EnableModuleCommand::class => ObjectDefinition
                 ::create(EnableModuleCommand::class)
-                ->with('@app.root')
+                ->with(self::APP_ROOT_KEY)
             ,
+            DisableModuleCommand::class => ObjectDefinition
+                ::create(DisableModuleCommand::class)
+                ->with(self::APP_ROOT_KEY)
+            ,
+            DescribeModuleCommand::class => ObjectDefinition
+                ::create(DescribeModuleCommand::class)
+                ->with(self::APP_ROOT_KEY)
+            ,
+            ListModuleCommand::class => ObjectDefinition
+                ::create(ListModuleCommand::class)
+                ->with(self::APP_ROOT_KEY, '@'.ClassLoader::class)
         ];
     }
 
@@ -57,5 +82,15 @@ final class ConsoleModule implements Infrastructure\Console\ConsoleModuleInterfa
             'console' => ['commands_dir' => '/src/UserInterface'],
         ];
         return importSettingsFile($settingsFile, $defaultSettings);
+    }
+
+    public function name(): string
+    {
+        return "console";
+    }
+
+    public function description(): ?string
+    {
+        return "Provides streamlined command line tools for module management.";
     }
 }

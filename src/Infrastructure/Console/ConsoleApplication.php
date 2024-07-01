@@ -11,13 +11,13 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Infrastructure\Console;
 
+use Composer\Autoload\ClassLoader;
 use Exception;
 use JsonException;
 use Slick\WebStack\ConsoleModule;
 use Slick\WebStack\Infrastructure\AbstractApplication;
 use Slick\WebStack\Infrastructure\ApplicationSettingsInterface;
 use Slick\WebStack\Infrastructure\ComposerParser;
-use Slick\WebStack\SecurityModule;
 use Symfony\Component\Console\Application;
 use function Slick\WebStack\constantValue;
 
@@ -31,9 +31,9 @@ final class ConsoleApplication extends AbstractApplication
     
     private ?Application $commandLine = null;
     
-    public function __construct(string $rootPath)
+    public function __construct(string $rootPath, ?ClassLoader $classLoader = null)
     {
-        parent::__construct($rootPath);
+        parent::__construct($rootPath, $classLoader);
         $this->modules[] = new ConsoleModule();
     }
 

@@ -14,6 +14,7 @@ namespace Slick\WebStack;
 use Dotenv\Dotenv;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Slick\WebStack\Infrastructure\AbstractModule;
 use Slick\WebStack\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandler;
@@ -30,8 +31,13 @@ use Symfony\Component\Console\Application;
  *
  * @package Slick\WebStack
  */
-final class SecurityModule implements ConsoleModuleInterface, WebModuleInterface
+final class SecurityModule extends AbstractModule implements ConsoleModuleInterface, WebModuleInterface
 {
+    public function description(): ?string
+    {
+        return "Provides authentication and authorization support for web applications.";
+    }
+
 
     /**
      * @throws ContainerExceptionInterface

@@ -66,7 +66,7 @@ class PhpPasswordHasherTest extends TestCase
     #[Test]
     public function longPasswordHash()
     {
-        $hasher = new PhpPasswordHasher();
+        $hasher = new PhpPasswordHasher(algorithm: PASSWORD_BCRYPT);
         $this->assertNotEmpty($hasher->hash($this->generateRandomString(80)));
     }
 
@@ -84,13 +84,25 @@ class PhpPasswordHasherTest extends TestCase
         $hasher = new PhpPasswordHasher(algorithm: PASSWORD_ARGON2I);
         $hashedPassword = $hasher->hash('password23');
         $this->assertTrue($hasher->verify($hashedPassword, 'password23'));
+    }
 
+    #[Test]
+    public function info(): void
+    {
+        $hasher = new PhpPasswordHasher(algorithm: PASSWORD_ARGON2I);
+        $this->assertEquals([
+            'algorithm' => 'Argon 2I',
+            'cost' => 13,
+            'time_cost' => 4,
+            'memory_cost' => 65536,
+            'threads' => 1
+        ], $hasher->info());
     }
 
     #[Test]
     public function verifyLongPasswords()
     {
-        $hasher = new PhpPasswordHasher();
+        $hasher = new PhpPasswordHasher(algorithm: PASSWORD_BCRYPT);
         $plainPassword = $this->generateRandomString(84);
         $hashedPassword = $hasher->hash($plainPassword);
         $this->assertTrue($hasher->verify($hashedPassword, $plainPassword));

@@ -6,13 +6,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Test\Slick\WebStack\Infrastructure;
+namespace Test\Slick\WebStack\UserInterface\Console;
 
 use PHPUnit\Framework\Attributes\Test;
-use Slick\WebStack\Infrastructure\EnableModuleCommand;
 use PHPUnit\Framework\TestCase;
 use Slick\WebStack\Infrastructure\Exception\InvalidModuleName;
 use Slick\WebStack\SecurityModule;
+use Slick\WebStack\UserInterface\Console\EnableModuleCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class EnableModuleCommandTest extends TestCase
@@ -38,11 +38,23 @@ class EnableModuleCommandTest extends TestCase
     #[Test]
     public function missingModule(): void
     {
-        $enabledModulesFile = __DIR__ . '/config/modules/enabled.php';
         $command = new CommandTester(new EnableModuleCommand(__DIR__));
-        $this->expectException(InvalidModuleName::class);
-        $command->execute(["module" => 'Some_other_unknown']);
+        $expected = "Could not determine module name classname. Check SlickModuleInterface";
+        $command->execute(["module" => 'something']);
+        $this->assertStringContainsString($expected, $command->getDisplay());
+    }
+
+    #[Test]
+    public function existingModule(): void
+    {
+        $enabledModulesFile = __DIR__ . '/config/modules/enabled.php';
+        mkdir(__DIR__ . '/config/modules/', 0755, true);
+        $contents = "<?php\n\nreturn[\\".SecurityModule::class."::class];\n";
+        file_put_contents($enabledModulesFile, $contents);
+        $command = new CommandTester(new EnableModuleCommand(__DIR__));
+        $command->execute(["module" => 'Security']);
         $this->assertTrue(file_exists($enabledModulesFile));
+        $this->assertStringContainsString(SecurityModule::class, (string) file_get_contents($enabledModulesFile));
     }
 
     protected function tearDown(): void
