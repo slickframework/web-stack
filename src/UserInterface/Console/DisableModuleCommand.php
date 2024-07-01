@@ -28,24 +28,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     description: "Disables a module",
     aliases: ["disable"],
 )]
-final class DisableModuleCommand extends Command
+final class DisableModuleCommand extends DescribeModuleCommand
 {
 
     use ModuleCommandTrait;
 
-    protected string $appRoot;
-
-    /** @var string  */
-    protected string $moduleListFile;
-
-    protected ?SymfonyStyle $outputStyle = null;
-
-    public function __construct(string $appRoot)
-    {
-        parent::__construct();
-        $this->appRoot = $appRoot;
-        $this->moduleListFile = $this->appRoot . EnableModuleCommand::ENABLED_MODULES_FILE;
-    }
 
     public function configure(): void
     {

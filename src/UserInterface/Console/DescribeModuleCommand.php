@@ -30,7 +30,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     description: 'Explains the functionality of a module.',
     aliases: ['describe']
 )]
-final class DescribeModuleCommand extends Command
+class DescribeModuleCommand extends Command
 {
 
     use ModuleCommandTrait;
