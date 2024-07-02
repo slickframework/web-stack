@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Infrastructure\FrontController;
 
-use ArrayIterator;
 use Doctrine\Common\Collections\ArrayCollection;
 use IteratorAggregate;
-use Psr\Http\Server\MiddlewareInterface;
+use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandlerInterface;
+use Slick\ModuleApi\Infrastructure\FrontController\Position;
 
 /**
  * MiddlewareList

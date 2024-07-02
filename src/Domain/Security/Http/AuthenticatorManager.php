@@ -18,6 +18,7 @@ use Slick\WebStack\Domain\Security\Http\Authenticator\Passport\Badge\Credentials
 use Slick\WebStack\Domain\Security\PasswordHasher\PasswordHasherInterface;
 use Slick\WebStack\Domain\Security\SecurityException;
 use Slick\WebStack\Domain\Security\User\PasswordAuthenticatedUserInterface;
+use Slick\WebStack\Domain\Security\User\PasswordUpgradableInterface;
 use Slick\WebStack\Domain\Security\UserInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
@@ -219,12 +220,16 @@ final class AuthenticatorManager implements AuthenticatorManagerInterface
         $hashedPassword = $user->password();
         /** @var PasswordCredentials $credentials */
         $credentials = $passport->badge(PasswordCredentials::class);
-        if ($this->hasher->verify($hashedPassword, $credentials->password())) {
-            $credentials->markResolved();
-            return;
+
+
+        if (!$this->hasher->verify($hashedPassword, $credentials->password())) {
+            throw new BadCredentialsException("Password couldn't be verified.");
         }
 
-        throw new BadCredentialsException("Password couldn't be verified.");
+        if ($this->hasher->needsRehash($hashedPassword) && $user instanceof PasswordUpgradableInterface) {
+            $user->upgradePassword($this->hasher->hash($credentials->password()));
+        }
+        $credentials->markResolved();
     }
 
     /**

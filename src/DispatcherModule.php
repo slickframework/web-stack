@@ -12,15 +12,15 @@ declare(strict_types=1);
 namespace Slick\WebStack;
 
 use Dotenv\Dotenv;
-use Slick\WebStack\Infrastructure\AbstractModule;
+use Slick\ModuleApi\Infrastructure\AbstractModule;
+use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandler;
+use Slick\ModuleApi\Infrastructure\FrontController\MiddlewarePosition;
+use Slick\ModuleApi\Infrastructure\FrontController\Position;
+use Slick\ModuleApi\Infrastructure\FrontController\WebModuleInterface;
+use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
-use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandler;
-use Slick\WebStack\Infrastructure\FrontController\MiddlewarePosition;
-use Slick\WebStack\Infrastructure\FrontController\Position;
-use Slick\WebStack\Infrastructure\FrontController\WebModuleInterface;
 use Slick\WebStack\Infrastructure\Http\DispatcherMiddleware;
 use Slick\WebStack\Infrastructure\Http\RoutingMiddleware;
-use Slick\WebStack\Infrastructure\SlickModuleInterface;
 
 /**
  * DispatcherSlickModule

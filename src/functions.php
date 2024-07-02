@@ -86,22 +86,3 @@ function constantValue(string $name, mixed $default = null): mixed
 
     return $default;
 }
-
-/**
- * Convert a camel case string to snake case.
- *
- * @param string $camelCase The camel case string to convert.
- * @param string $glue The glue character to use. Default is '_'.
- * @return string Returns the snake case string.
- */
-function camelToSnake(string $camelCase, string $glue = '_'): string
-{
-    $result = '';
-
-    for ($i = 0; $i < strlen($camelCase); $i++) {
-        $char = $camelCase[$i];
-        $result .= (ctype_upper($char)) ? $glue . strtolower($char) : $char;
-    }
-
-    return ltrim($result, $glue);
-}

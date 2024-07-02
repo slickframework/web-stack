@@ -14,6 +14,7 @@ namespace Slick\WebStack\Infrastructure\Console;
 use Composer\Autoload\ClassLoader;
 use Exception;
 use JsonException;
+use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\WebStack\ConsoleModule;
 use Slick\WebStack\Infrastructure\AbstractApplication;
 use Slick\WebStack\Infrastructure\ApplicationSettingsInterface;

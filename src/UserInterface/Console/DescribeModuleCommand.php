@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\UserInterface\Console;
 
+use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use Slick\WebStack\Infrastructure\Exception\InvalidModuleName;
-use Slick\WebStack\Infrastructure\SlickModuleInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

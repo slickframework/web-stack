@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Test\Slick\WebStack\Infrastructure;
 
-use Slick\WebStack\Infrastructure\AbstractModule;
+use Slick\ModuleApi\Infrastructure\AbstractModule;
 
 /**
  * DummyModule
  *
- * @package Test\Slick\WebStack\Infrastructure
+ * @package Test\Slick\WebStack\Infrastructure\FrontController
  */
 final class DummyModule extends AbstractModule
 {

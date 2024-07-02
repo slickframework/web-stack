@@ -18,10 +18,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Slick\Http\Server\Middleware\CallableMiddleware;
 use Slick\Http\Server\MiddlewareStack;
+use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandlerInterface;
+use Slick\ModuleApi\Infrastructure\FrontController\WebModuleInterface;
 use Slick\WebStack\DispatcherModule;
 use Slick\WebStack\FrontControllerModule;
 use Slick\WebStack\Infrastructure\AbstractApplication;
-use Slick\WebStack\SecurityModule;
 
 /**
  * Application

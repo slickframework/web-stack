@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a0acea6be96afaa748d09a5825c289b",
+    "content-hash": "735643c39608ac9cd83aea6d6abaf5e5",
     "packages": [
         {
             "name": "doctrine/collections",
@@ -1534,6 +1534,56 @@
                 "source": "https://github.com/slickframework/http/tree/develop"
             },
             "time": "2022-04-04T17:57:50+00:00"
+        },
+        {
+            "name": "slick/module-api",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slickframework/module-api.git",
+                "reference": "03ec99a1c87494c0ce148e45c01c664e1097e115"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slickframework/module-api/zipball/03ec99a1c87494c0ce148e45c01c664e1097e115",
+                "reference": "03ec99a1c87494c0ce148e45c01c664e1097e115",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 8.2",
+                "psr/http-server-middleware": "^1.0@dev",
+                "slick/di": ">=2.9",
+                "symfony/console": "*",
+                "vlucas/phpdotenv": "*"
+            },
+            "require-dev": {
+                "phpspec/prophecy": "^1.0@dev",
+                "phpspec/prophecy-phpunit": "^2.0@dev",
+                "phpunit/phpunit": "^11.3@dev"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Slick\\ModuleApi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Filipe Silva",
+                    "email": "silvam.filipe@gmail.com"
+                }
+            ],
+            "description": "Interfaces required to develop a Slick module",
+            "support": {
+                "issues": "https://github.com/slickframework/module-api/issues",
+                "source": "https://github.com/slickframework/module-api/tree/v0.1.0"
+            },
+            "time": "2024-07-02T14:55:31+00:00"
         },
         {
             "name": "symfony/console",

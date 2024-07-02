@@ -13,16 +13,18 @@ namespace Slick\WebStack;
 
 use Dotenv\Dotenv;
 use JsonException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Slick\Http\Message\Response;
-use Slick\WebStack\Infrastructure\AbstractModule;
+use Slick\ModuleApi\Infrastructure\AbstractModule;
+use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandler;
+use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandlerInterface;
+use Slick\ModuleApi\Infrastructure\FrontController\MiddlewarePosition;
+use Slick\ModuleApi\Infrastructure\FrontController\Position;
+use Slick\ModuleApi\Infrastructure\FrontController\WebModuleInterface;
+use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use Slick\WebStack\Infrastructure\ComposerParser;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
-use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandler;
-use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandlerInterface;
-use Slick\WebStack\Infrastructure\FrontController\MiddlewarePosition;
-use Slick\WebStack\Infrastructure\FrontController\Position;
-use Slick\WebStack\Infrastructure\FrontController\WebModuleInterface;
-use Slick\WebStack\Infrastructure\SlickModuleInterface;
 
 /**
  * FrontControllerModule
@@ -66,19 +68,12 @@ final class FrontControllerModule extends AbstractModule implements SlickModuleI
         ];
     }
 
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function settings(Dotenv $dotenv): array
-    {
-        return [];
-    }
-
     /**
      * Returns an array of middleware handlers.
      *
      * @return array<MiddlewareHandlerInterface> The middleware handlers.
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function middlewareHandlers(): array
     {

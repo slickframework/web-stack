@@ -12,10 +12,9 @@ declare(strict_types=1);
 namespace Slick\WebStack\UserInterface\Console;
 
 use Composer\Autoload\ClassLoader;
-use Slick\WebStack\Infrastructure\SlickModuleInterface;
+use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -58,7 +57,10 @@ final class ListModuleCommand extends Command
         $existing = [];
         $classMap = $this->classLoader->getClassMap();
         foreach ($classMap as $className => $file) {
-            $moduleClass = str_contains($file, 'Module.php') && !str_contains($file, 'AbstractModule.php');
+            $moduleClass = str_contains($file, 'Module.php')
+                && !str_contains($file, 'AbstractModule.php')
+                && !str_contains($file, 'Dummy')
+            ;
             if (!$moduleClass) {
                 continue;
             }

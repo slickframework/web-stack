@@ -10,11 +10,11 @@ namespace Test\Slick\WebStack\Infrastructure\FrontController;
 
 use PHPUnit\Framework\Attributes\Test;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Slick\WebStack\Infrastructure\FrontController\MiddlewareHandlerInterface;
+use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandlerInterface;
+use Slick\ModuleApi\Infrastructure\FrontController\MiddlewarePosition;
+use Slick\ModuleApi\Infrastructure\FrontController\Position;
 use Slick\WebStack\Infrastructure\FrontController\MiddlewareList;
 use PHPUnit\Framework\TestCase;
-use Slick\WebStack\Infrastructure\FrontController\MiddlewarePosition;
-use Slick\WebStack\Infrastructure\FrontController\Position;
 
 class MiddlewareListTest extends TestCase
 {

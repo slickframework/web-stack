@@ -15,6 +15,7 @@ use Composer\Autoload\ClassLoader;
 use Dotenv\Dotenv;
 use Slick\Configuration\ConfigurationInterface;
 use Slick\Di\ContainerInterface;
+use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use function Slick\WebStack\importSettingsFile;
 use function Slick\WebStack\mergeArrays;
 

@@ -19,6 +19,7 @@ use Slick\WebStack\Domain\Security\Http\AuthenticatorManager;
 use Slick\WebStack\Domain\Security\Http\AuthenticatorManagerInterface;
 use Slick\WebStack\Domain\Security\PasswordHasher\PasswordHasherInterface;
 use Slick\WebStack\Domain\Security\User\PasswordAuthenticatedUserInterface;
+use Slick\WebStack\Domain\Security\User\PasswordUpgradableInterface;
 use Slick\WebStack\Domain\Security\UserInterface;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -124,6 +125,23 @@ class AuthenticatorManagerTest extends TestCase
 
         list($hasher, $tokenStorage, $logger, $authenticator, $serverRequest, $token) = $this->createContext($hashedPassword, $password);
         $authenticator->onAuthenticationSuccess($serverRequest, $token->reveal())->willReturn(null)->shouldBeCalled();
+
+        $authenticatorManager = new AuthenticatorManager([$authenticator->reveal()], $tokenStorage->reveal(), $hasher->reveal(), $logger->reveal());
+
+        $this->assertNull($authenticatorManager->authenticateRequest($serverRequest));
+    }
+
+    #[Test]
+    public function authenticateWithRehash()
+    {
+        $password = 'password';
+        $hashedPassword = md5($password);
+
+        list($hasher, $tokenStorage, $logger, $authenticator, $serverRequest, $token) = $this->createContext($hashedPassword, $password);
+        $authenticator->onAuthenticationSuccess($serverRequest, $token->reveal())->willReturn(null)->shouldBeCalled();
+        $hasher->needsRehash($hashedPassword)->willReturn(true);
+        $hasher->hash($password)->willReturn($hashedPassword)->shouldBeCalled();
+
 
         $authenticatorManager = new AuthenticatorManager([$authenticator->reveal()], $tokenStorage->reveal(), $hasher->reveal(), $logger->reveal());
 
@@ -248,12 +266,15 @@ class AuthenticatorManagerTest extends TestCase
     public function createContext(string $hashedPassword, string $password): array
     {
         $user = $this->prophesize(PasswordAuthenticatedUserInterface::class);
+        $user->willImplement(PasswordUpgradableInterface::class);
+        $user->upgradePassword(Argument::type("string"))->willReturn($user);
         $user->password()->willReturn($hashedPassword);
 
         $token = $this->prophesize(TokenInterface::class);
 
         $hasher = $this->prophesize(PasswordHasherInterface::class);
         $hasher->verify($hashedPassword, $password)->willReturn(true);
+        $hasher->needsRehash(Argument::any())->willReturn(false);
 
         $tokenStorage = $this->prophesize(TokenStorageInterface::class);
         $logger = $this->prophesize(LoggerInterface::class);
