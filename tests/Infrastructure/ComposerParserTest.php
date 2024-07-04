@@ -61,6 +61,15 @@ class ComposerParserTest extends TestCase
         $this->assertSame($data["description"], $parser->description());
     }
 
+    #[Test]
+    public function psr4Namespaces(): void
+    {
+        $composer = dirname(__DIR__, 2) . '/composer.json';
+        $data = json_decode(file_get_contents($composer), true);
+        $parser = new ComposerParser($composer);
+        $this->assertEquals(array_keys($data["autoload"]["psr-4"]), $parser->psr4Namespaces());
+    }
+
     private function readComposer(string $composerFile): array
     {
         $data = json_decode(file_get_contents($composerFile), true);

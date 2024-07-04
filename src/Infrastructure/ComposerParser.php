@@ -23,13 +23,9 @@ use Slick\WebStack\Infrastructure\Exception\InvalidComposerFile;
 final class ComposerParser
 {
     /**
-     * @var object{
-     *     'name': string,
-     *     'version': string|int,
-     *     'description': string
-     * }
+     * @var array<string, mixed>
      */
-    private object $data;
+    private array $data;
 
     /**
      * @throws JsonException
@@ -39,7 +35,7 @@ final class ComposerParser
         if (!is_file($composerFile) || !$composerContents = file_get_contents($composerFile)) {
             throw new InvalidComposerFile("Composer file '$composerFile' does not exist or is not readable.");
         }
-        $this->data = json_decode(json: $composerContents, flags: JSON_THROW_ON_ERROR);
+        $this->data = json_decode(json: $composerContents, associative: true, flags: JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -49,7 +45,7 @@ final class ComposerParser
      */
     public function appName(): string
     {
-        return $this->inflateName($this->data->name);
+        return $this->inflateName($this->data["name"]);
     }
 
     /**
@@ -59,7 +55,7 @@ final class ComposerParser
      */
     public function version(): string
     {
-        return (string) $this->data->version;
+        return (string) $this->data["version"];
     }
 
     /**
@@ -84,6 +80,27 @@ final class ComposerParser
      */
     public function description(): string
     {
-        return (string) $this->data->description;
+        return (string) $this->data["description"];
+    }
+
+    /**
+     * Returns the autoload paths for the given key.
+     *
+     * @param string $key The autoload path key. Default is "psr-4".
+     * @return array<string, string> The autoload paths for the given key.
+     */
+    public function autoload(string $key = "psr-4"): array
+    {
+        return (array) $this->data["autoload"][$key];
+    }
+
+    /**
+     * Returns the PSR-4 namespaces declared in the autoload configuration.
+     *
+     * @return array<string> An array of PSR-4 namespaces.
+     */
+    public function psr4Namespaces(): array
+    {
+        return array_keys($this->autoload());
     }
 }
