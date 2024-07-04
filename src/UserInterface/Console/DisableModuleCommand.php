@@ -75,7 +75,7 @@ final class DisableModuleCommand extends DescribeModuleCommand
         $module = new $className();
         $module->onDisable([
             'container' => DependencyContainerFactory::instance()->container(),
-            'purge' => $input->hasOption('purge'),
+            'purge' => $input->getOption('purge'),
         ]);
 
         $this->outputStyle->writeln("<info>Module '$moduleName' disabled.</info>");
