@@ -11,10 +11,14 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\UserInterface\Console;
 
+use PhpOption\Option;
+use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
+use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -37,6 +41,7 @@ final class DisableModuleCommand extends DescribeModuleCommand
     public function configure(): void
     {
         $this->addArgument('module', InputArgument::REQUIRED, 'Module name to disable');
+        $this->addOption('purge', null, InputOption::VALUE_NONE, 'Purge all module files');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -65,6 +70,14 @@ final class DisableModuleCommand extends DescribeModuleCommand
         }
 
         file_put_contents($this->moduleListFile, $this->generateModuleConfig($new));
+
+        /** @var SlickModuleInterface $module */
+        $module = new $className();
+        $module->onDisable([
+            'container' => DependencyContainerFactory::instance()->container(),
+            'purge' => $input->hasOption('purge'),
+        ]);
+
         $this->outputStyle->writeln("<info>Module '$moduleName' disabled.</info>");
         return Command::SUCCESS;
     }

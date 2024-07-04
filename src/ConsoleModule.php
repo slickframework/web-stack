@@ -16,6 +16,7 @@ use Dotenv\Dotenv;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Slick\Di\Definition\ObjectDefinition;
+use Slick\ModuleApi\Infrastructure\AbstractModule;
 use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\UserInterface\Console\DescribeModuleCommand;
@@ -29,7 +30,7 @@ use Symfony\Component\Console\Application;
  *
  * @package Slick\WebStack
  */
-final class ConsoleModule implements ConsoleModuleInterface
+final class ConsoleModule extends AbstractModule implements ConsoleModuleInterface
 {
 
     private const APP_ROOT_KEY = '@app.root';

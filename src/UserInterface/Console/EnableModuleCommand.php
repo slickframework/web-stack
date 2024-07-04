@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\UserInterface\Console;
 
+use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
+use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -73,6 +75,10 @@ class EnableModuleCommand extends Command
 
         $modules[] = $retrieveModuleName;
         file_put_contents($this->moduleListFile, $this->generateModuleConfig($modules));
+
+        /** @var SlickModuleInterface $module */
+        $module = new $retrieveModuleName();
+        $module->onEnable(['container' => DependencyContainerFactory::instance()->container()]);
 
         $this->outputStyle?->writeln("<info>Module '$moduleName' enabled.</info>");
         return Command::SUCCESS;

@@ -1541,12 +1541,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/module-api.git",
-                "reference": "03ec99a1c87494c0ce148e45c01c664e1097e115"
+                "reference": "b662b500451628f0ca984c2467d9e8f678bd4239"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/module-api/zipball/03ec99a1c87494c0ce148e45c01c664e1097e115",
-                "reference": "03ec99a1c87494c0ce148e45c01c664e1097e115",
+                "url": "https://api.github.com/repos/slickframework/module-api/zipball/b662b500451628f0ca984c2467d9e8f678bd4239",
+                "reference": "b662b500451628f0ca984c2467d9e8f678bd4239",
                 "shasum": ""
             },
             "require": {
@@ -1581,9 +1581,9 @@
             "description": "Interfaces required to develop a Slick module",
             "support": {
                 "issues": "https://github.com/slickframework/module-api/issues",
-                "source": "https://github.com/slickframework/module-api/tree/v0.1.0"
+                "source": "https://github.com/slickframework/module-api/tree/v0.2.0"
             },
-            "time": "2024-07-02T14:55:31+00:00"
+            "time": "2024-07-04T15:01:39+00:00"
         },
         {
             "name": "symfony/console",
