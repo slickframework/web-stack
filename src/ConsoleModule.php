@@ -55,7 +55,7 @@ final class ConsoleModule extends AbstractModule implements ConsoleModuleInterfa
      */
     public function services(): array
     {
-        return [
+        $default = [
             EnableModuleCommand::class => ObjectDefinition
                 ::create(EnableModuleCommand::class)
                 ->with(self::APP_ROOT_KEY)
@@ -72,6 +72,7 @@ final class ConsoleModule extends AbstractModule implements ConsoleModuleInterfa
                 ::create(ListModuleCommand::class)
                 ->with(self::APP_ROOT_KEY, '@'.ClassLoader::class)
         ];
+        return importSettingsFile(dirname(__DIR__).'/config/logging.php', $default);
     }
 
     /**

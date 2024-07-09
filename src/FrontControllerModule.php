@@ -66,7 +66,7 @@ final class FrontControllerModule extends AbstractModule implements SlickModuleI
                 );
             }
         ];
-        return importSettingsFile(dirname(__DIR__).'/config/front-controller.php', $default);
+        return importSettingsFile(dirname(__DIR__).'/config/logging.php', $default);
     }
 
     /**
