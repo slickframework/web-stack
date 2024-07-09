@@ -33,6 +33,7 @@
     "php": ">=8.2",
     "doctrine/collections": "^2.3",
     "doctrine/orm": "^3.2",
+    "monolog/monolog": "3.x-dev",
     "psr/log": ">=2.0",
     "slick/configuration": "^2.0",
     "slick/di": "^2.0@dev",

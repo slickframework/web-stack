@@ -57,7 +57,6 @@ $services['security'] = function (ContainerInterface $container) {
     );
 };
 
-$services[LoggerInterface::class] = ObjectDefinition::create(NullLogger::class);
 $services[TokenStorageInterface::class] = '@security.token.storage';
 $services['security.token.storage'] = ObjectDefinition::create(TokenStorage::class);
 

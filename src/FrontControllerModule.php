@@ -57,7 +57,7 @@ final class FrontControllerModule extends AbstractModule implements SlickModuleI
      */
     public function services(): array
     {
-        return [
+        $default = [
             'default.middleware' => function () {
                 return fn() => new Response(
                     200,
@@ -66,6 +66,7 @@ final class FrontControllerModule extends AbstractModule implements SlickModuleI
                 );
             }
         ];
+        return importSettingsFile(dirname(__DIR__).'/config/front-controller.php', $default);
     }
 
     /**
