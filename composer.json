@@ -18,7 +18,6 @@
     }
   ],
   "autoload": {
-    "files": ["vendor/slick/module-api/src/functions.php"],
     "psr-4": {
       "Slick\\WebStack\\": "src/"
     }

@@ -1639,16 +1639,16 @@
         },
         {
             "name": "slick/module-api",
-            "version": "v0.3.0",
+            "version": "v0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/module-api.git",
-                "reference": "f24456aa44a1ddb173673f56fbac5a0f96d262c8"
+                "reference": "cb996d5209ff64587fe6df9bfa50f1d0f0feb63f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/module-api/zipball/f24456aa44a1ddb173673f56fbac5a0f96d262c8",
-                "reference": "f24456aa44a1ddb173673f56fbac5a0f96d262c8",
+                "url": "https://api.github.com/repos/slickframework/module-api/zipball/cb996d5209ff64587fe6df9bfa50f1d0f0feb63f",
+                "reference": "cb996d5209ff64587fe6df9bfa50f1d0f0feb63f",
                 "shasum": ""
             },
             "require": {
@@ -1665,6 +1665,9 @@
             },
             "type": "library",
             "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
                 "psr-4": {
                     "Slick\\ModuleApi\\": "src/"
                 }
@@ -1682,9 +1685,9 @@
             "description": "Interfaces required to develop a Slick module",
             "support": {
                 "issues": "https://github.com/slickframework/module-api/issues",
-                "source": "https://github.com/slickframework/module-api/tree/v0.3.0"
+                "source": "https://github.com/slickframework/module-api/tree/v0.3.1"
             },
-            "time": "2024-07-10T23:12:21+00:00"
+            "time": "2024-07-10T23:46:56+00:00"
         },
         {
             "name": "symfony/console",
