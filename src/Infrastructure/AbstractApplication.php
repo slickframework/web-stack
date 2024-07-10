@@ -16,8 +16,8 @@ use Dotenv\Dotenv;
 use Slick\Configuration\ConfigurationInterface;
 use Slick\Di\ContainerInterface;
 use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
-use function Slick\WebStack\importSettingsFile;
-use function Slick\WebStack\mergeArrays;
+use function Slick\ModuleApi\importSettingsFile;
+use function Slick\ModuleApi\mergeArrays;
 
 /**
  * AbstractApplication

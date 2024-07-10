@@ -185,6 +185,7 @@ trait ModuleCommandTrait
             }
             $table->addRow([$module->name(), $module->description(), $status]);
         }
+        $table->setColumnMaxWidth(1, 100);
 
         $table->render();
         $this->outputStyle?->write("  (<info>√</info>) enabled, ");

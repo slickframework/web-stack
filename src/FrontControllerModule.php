@@ -25,6 +25,7 @@ use Slick\ModuleApi\Infrastructure\FrontController\WebModuleInterface;
 use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use Slick\WebStack\Infrastructure\ComposerParser;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
+use function Slick\ModuleApi\importSettingsFile;
 
 /**
  * FrontControllerModule

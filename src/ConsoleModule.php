@@ -24,6 +24,7 @@ use Slick\WebStack\UserInterface\Console\DisableModuleCommand;
 use Slick\WebStack\UserInterface\Console\EnableModuleCommand;
 use Slick\WebStack\UserInterface\Console\ListModuleCommand;
 use Symfony\Component\Console\Application;
+use function Slick\ModuleApi\importSettingsFile;
 
 /**
  * ConsoleModule

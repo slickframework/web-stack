@@ -20,7 +20,7 @@ use Slick\WebStack\Infrastructure\AbstractApplication;
 use Slick\WebStack\Infrastructure\ApplicationSettingsInterface;
 use Slick\WebStack\Infrastructure\ComposerParser;
 use Symfony\Component\Console\Application;
-use function Slick\WebStack\constantValue;
+use function Slick\ModuleApi\constantValue;
 
 /**
  * ConsoleApplication

@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\UserInterface\Console;
 
-use PhpOption\Option;
 use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Symfony\Component\Console\Attribute\AsCommand;

@@ -25,6 +25,7 @@ use Slick\WebStack\Infrastructure\Http\AuthorizationMiddleware;
 use Slick\WebStack\Infrastructure\Http\SecurityMiddleware;
 use Slick\WebStack\UserInterface\Console\Security\HashPassword;
 use Symfony\Component\Console\Application;
+use function Slick\ModuleApi\importSettingsFile;
 
 /**
  * SecurityModule

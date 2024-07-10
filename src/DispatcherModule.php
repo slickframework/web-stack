@@ -21,6 +21,7 @@ use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\Infrastructure\Http\DispatcherMiddleware;
 use Slick\WebStack\Infrastructure\Http\RoutingMiddleware;
+use function Slick\ModuleApi\importSettingsFile;
 
 /**
  * DispatcherSlickModule
