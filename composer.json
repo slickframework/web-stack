@@ -53,6 +53,7 @@
     "phpspec/prophecy-phpunit": "^2.0@dev",
     "phpstan/phpstan": "2.0.x-dev",
     "phpunit/phpunit": "^11.3@dev",
+    "slick/orm": "^2.0@dev",
     "squizlabs/php_codesniffer": "4.0.x-dev"
   },
   "extra": {

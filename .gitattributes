@@ -7,3 +7,12 @@
 /.scrutinizer.yml   export-ignore
 /docker             export-ignore
 /docker-compose.yml export-ignore
+/.github            export-ignore
+/build              export-ignore
+/features           export-ignore
+/tests              export-ignore
+/behat.yml          export-ignore
+/CONTRIBUTING.md    export-ignore
+/phpstan.neon.dist  export-ignore
+/phpunit.xml        export-ignore
+/sonar-project.properties export-ignore

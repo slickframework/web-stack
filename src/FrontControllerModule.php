@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Slick\WebStack;
 
-use Dotenv\Dotenv;
 use JsonException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Slick\Http\Message\Response;
 use Slick\ModuleApi\Infrastructure\AbstractModule;
+use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandler;
 use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandlerInterface;
 use Slick\ModuleApi\Infrastructure\FrontController\MiddlewarePosition;
@@ -25,6 +25,8 @@ use Slick\ModuleApi\Infrastructure\FrontController\WebModuleInterface;
 use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use Slick\WebStack\Infrastructure\ComposerParser;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
+use Slick\WebStack\UserInterface\Console\StackDisplayCommand;
+use Symfony\Component\Console\Application;
 use function Slick\ModuleApi\importSettingsFile;
 
 /**
@@ -32,7 +34,10 @@ use function Slick\ModuleApi\importSettingsFile;
  *
  * @package Slick\WebStack
  */
-final class FrontControllerModule extends AbstractModule implements SlickModuleInterface, WebModuleInterface
+final class FrontControllerModule extends AbstractModule implements
+    SlickModuleInterface,
+    WebModuleInterface,
+    ConsoleModuleInterface
 {
 
     private ComposerParser $composerParser;
@@ -87,6 +92,14 @@ final class FrontControllerModule extends AbstractModule implements SlickModuleI
             )
         ];
     }
+
+    public function configureConsole(Application $cli): void
+    {
+        $container = DependencyContainerFactory::instance()->container();
+        $args = [null];
+        $cli->add($container->make(StackDisplayCommand::class, ...$args));
+    }
+
 
     /**
      * Creates the default content for the HTML body.

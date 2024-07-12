@@ -27,7 +27,7 @@ use function Slick\ModuleApi\mergeArrays;
 abstract class AbstractApplication
 {
 
-    private const MODULES_PATH = "/config/modules/enabled.php";
+    public const MODULES_PATH = "/config/modules/enabled.php";
 
     protected DependencyContainerFactory $containerFactory;
 
@@ -128,7 +128,7 @@ abstract class AbstractApplication
     /**
      * Load modules into the application.
      */
-    private function loadModules(): void
+    public function loadModules(): void
     {
         $file = $this->rootPath . self::MODULES_PATH;
         if (!is_file($file)) {

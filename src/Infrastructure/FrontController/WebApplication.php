@@ -48,6 +48,14 @@ final class WebApplication extends AbstractApplication
     }
 
     /**
+     * @return MiddlewareList<string, MiddlewareHandlerInterface>
+     */
+    public function middlewareList(): MiddlewareList
+    {
+        return $this->middlewareList;
+    }
+
+    /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -97,7 +105,7 @@ final class WebApplication extends AbstractApplication
         return $middlewareStack;
     }
 
-    private function loadMiddlewares(): void
+    public function loadMiddlewares(): void
     {
         foreach ($this->modules as $module) {
             if ($module instanceof WebModuleInterface) {
