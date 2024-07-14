@@ -58,7 +58,7 @@ final class ConsoleApplication extends AbstractApplication
 
         foreach ($this->modules as $module) {
             if ($module instanceof ConsoleModuleInterface) {
-                $module->configureConsole($cli);
+                $module->configureConsole($cli, $container);
             }
         }
 

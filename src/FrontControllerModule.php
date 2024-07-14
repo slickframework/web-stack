@@ -14,6 +14,7 @@ namespace Slick\WebStack;
 use JsonException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Slick\Di\ContainerInterface;
 use Slick\Http\Message\Response;
 use Slick\ModuleApi\Infrastructure\AbstractModule;
 use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
@@ -93,9 +94,8 @@ final class FrontControllerModule extends AbstractModule implements
         ];
     }
 
-    public function configureConsole(Application $cli): void
+    public function configureConsole(Application $cli, ContainerInterface $container): void
     {
-        $container = DependencyContainerFactory::instance()->container();
         $args = [null];
         $cli->add($container->make(StackDisplayCommand::class, ...$args));
     }

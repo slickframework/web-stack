@@ -15,6 +15,7 @@ use Composer\Autoload\ClassLoader;
 use Dotenv\Dotenv;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Slick\Di\ContainerInterface;
 use Slick\Di\Definition\ObjectDefinition;
 use Slick\ModuleApi\Infrastructure\AbstractModule;
 use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
@@ -40,9 +41,8 @@ final class ConsoleModule extends AbstractModule implements ConsoleModuleInterfa
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function configureConsole(Application $cli): void
+    public function configureConsole(Application $cli, ContainerInterface $container): void
     {
-        $container = DependencyContainerFactory::instance()->container();
         $cli->addCommands([
             $container->get(EnableModuleCommand::class),
             $container->get(DisableModuleCommand::class),

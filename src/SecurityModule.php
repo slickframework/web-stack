@@ -14,6 +14,7 @@ namespace Slick\WebStack;
 use Dotenv\Dotenv;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Slick\Di\ContainerInterface;
 use Slick\ModuleApi\Infrastructure\AbstractModule;
 use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandler;
@@ -44,7 +45,7 @@ final class SecurityModule extends AbstractModule implements ConsoleModuleInterf
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function configureConsole(Application $cli): void
+    public function configureConsole(Application $cli, ContainerInterface $container): void
     {
         $cli->add(DependencyContainerFactory::instance()->container()->get(HashPassword::class));
     }
