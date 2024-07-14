@@ -19,7 +19,6 @@ use Slick\Di\ContainerInterface;
 use Slick\Di\Definition\ObjectDefinition;
 use Slick\ModuleApi\Infrastructure\AbstractModule;
 use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
-use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\UserInterface\Console\DescribeModuleCommand;
 use Slick\WebStack\UserInterface\Console\DisableModuleCommand;
 use Slick\WebStack\UserInterface\Console\EnableModuleCommand;

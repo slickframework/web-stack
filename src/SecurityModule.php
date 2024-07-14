@@ -21,7 +21,6 @@ use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandler;
 use Slick\ModuleApi\Infrastructure\FrontController\MiddlewarePosition;
 use Slick\ModuleApi\Infrastructure\FrontController\Position;
 use Slick\ModuleApi\Infrastructure\FrontController\WebModuleInterface;
-use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\Infrastructure\Http\AuthorizationMiddleware;
 use Slick\WebStack\Infrastructure\Http\SecurityMiddleware;
 use Slick\WebStack\UserInterface\Console\Security\HashPassword;
@@ -47,7 +46,7 @@ final class SecurityModule extends AbstractModule implements ConsoleModuleInterf
      */
     public function configureConsole(Application $cli, ContainerInterface $container): void
     {
-        $cli->add(DependencyContainerFactory::instance()->container()->get(HashPassword::class));
+        $cli->add($container->get(HashPassword::class));
     }
 
     /**
