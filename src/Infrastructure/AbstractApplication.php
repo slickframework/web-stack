@@ -14,6 +14,8 @@ namespace Slick\WebStack\Infrastructure;
 use Composer\Autoload\ClassLoader;
 use Dotenv\Dotenv;
 use Slick\Configuration\ConfigurationInterface;
+use Slick\Configuration\Driver\Environment;
+use Slick\Configuration\PriorityConfigurationChain;
 use Slick\Di\ContainerInterface;
 use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use function Slick\ModuleApi\importSettingsFile;
@@ -78,7 +80,9 @@ abstract class AbstractApplication
     protected function prepareContainer(): ContainerInterface
     {
         $this->loadModules();
-        $settingsDriver = new ArrayConfigurationDriver($this->loadSettings());
+        $settingsDriver = new PriorityConfigurationChain();
+        $settingsDriver->add(new Environment(), 10);
+        $settingsDriver->add(new ArrayConfigurationDriver($this->loadSettings()), 30);
         $this->loadServices();
         $container = $this->containerFactory->container();
         $container->register('settings', $settingsDriver);
