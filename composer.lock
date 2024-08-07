@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9af2bed46b464e0cf2396bc967837a85",
+    "content-hash": "ab95ac4a051313fea3904446abeb7def",
     "packages": [
         {
             "name": "doctrine/collections",
@@ -1386,30 +1386,32 @@
         },
         {
             "name": "slick/configuration",
-            "version": "v2.0.2",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/configuration.git",
-                "reference": "7ce5f8b205500dd9b353f6d5024e167ad31cc00b"
+                "reference": "780269862e27684bb6f55685a0bf9274505ead41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/configuration/zipball/7ce5f8b205500dd9b353f6d5024e167ad31cc00b",
-                "reference": "7ce5f8b205500dd9b353f6d5024e167ad31cc00b",
+                "url": "https://api.github.com/repos/slickframework/configuration/zipball/780269862e27684bb6f55685a0bf9274505ead41",
+                "reference": "780269862e27684bb6f55685a0bf9274505ead41",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0"
+                "php": ">=8.2"
             },
             "require-dev": {
-                "phpspec/phpspec": "^7.2",
-                "squizlabs/php_codesniffer": "^3.1"
+                "phpmd/phpmd": "^2.15",
+                "phpspec/phpspec": "^7.5",
+                "phpstan/phpstan": "^1.11",
+                "squizlabs/php_codesniffer": "^3.10"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev",
-                    "dev-develop": "1.3-dev"
+                    "dev-master": "2.1-dev",
+                    "dev-develop": "2.2-dev"
                 }
             },
             "autoload": {
@@ -1428,19 +1430,22 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Slick/Configuration is a simple package that deals with configuration files.",
+            "description": "The slick/configuration component provides an easy-to-use solution for managing configuration files in your PHP applications.",
             "homepage": "https://github.com/slickframework/configuration",
             "keywords": [
+                "Settings",
                 "arrays",
                 "configuration",
+                "environment",
                 "ini",
-                "slick"
+                "slick",
+                "slick-php"
             ],
             "support": {
                 "issues": "https://github.com/slickframework/configuration/issues",
-                "source": "https://github.com/slickframework/configuration/tree/v2.0.2"
+                "source": "https://github.com/slickframework/configuration/tree/develop"
             },
-            "time": "2022-04-04T15:32:29+00:00"
+            "time": "2024-08-07T01:02:10+00:00"
         },
         {
             "name": "slick/di",
@@ -1691,6 +1696,81 @@
             "time": "2024-07-14T00:57:47+00:00"
         },
         {
+            "name": "symfony/config",
+            "version": "7.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/config.git",
+                "reference": "cf6d4f3edc6de6a629c342434c1a694a6de8e2f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/config/zipball/cf6d4f3edc6de6a629c342434c1a694a6de8e2f4",
+                "reference": "cf6d4f3edc6de6a629c342434c1a694a6de8e2f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/deprecation-contracts": "^2.5|^3",
+                "symfony/filesystem": "^7.1",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "conflict": {
+                "symfony/finder": "<6.4",
+                "symfony/service-contracts": "<2.5"
+            },
+            "require-dev": {
+                "symfony/event-dispatcher": "^6.4|^7.0",
+                "symfony/finder": "^6.4|^7.0",
+                "symfony/messenger": "^6.4|^7.0",
+                "symfony/service-contracts": "^2.5|^3",
+                "symfony/yaml": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Config\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/config/tree/7.2"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-08-02T06:50:04+00:00"
+        },
+        {
             "name": "symfony/console",
             "version": "7.2.x-dev",
             "source": {
@@ -1850,6 +1930,72 @@
                 }
             ],
             "time": "2024-04-18T09:32:20+00:00"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "7.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "bea731a0b0ae9e51a44d83a445db09fb89952d3a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/bea731a0b0ae9e51a44d83a445db09fb89952d3a",
+                "reference": "bea731a0b0ae9e51a44d83a445db09fb89952d3a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.8"
+            },
+            "require-dev": {
+                "symfony/process": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides basic utilities for the filesystem",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/filesystem/tree/7.2"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-07-06T18:14:19+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -3075,6 +3221,108 @@
                 }
             ],
             "time": "2024-05-06T16:37:16+00:00"
+        },
+        {
+            "name": "doctrine/migrations",
+            "version": "4.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/migrations.git",
+                "reference": "846e76645d34f98c9f716369a1643a42e7453519"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/846e76645d34f98c9f716369a1643a42e7453519",
+                "reference": "846e76645d34f98c9f716369a1643a42e7453519",
+                "shasum": ""
+            },
+            "require": {
+                "composer-runtime-api": "^2",
+                "doctrine/dbal": "^3.6 || ^4",
+                "doctrine/deprecations": "^0.5.3 || ^1",
+                "doctrine/event-manager": "^1.2 || ^2.0",
+                "php": "^8.1",
+                "psr/log": "^1.1.3 || ^2 || ^3",
+                "symfony/console": "^5.4 || ^6.0 || ^7.0",
+                "symfony/stopwatch": "^5.4 || ^6.0 || ^7.0",
+                "symfony/var-exporter": "^6.2 || ^7.0"
+            },
+            "conflict": {
+                "doctrine/orm": "<2.12 || >=4"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^12",
+                "doctrine/orm": "^2.13 || ^3",
+                "doctrine/persistence": "^2 || ^3",
+                "doctrine/sql-formatter": "^1.0",
+                "ext-pdo_sqlite": "*",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "phpstan/phpstan-strict-rules": "^1.4",
+                "phpstan/phpstan-symfony": "^1.3",
+                "phpunit/phpunit": "^10.3",
+                "symfony/cache": "^5.4 || ^6.0 || ^7.0",
+                "symfony/process": "^5.4 || ^6.0 || ^7.0",
+                "symfony/yaml": "^5.4 || ^6.0 || ^7.0"
+            },
+            "suggest": {
+                "doctrine/sql-formatter": "Allows to generate formatted SQL with the diff command.",
+                "symfony/yaml": "Allows the use of yaml for migration configuration files."
+            },
+            "bin": [
+                "bin/doctrine-migrations"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Migrations\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Michael Simonson",
+                    "email": "contact@mikesimonson.com"
+                }
+            ],
+            "description": "PHP Doctrine Migrations project offer additional functionality on top of the database abstraction layer (DBAL) for versioning your database schema and easily deploying changes to it. It is a very easy to use and a powerful tool.",
+            "homepage": "https://www.doctrine-project.org/projects/migrations.html",
+            "keywords": [
+                "database",
+                "dbal",
+                "migrations"
+            ],
+            "support": {
+                "issues": "https://github.com/doctrine/migrations/issues",
+                "source": "https://github.com/doctrine/migrations/tree/4.0.x"
+            },
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fmigrations",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-06-26T14:16:28+00:00"
         },
         {
             "name": "ediasoft/mink-selenium4-driver",
@@ -5495,6 +5743,73 @@
             "time": "2024-07-03T05:13:08+00:00"
         },
         {
+            "name": "slick/orm",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slickframework/orm.git",
+                "reference": "aa49873a86d3d1db71849271d3f6e66f2c6a0f68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slickframework/orm/zipball/aa49873a86d3d1db71849271d3f6e66f2c6a0f68",
+                "reference": "aa49873a86d3d1db71849271d3f6e66f2c6a0f68",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/migrations": "*",
+                "doctrine/orm": "*",
+                "php": ">=8.2",
+                "slick/module-api": ">=0.4"
+            },
+            "require-dev": {
+                "monolog/monolog": "^3.0@dev",
+                "phpmd/phpmd": "dev-master",
+                "phpspec/prophecy": "^1.0@dev",
+                "phpspec/prophecy-phpunit": "^2.0@dev",
+                "phpstan/phpstan": "2.0.x-dev",
+                "phpunit/phpunit": "^11.3@dev",
+                "slick/webstack": "2.x-dev",
+                "squizlabs/php_codesniffer": "4.0.x-dev",
+                "symfony/cache": "7.2.x-dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev",
+                    "dev-develop": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Slick\\Orm\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Filipe Silva",
+                    "email": "silvam.filipe@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Slick ORM is a module that provides ORM support to a Slick application using doctrine/orm.",
+            "keywords": [
+                "doctrrine",
+                "orm",
+                "slick",
+                "slick-modules"
+            ],
+            "support": {
+                "issues": "https://github.com/slickframework/orm/issues",
+                "source": "https://github.com/slickframework/orm/tree/develop"
+            },
+            "time": "2024-07-14T01:26:45+00:00"
+        },
+        {
             "name": "squizlabs/php_codesniffer",
             "version": "4.0.x-dev",
             "source": {
@@ -5573,81 +5888,6 @@
                 }
             ],
             "time": "2024-07-09T05:14:31+00:00"
-        },
-        {
-            "name": "symfony/config",
-            "version": "7.2.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/config.git",
-                "reference": "e0856feac218804fef3d3a5cc9e9053c435ea577"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/e0856feac218804fef3d3a5cc9e9053c435ea577",
-                "reference": "e0856feac218804fef3d3a5cc9e9053c435ea577",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.2",
-                "symfony/deprecation-contracts": "^2.5|^3",
-                "symfony/filesystem": "^7.1",
-                "symfony/polyfill-ctype": "~1.8"
-            },
-            "conflict": {
-                "symfony/finder": "<6.4",
-                "symfony/service-contracts": "<2.5"
-            },
-            "require-dev": {
-                "symfony/event-dispatcher": "^6.4|^7.0",
-                "symfony/finder": "^6.4|^7.0",
-                "symfony/messenger": "^6.4|^7.0",
-                "symfony/service-contracts": "^2.5|^3",
-                "symfony/yaml": "^6.4|^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Config\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/config/tree/7.2"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2024-07-06T08:20:04+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -5952,31 +6192,27 @@
             "time": "2024-04-18T09:32:20+00:00"
         },
         {
-            "name": "symfony/filesystem",
+            "name": "symfony/stopwatch",
             "version": "7.2.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/filesystem.git",
-                "reference": "bea731a0b0ae9e51a44d83a445db09fb89952d3a"
+                "url": "https://github.com/symfony/stopwatch.git",
+                "reference": "a5ab03f4e61db160ffff610a4a2bebe2913bdd2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/bea731a0b0ae9e51a44d83a445db09fb89952d3a",
-                "reference": "bea731a0b0ae9e51a44d83a445db09fb89952d3a",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/a5ab03f4e61db160ffff610a4a2bebe2913bdd2e",
+                "reference": "a5ab03f4e61db160ffff610a4a2bebe2913bdd2e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
-                "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-mbstring": "~1.8"
-            },
-            "require-dev": {
-                "symfony/process": "^6.4|^7.0"
+                "symfony/service-contracts": "^2.5|^3"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Symfony\\Component\\Filesystem\\": ""
+                    "Symfony\\Component\\Stopwatch\\": ""
                 },
                 "exclude-from-classmap": [
                     "/Tests/"
@@ -5996,10 +6232,10 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Provides basic utilities for the filesystem",
+            "description": "Provides a way to profile code",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/7.2"
+                "source": "https://github.com/symfony/stopwatch/tree/7.2"
             },
             "funding": [
                 {
@@ -6015,7 +6251,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-06T18:14:19+00:00"
+            "time": "2024-07-06T07:57:47+00:00"
         },
         {
             "name": "symfony/translation",
@@ -6388,6 +6624,7 @@
         "phpspec/prophecy-phpunit": 20,
         "phpstan/phpstan": 20,
         "phpunit/phpunit": 20,
+        "slick/orm": 20,
         "squizlabs/php_codesniffer": 20
     },
     "prefer-stable": false,
