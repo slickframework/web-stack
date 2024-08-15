@@ -87,7 +87,6 @@ abstract class AbstractApplication
         $container = $this->containerFactory->container();
         $container->register('settings', $settingsDriver);
         $container->register(ConfigurationInterface::class, '@settings');
-        $container->register(ApplicationSettingsInterface::class, '@settings');
         $container->register('app.root', $this->rootPath());
 
         if ($this->classLoader) {

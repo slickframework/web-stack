@@ -14,6 +14,7 @@ namespace Slick\WebStack\Infrastructure\Console;
 use Composer\Autoload\ClassLoader;
 use Exception;
 use JsonException;
+use Slick\Configuration\ConfigurationInterface;
 use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\WebStack\ConsoleModule;
 use Slick\WebStack\FrontControllerModule;
@@ -48,7 +49,7 @@ final class ConsoleApplication extends AbstractApplication
     public function run(): null
     {
         $container = $this->prepareContainer();
-        $commandsDir = $container->get(ApplicationSettingsInterface::class)->get('console.commands_dir');
+        $commandsDir = $container->get(ConfigurationInterface::class)->get('console.commands_dir');
 
         $loader = new ConsoleCommandLoader($container, APP_ROOT . $commandsDir);
         $cli = $this->commandLine();

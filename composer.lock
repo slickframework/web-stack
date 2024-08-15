@@ -1453,12 +1453,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slickframework/di.git",
-                "reference": "0917967c1166fccc081f338572c9347dc3ab2c4f"
+                "reference": "6c7d9d253fb393f5afb5d2ffa616b0c609e488b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slickframework/di/zipball/0917967c1166fccc081f338572c9347dc3ab2c4f",
-                "reference": "0917967c1166fccc081f338572c9347dc3ab2c4f",
+                "url": "https://api.github.com/repos/slickframework/di/zipball/6c7d9d253fb393f5afb5d2ffa616b0c609e488b4",
+                "reference": "6c7d9d253fb393f5afb5d2ffa616b0c609e488b4",
                 "shasum": ""
             },
             "require": {
@@ -1477,7 +1477,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev",
+                    "dev-master": "2.10-dev",
                     "dev-develop": "2.x-dev"
                 }
             },
@@ -1509,7 +1509,7 @@
                 "issues": "https://github.com/slickframework/di/issues",
                 "source": "https://github.com/slickframework/di/tree/develop"
             },
-            "time": "2024-06-24T12:14:04+00:00"
+            "time": "2024-08-15T14:23:13+00:00"
         },
         {
             "name": "slick/fswatch",
@@ -6611,8 +6611,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "monolog/monolog": 20,
-        "slick/di": 20,
         "slick/fswatch": 20,
+        "symfony/config": 20,
         "symfony/console": 20,
         "symfony/routing": 20,
         "vlucas/phpdotenv": 20,

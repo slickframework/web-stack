@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Infrastructure;
 
+use Slick\Configuration\ConfigurationInterface;
 use Slick\Configuration\Driver\CommonDriverMethods;
 
 /**
@@ -18,7 +19,7 @@ use Slick\Configuration\Driver\CommonDriverMethods;
  *
  * @package Slick\WebStack\Infrastructure
  */
-final class ArrayConfigurationDriver implements ApplicationSettingsInterface
+final class ArrayConfigurationDriver implements ConfigurationInterface
 {
 
     use CommonDriverMethods;
