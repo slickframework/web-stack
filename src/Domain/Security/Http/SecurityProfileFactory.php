@@ -20,6 +20,7 @@ use Slick\WebStack\Domain\Security\Http\SecurityProfile\DisabledSecurityProfile;
 use Slick\WebStack\Domain\Security\Http\SecurityProfile\SecurityProfile;
 use Slick\WebStack\Domain\Security\Http\SecurityProfile\SecurityProfileTrait;
 use Slick\WebStack\Domain\Security\Http\SecurityProfile\StatefulSecurityProfile\SessionSecurityProfile;
+use Slick\WebStack\Domain\Security\User\UserProviderInterface;
 use Slick\WebStack\Domain\Security\UserInterface;
 use Slick\WebStack\Infrastructure\Http\Authenticator\Factory\AuthenticatorsListFactory;
 
@@ -86,10 +87,26 @@ class SecurityProfileFactory
     private function createDisabledProfile(array $profile): SecurityProfileInterface
     {
         $options = array_merge(self::$defaultOptions, $profile);
-        return $options['secured'] !== true
-            ? new DisabledSecurityProfile($options['pattern'])
-            : $this->createStatelessProfile($options)
-        ;
+
+        if ($options['secured'] !== true) {
+            if (isset($options['stateless']) && !$options['stateless']) {
+                $tokenValidator = new UserIntegrityTokenValidator(
+                    $this->createUserProvider(
+                        $this->getProviderClass($profile)
+                    )
+                );
+
+                return new DisabledSecurityProfile(
+                    $options['pattern'],
+                    $this->createTokenStorage($profile),
+                    $this->createSessionDriver($profile),
+                    $tokenValidator
+                );
+            }
+            return new DisabledSecurityProfile($options['pattern']);
+        }
+
+        return $this->createStatelessProfile($options);
     }
 
     /**
@@ -127,7 +144,7 @@ class SecurityProfileFactory
     private function createSecurityProfile(array $profile): SecurityProfileInterface
     {
         $tokenValidator = new UserIntegrityTokenValidator(
-            $this->createUserProvider($profile['userProvider'])
+            $this->createUserProvider($this->getProviderClass($profile))
         );
         return new SessionSecurityProfile(
             $profile['pattern'],
@@ -178,5 +195,14 @@ class SecurityProfileFactory
         }
 
         return $this->entryPoint;
+    }
+
+    /**
+     * @param array<string, mixed> $profile
+     * @return string
+     */
+    private function getProviderClass(array $profile): string
+    {
+        return isset($profile['userProvider']) ? $profile['userProvider'] : UserProviderInterface::class;
     }
 }

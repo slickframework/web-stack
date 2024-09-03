@@ -15,7 +15,10 @@ use JsonException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Slick\Di\ContainerInterface;
+use Slick\Di\Definition\ObjectDefinition;
 use Slick\Http\Message\Response;
+use Slick\Http\Session\Driver\ServerDriver;
+use Slick\Http\Session\SessionDriverInterface;
 use Slick\ModuleApi\Infrastructure\AbstractModule;
 use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandler;
@@ -26,6 +29,7 @@ use Slick\ModuleApi\Infrastructure\FrontController\WebModuleInterface;
 use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
 use Slick\WebStack\Infrastructure\ComposerParser;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
+use Slick\WebStack\Infrastructure\Http\FlashMessageStorage;
 use Slick\WebStack\UserInterface\Console\StackDisplayCommand;
 use Symfony\Component\Console\Application;
 use function Slick\ModuleApi\importSettingsFile;
@@ -34,6 +38,7 @@ use function Slick\ModuleApi\importSettingsFile;
  * FrontControllerModule
  *
  * @package Slick\WebStack
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 final class FrontControllerModule extends AbstractModule implements
     SlickModuleInterface,
@@ -65,6 +70,11 @@ final class FrontControllerModule extends AbstractModule implements
     public function services(): array
     {
         $default = [
+            FlashMessageStorage::class => ObjectDefinition::
+                create(FlashMessageStorage::class)
+                ->with('@session'),
+            SessionDriverInterface::class => '@session',
+            'session' => ObjectDefinition::create(ServerDriver::class),
             'default.middleware' => function () {
                 return fn() => new Response(
                     200,

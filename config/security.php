@@ -11,11 +11,12 @@ namespace config\services;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Slick\Di\ContainerInterface;
 use Slick\Di\Definition\ObjectDefinition;
+use Slick\Http\Session\Driver\ServerDriver;
 use Slick\Http\Session\SessionDriverInterface;
 use Slick\WebStack\Domain\Security\Authentication\Token\Storage\TokenStorage;
+use Slick\WebStack\Domain\Security\Authentication\Token\TokenStorageInterface as SessionTokenStorageInterface;
 use Slick\WebStack\Domain\Security\AuthorizationCheckerInterface;
 use Slick\WebStack\Domain\Security\Csrf\CsrfTokenManager;
 use Slick\WebStack\Domain\Security\Csrf\CsrfTokenManagerInterface;
@@ -33,7 +34,6 @@ use Slick\WebStack\Domain\Security\Security;
 use Slick\WebStack\Domain\Security\SecurityAuthenticatorInterface;
 use Slick\WebStack\Domain\Security\Signature\SignatureHasher;
 use Slick\WebStack\Domain\Security\User\UserProviderInterface;
-use const _PHPStan_35a337228\__;
 
 $services = [];
 
@@ -69,6 +69,12 @@ $services[RememberMeHandlerInterface::class] = function (ContainerInterface $con
         $container->get(LoggerInterface::class)
     );
 };
+
+//------------------------------------------------------------------
+// Session storage
+//------------------------------------------------------------------
+$services[SessionTokenStorageInterface::class] = '@security.token.storage';
+
 
 //------------------------------------------------------------------
 // Password hasher

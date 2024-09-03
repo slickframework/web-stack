@@ -122,7 +122,6 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
     /**
      * @inheritDoc
      */
-    
     public function process(ServerRequestInterface $request): ?ResponseInterface
     {
         $securityProfile = $this->profileFactory->createProfile($this->options, $request);
@@ -148,12 +147,9 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
     
     public function authenticatedUser(): UserInterface
     {
-        $token = $this->tokenStorage->getToken();
-        if ($token instanceof TokenInterface) {
-            $user = $token->user();
-            if ($user instanceof UserInterface) {
-                return $user;
-            }
+        $user = $this->user();
+        if ($user instanceof UserInterface) {
+            return $user;
         }
 
         throw new UserNotFoundException('User not authenticated.');
@@ -220,5 +216,17 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
     public function authenticationErrors(): array
     {
         return $this->errors;
+    }
+
+    public function user(): ?UserInterface
+    {
+        $token = $this->tokenStorage->getToken();
+        if ($token instanceof TokenInterface) {
+            $user = $token->user();
+            if ($user instanceof UserInterface) {
+                return $user;
+            }
+        }
+        return null;
     }
 }

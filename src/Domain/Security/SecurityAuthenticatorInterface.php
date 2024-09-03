@@ -29,6 +29,7 @@ interface SecurityAuthenticatorInterface
      */
     public function enabled(): bool;
 
+    public function user(): ?UserInterface;
 
     /**
      * Processes security profile for the given server request and optionally returns a response.
