@@ -137,4 +137,12 @@ final class RememberMeAuthenticator implements AuthenticatorInterface
 
         return null;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function clear(): void
+    {
+        $this->rememberMeHandler->clearRememberMeCookie();
+    }
 }

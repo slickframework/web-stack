@@ -13,7 +13,6 @@ namespace Slick\WebStack\Domain\Security\Http\SecurityProfile;
 
 use Slick\WebStack\Domain\Security\Authentication\Token\TokenStorageInterface;
 use Slick\WebStack\Domain\Security\Http\AuthenticationEntryPointInterface;
-use Slick\WebStack\Domain\Security\Http\Authenticator\PassportInterface;
 use Slick\WebStack\Domain\Security\Http\AuthenticatorManagerInterface;
 use Slick\WebStack\Domain\Security\Http\SecurityProfileInterface;
 use Slick\WebStack\Domain\Security\UserInterface;
@@ -42,7 +41,7 @@ class SecurityProfile implements SecurityProfileInterface
      */
     public function __construct(
         string $matchExp,
-        private readonly AuthenticatorManagerInterface $authenticatorManager,
+        protected readonly AuthenticatorManagerInterface $authenticatorManager,
         protected readonly TokenStorageInterface $tokenStorage,
         private readonly ?AuthenticationEntryPointInterface $entryPoint = null
     ) {
@@ -77,10 +76,10 @@ class SecurityProfile implements SecurityProfileInterface
      * a status code of 401 (Unauthorized).
      *
      * @param ServerRequestInterface $request The server request to process the entry point.
-     * @return ResponseInterface Returns the response of the entry point or a response with
+     * @return null|ResponseInterface Returns the response of the entry point or a response with
      *                           a status code of 401 (Unauthorized).
      */
-    private function processEntryPoint(ServerRequestInterface $request): ResponseInterface
+    private function processEntryPoint(ServerRequestInterface $request): ?ResponseInterface
     {
         if ($this->entryPoint) {
             return $this->entryPoint->start($request);

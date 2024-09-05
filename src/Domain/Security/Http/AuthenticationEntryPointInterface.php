@@ -42,5 +42,5 @@ interface AuthenticationEntryPointInterface
     public function start(
         ServerRequestInterface $request,
         ?AuthenticationException $authException = null
-    ): ResponseInterface;
+    ): ?ResponseInterface;
 }

@@ -103,7 +103,7 @@ final class FormLoginProperties
      */
     public function useReferer(): bool
     {
-        return (bool)$this->properties['useReferer'];
+        return (bool) $this->properties['useReferer'];
     }
 
     /**

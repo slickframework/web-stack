@@ -23,6 +23,7 @@ use Slick\ModuleApi\Infrastructure\FrontController\Position;
 use Slick\ModuleApi\Infrastructure\FrontController\WebModuleInterface;
 use Slick\WebStack\Infrastructure\Http\AuthorizationMiddleware;
 use Slick\WebStack\Infrastructure\Http\SecurityMiddleware;
+use Slick\WebStack\UserInterface\Console\Security\GenerateSecretCommand;
 use Slick\WebStack\UserInterface\Console\Security\HashPassword;
 use Symfony\Component\Console\Application;
 use function Slick\ModuleApi\importSettingsFile;
@@ -47,6 +48,7 @@ final class SecurityModule extends AbstractModule implements ConsoleModuleInterf
     public function configureConsole(Application $cli, ContainerInterface $container): void
     {
         $cli->add($container->get(HashPassword::class));
+        $cli->add($container->get(GenerateSecretCommand::class));
     }
 
     /**

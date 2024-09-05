@@ -42,7 +42,8 @@ final class AuthenticatorsListFactory implements ArrayAccess, IteratorAggregate,
     /** @var array<string, mixed|array<string, mixed>>  */
     private static array $presets = [
         'custom' => [
-            'className' => null
+            'className' => null,
+            'args' => []
         ],
         'httpBasicAuth' => [
             'className' => HttpBasicAuthenticator::class,
@@ -194,8 +195,12 @@ final class AuthenticatorsListFactory implements ArrayAccess, IteratorAggregate,
      */
     private function createFromContainer(int|string $name, array $config): void
     {
-        $args = array_merge(self::$presets[$name]['args'], $config);
-        $className = self::$presets[$name]['className'];
+        $customArgs = isset($config['args']) ? $config['args'] :$config;
+        $customClass = isset($config['className']) ? $config['className'] : null;
+
+        $args = array_merge(self::$presets[$name]['args'], $customArgs);
+        $className = $customClass ?? self::$presets[$name]['className'];
+
         $this->authenticators[$name] = $this->container->make($className, ...array_values($args));
         if ($this->authenticators[$name] instanceof AuthenticationEntryPointInterface) {
             $this->entryPoint = $this->authenticators[$name];

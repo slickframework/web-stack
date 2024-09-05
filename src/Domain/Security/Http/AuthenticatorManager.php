@@ -240,4 +240,14 @@ final class AuthenticatorManager implements AuthenticatorManagerInterface
     {
         return $this->errors;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function clear(): void
+    {
+        foreach ($this->authenticators as $authenticator) {
+            $authenticator->clear();
+        }
+    }
 }

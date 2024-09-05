@@ -107,4 +107,12 @@ interface AuthenticatorInterface
      * @return self<TUser> The instance of this class.
      */
     public function withHandler(AuthenticatorHandlerInterface $handler): self;
+
+    /**
+     * Clears any cached data or state.
+     *
+     * This method is used to clear any cached data or state that the class may be holding.
+     * It does not take any parameters and does not return any value.
+     */
+    public function clear(): void;
 }

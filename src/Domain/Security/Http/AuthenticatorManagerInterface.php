@@ -38,4 +38,9 @@ interface AuthenticatorManagerInterface
      * @return array<string> An array of authentication errors, if any.
      */
     public function authenticationErrors(): array;
+
+    /**
+     * Clears any data or state associated with the current object.
+     */
+    public function clear(): void;
 }

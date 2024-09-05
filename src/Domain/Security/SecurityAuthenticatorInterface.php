@@ -46,4 +46,11 @@ interface SecurityAuthenticatorInterface
      * @return array<string> An array of authentication errors.
      */
     public function authenticationErrors(): array;
+
+    /**
+     * Logs out the current user.
+     *
+     * @return void
+     */
+    public function logout(): void;
 }

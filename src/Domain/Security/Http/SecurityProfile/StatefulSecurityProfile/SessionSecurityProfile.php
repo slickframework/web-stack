@@ -84,4 +84,13 @@ final class SessionSecurityProfile extends SecurityProfile implements StatefulSe
         parent::handleAuthenticationSuccess($request);
         $this->session->set(self::SESSION_KEY, $this->tokenStorage->getToken());
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function logout(): void
+    {
+        $this->session->erase(self::SESSION_KEY);
+        $this->authenticatorManager->clear();
+    }
 }

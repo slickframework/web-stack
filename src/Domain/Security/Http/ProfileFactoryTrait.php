@@ -59,7 +59,7 @@ trait ProfileFactoryTrait
      * Create a token storage based on a given profile.
      *
      * @param array<string, mixed> $profile The profile configuration.
-     * @return TokenStorageInterface<TUser> The created token storage.
+     * @return TokenStorageInterface<UserInterface> The created token storage.
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -88,7 +88,7 @@ trait ProfileFactoryTrait
      *
      * @param string $providerClass The class name of the user provider
      *
-     * @return UserProviderInterface<TUser> The user provider instance
+     * @return UserProviderInterface<UserInterface> The user provider instance
      *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface

@@ -30,4 +30,11 @@ interface StatefulSecurityProfileInterface extends SecurityProfileInterface
      * @return TokenInterface<TUser>|null The restored token, or null if nothing was restored.
      */
     public function restoreToken(): ?TokenInterface;
+
+    /**
+     * Logs out the authenticated user, invalidating the session.
+     *
+     * @return void
+     */
+    public function logout(): void;
 }

@@ -131,4 +131,12 @@ final class HttpBasicAuthenticator implements AuthenticatorInterface, Authentica
     ): ResponseInterface {
         return new Response(401, 'Unauthorized', ['WWW-Authenticate' => sprintf('Basic realm="%s"', $this->realm)]);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function clear(): void
+    {
+        // Do nothing here
+    }
 }

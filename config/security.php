@@ -13,7 +13,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Slick\Di\ContainerInterface;
 use Slick\Di\Definition\ObjectDefinition;
-use Slick\Http\Session\Driver\ServerDriver;
 use Slick\Http\Session\SessionDriverInterface;
 use Slick\WebStack\Domain\Security\Authentication\Token\Storage\TokenStorage;
 use Slick\WebStack\Domain\Security\Authentication\Token\TokenStorageInterface as SessionTokenStorageInterface;
@@ -34,6 +33,7 @@ use Slick\WebStack\Domain\Security\Security;
 use Slick\WebStack\Domain\Security\SecurityAuthenticatorInterface;
 use Slick\WebStack\Domain\Security\Signature\SignatureHasher;
 use Slick\WebStack\Domain\Security\User\UserProviderInterface;
+use function Slick\ModuleApi\importSettingsFile;
 
 $services = [];
 
@@ -41,19 +41,21 @@ $services[SecurityProfileFactory::class] = function (ContainerInterface $contain
     return new SecurityProfileFactory($container);
 };
 
-$services[SecurityAuthenticatorInterface::class] = '@security';
-$services[AuthorizationCheckerInterface::class] = '@security';
-$services[Security::class] = '@security';
+$securityVariable = '@security';
+$services[SecurityAuthenticatorInterface::class] = $securityVariable;
+$services[AuthorizationCheckerInterface::class] = $securityVariable;
+$services[Security::class] = $securityVariable;
 $services['security'] = function (ContainerInterface $container) {
     $securityConfigPath = APP_ROOT . '/config/security.php';
     if (!is_file($securityConfigPath)) {
         file_put_contents($securityConfigPath, file_get_contents(__DIR__.'/default-security.settings.php'));
     }
-    $options = require $securityConfigPath;
+
     return new Security(
         $container->get(SecurityProfileFactory::class),
         $container->get('security.token.storage'),
-        $options
+        importSettingsFile($securityConfigPath),
+        $container->get(SessionDriverInterface::class)
     );
 };
 
@@ -75,7 +77,7 @@ $services[RememberMeHandlerInterface::class] = function (ContainerInterface $con
 //------------------------------------------------------------------
 $services[SessionTokenStorageInterface::class] = '@security.token.storage';
 
-
+$envAppSecret = $_ENV["APP_SECRET"] ?? '';
 //------------------------------------------------------------------
 // Password hasher
 //------------------------------------------------------------------
@@ -84,7 +86,7 @@ $services[PhpPasswordHasher::class] = '@password.hasher';
 $services['password.hasher'] = function () {
     return new PhpPasswordHasher();
 };
-$services[Pbkdf2PasswordHasher::class] = fn() => new Pbkdf2PasswordHasher(salt: $_ENV["APP_SECRET"]);
+$services[Pbkdf2PasswordHasher::class] = fn() => new Pbkdf2PasswordHasher(salt: $envAppSecret);
 $services[PlaintextPasswordHasher::class] = fn() => new PlaintextPasswordHasher();
 
 $services[CsrfTokenManagerInterface::class] = function (ContainerInterface $container) {

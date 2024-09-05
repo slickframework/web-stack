@@ -42,7 +42,7 @@ final class DisabledSecurityProfile implements SecurityProfileInterface, Statefu
      */
     public function __construct(
         string $matchExp,
-        private ?TokenStorageInterface $tokenStorage = null,
+        private readonly ?TokenStorageInterface $tokenStorage = null,
         private readonly ?SessionDriverInterface $session = null,
         private readonly ?TokenValidatorInterface $tokenValidator = null
     ) {
@@ -82,5 +82,13 @@ final class DisabledSecurityProfile implements SecurityProfileInterface, Statefu
 
         $this->tokenStorage?->setToken($token);
         return $token;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function logout(): void
+    {
+        // nothing to do here.
     }
 }

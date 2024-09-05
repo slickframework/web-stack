@@ -162,4 +162,12 @@ final class FormLoginAuthenticator implements AuthenticatorInterface
 
         return array($userName, $password);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function clear(): void
+    {
+        // Do nothing
+    }
 }

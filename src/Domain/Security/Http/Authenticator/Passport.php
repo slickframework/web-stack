@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Slick\WebStack\Domain\Security\Http\Authenticator;
 
 use Slick\WebStack\Domain\Security\Http\Authenticator\Passport\Badge\Credentials\PasswordCredentials;
+use Slick\WebStack\Domain\Security\Http\Authenticator\Passport\Badge\CredentialsInterface;
 use Slick\WebStack\Domain\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Slick\WebStack\Domain\Security\Http\Authenticator\Passport\BadgeInterface;
 use Slick\WebStack\Domain\Security\UserInterface;
@@ -31,13 +32,13 @@ class Passport implements PassportInterface
      * Creates a Passport
      *
      * @param UserBadge<TUser> $userBadge
-     * @param PasswordCredentials $credentials
+     * @param CredentialsInterface $credentials
      * @param array<BadgeInterface> $badges
      */
-    public function __construct(UserBadge $userBadge, PasswordCredentials $credentials, array $badges = [])
+    public function __construct(UserBadge $userBadge, CredentialsInterface $credentials, array $badges = [])
     {
         $this->addBadge($userBadge, UserBadge::class);
-        $this->addBadge($credentials, PasswordCredentials::class);
+        $this->addBadge($credentials, get_class($credentials));
         foreach ($badges as $badge) {
             $this->addBadge($badge);
         }

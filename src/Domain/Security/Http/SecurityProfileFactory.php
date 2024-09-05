@@ -25,19 +25,18 @@ use Slick\WebStack\Domain\Security\UserInterface;
 use Slick\WebStack\Infrastructure\Http\Authenticator\Factory\AuthenticatorsListFactory;
 
 /**
- * SecurityProfileFactory
- *
- * @package Slick\WebStack\Domain\Security\Http
- * @template TUser of UserInterface
+ * Class SecurityProfileFactory
  */
 class SecurityProfileFactory
 {
     use SecurityProfileTrait;
 
     /**
-     * @use ProfileFactoryTrait<TUser>
+     * @use ProfileFactoryTrait<UserInterface>
      */
     use ProfileFactoryTrait;
+
+    protected ?SecurityProfileInterface $profile = null;
 
     private ?AuthenticationEntryPointInterface $entryPoint = null;
 
@@ -68,11 +67,22 @@ class SecurityProfileFactory
             }
 
             if ($this->match($request)) {
-                return $this->createDisabledProfile($profile);
+                $this->profile = $this->createDisabledProfile($profile);
+                return $this->profile;
             }
         }
 
         return null;
+    }
+
+    /**
+     * Retrieves the security profile
+     *
+     * @return SecurityProfileInterface|null The security profile if available, null otherwise
+     */
+    public function profile(): ?SecurityProfileInterface
+    {
+        return $this->profile;
     }
 
     /**

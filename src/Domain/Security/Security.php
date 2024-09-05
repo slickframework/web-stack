@@ -11,10 +11,12 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Domain\Security;
 
+use Slick\Http\Session\SessionDriverInterface;
 use Slick\WebStack\Domain\Security\Authentication\Token\TokenStorageInterface;
 use Slick\WebStack\Domain\Security\Authentication\TokenInterface;
 use Slick\WebStack\Domain\Security\Exception\UserNotFoundException;
 use Slick\WebStack\Domain\Security\Http\SecurityProfile\SecurityProfileTrait;
+use Slick\WebStack\Domain\Security\Http\SecurityProfile\StatefulSecurityProfile\SessionSecurityProfile;
 use Slick\WebStack\Domain\Security\Http\SecurityProfile\StatefulSecurityProfileInterface;
 use Slick\WebStack\Domain\Security\Http\SecurityProfileFactory;
 use Psr\Http\Message\ResponseInterface;
@@ -53,14 +55,15 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
     /**
      * Creates a Security
      *
-     * @param SecurityProfileFactory<TUser> $profileFactory
+     * @param SecurityProfileFactory $profileFactory
      * @param TokenStorageInterface<TUser> $tokenStorage
      * @param array<string, mixed> $options
      */
     public function __construct(
         private readonly SecurityProfileFactory $profileFactory,
         private readonly TokenStorageInterface $tokenStorage,
-        array $options = []
+        array $options = [],
+        private ?SessionDriverInterface $sessionDriver = null
     ) {
         $this->options = array_merge(self::$defaultOptions, $options);
     }
@@ -228,5 +231,20 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
             }
         }
         return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function logout(): void
+    {
+        if ($this->sessionDriver) {
+            $this->sessionDriver->erase(SessionSecurityProfile::SESSION_KEY);
+        }
+
+        $profile = $this->profileFactory->profile();
+        if ($profile instanceof StatefulSecurityProfileInterface) {
+            $profile->logout();
+        }
     }
 }
