@@ -1,31 +1,38 @@
-version: '3.2'
-
 services:
 
   php:
     build: docker/php
-    ports:
-      - 80
     volumes:
       - ./:/var/www/app
     environment:
+      - USE_XDEBUG=no
+      - XDEBUG_MODE=develop,debug,coverage
+      - ENABLE_OPCACHE=no
+      - ENABLE_XDEBUG_FOR_MAC=no
+
+  php-server:
+    build: docker/php-server
+    volumes:
+      - ./:/var/www/app
+    ports:
+      - 8880:80
+    environment:
       - USE_XDEBUG=yes
+      - XDEBUG_MODE=develop,debug,coverage
+      - ENABLE_OPCACHE=no
+      - ENABLE_XDEBUG_FOR_MAC=yes
+      - WEBROOT=features/app/public
 
-  docs:
-    image: nginx:latest
+  selenium:
+    image: selenium/standalone-firefox:4.21.0
     ports:
-      - 80
-    volumes:
-      - ./docs/build/html:/usr/share/nginx/html:ro
+      - 4444:4444
 
-  build-docs:
-    build: docker/build-docs
+  sonarqube:
+    platform: linux/amd64
+    image: sonarsource/sonar-scanner-cli
     volumes:
-    - ./docs:/docs
-
-  webgrind:
-    image: jokkedk/webgrind:latest
-    volumes:
-      - ./tmp:/tmp
-    ports:
-      - 8888:80
+      - ./:/usr/src
+    environment:
+      - SONAR_HOST_URL=http://sonarqube.fsilva.info
+      - SONAR_TOKEN=sqp_29a5a35add3da58bd332016595bcb7f27935adeb

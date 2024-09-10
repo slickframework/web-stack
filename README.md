@@ -2,8 +2,9 @@
 
 [![Latest Version](https://img.shields.io/github/release/slickframework/web-stack.svg?style=flat-square)](https://github.com/slickframework/web-stack/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/slickframework/web-stack/master.svg?style=flat-square)](https://travis-ci.org/slickframework/web-stack)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/slickframework/web-stack/continuous-integration.yml?style=flat-square)](https://github.com/slickframework/web-stack/actions/workflows/continuous-integration.yml)
 [![Quality Score](https://img.shields.io/scrutinizer/g/slickframework/web-stack/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/slickframework/web-stack?branch=master)
+[![Quality Gate Status](https://sonarqube.fsilva.info/api/project_badges/measure?project=web-stack&metric=alert_status&token=sqb_e54d9740f9eab19793ca1fdad10ecedf08e7a06b)](https://sonarqube.fsilva.info/dashboard?id=web-stack)
 [![Total Downloads](https://img.shields.io/packagist/dt/slick/webstack.svg?style=flat-square)](https://packagist.org/packages/slick/webstack)
 
 ``slick/webstack`` is a [PSR-15](https://www.php-fig.org/psr/psr-15/) HTTP middleware stack that can help you create
@@ -26,10 +27,6 @@ Via Composer
 $ composer require slick/webstack
 ```
 
-## Usage
-A full [documentation site](http://www.slick-framework.com/en/latest/manual/getting-started.html)
-is available to support this package usage.
-
 ## Testing
 
 We use [Behat](http://behat.org/en/latest/index.html) to describe features and for acceptance tests
@@ -37,10 +34,7 @@ and [PHPSpec](http://www.phpspec.net/) for unit testing.
 
 ``` bash
 # unit tests
-$ vendor/bin/phpspec
-
-# acceptance tests
-$ vendor/bin/behat
+$ vendor/bin/phpinfo
 ```
 
 ## Contributing

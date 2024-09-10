@@ -3,3 +3,5 @@ composer.phar
 .idea
 .DS_Store
 /tmp
+.scannerwork
+.phpunit.result.cache

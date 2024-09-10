@@ -1,7 +1,0 @@
-example:
-    allows: [GET, POST]
-    path: /article/error{/articleId}
-    defauts:
-        namespace: Articles\Error\Controller
-        action: handle
-        controller: article-error
