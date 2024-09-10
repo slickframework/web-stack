@@ -8,6 +8,7 @@
 
 namespace Test\Slick\WebStack\Infrastructure\Http\Authenticator;
 
+use Slick\Http\Session\SessionDriverInterface;
 use Slick\WebStack\Domain\Security\Authentication\TokenInterface;
 use Slick\WebStack\Domain\Security\Exception\AuthenticationException;
 use Slick\WebStack\Domain\Security\Http\Authenticator\AuthenticatorHandlerInterface;
@@ -33,10 +34,12 @@ class FormLoginAuthenticatorTest extends TestCase
     public function isInitializable(): void
     {
         $userProvider = $this->prophesize(UserProviderInterface::class);
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class)->reveal();
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler,
+            $session
         );
         $this->assertInstanceOf(FormLoginAuthenticator::class, $authenticator);
     }
@@ -44,12 +47,14 @@ class FormLoginAuthenticatorTest extends TestCase
     #[Test]
     public function checkSupports()
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class)->reveal();
         $loginPath = '/login';
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler,
+            $session,
             new FormLoginAuthenticator\FormLoginProperties([
                 'paths' => ['check' => $loginPath],
                 'parameters' => ['username' => 'email', 'password' => 'password'],
@@ -65,12 +70,14 @@ class FormLoginAuthenticatorTest extends TestCase
     #[Test]
     public function checkSupportBadMethod()
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class)->reveal();
         $loginPath = '/login';
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler,
+            $session,
             new FormLoginAuthenticator\FormLoginProperties([
                 'paths' => ['check' => $loginPath],
             ])
@@ -85,12 +92,14 @@ class FormLoginAuthenticatorTest extends TestCase
     #[Test]
     public function checkSupportWrongPath()
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class)->reveal();
         $loginPath = '/sign-in';
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler,
+            $session,
             new FormLoginAuthenticator\FormLoginProperties([
                 'paths' => ['check' => $loginPath],
                 'parameters' => ['username' => 'email', 'password' => 'password'],
@@ -106,12 +115,14 @@ class FormLoginAuthenticatorTest extends TestCase
     #[Test]
     public function checkSupportWrongPayload()
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class)->reveal();
         $loginPath = '/login';
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler,
+            $session,
             new FormLoginAuthenticator\FormLoginProperties([
                 'paths' => ['check' => $loginPath],
                 'parameters' => ['username' => 'email', 'password' => 'password'],
@@ -130,6 +141,7 @@ class FormLoginAuthenticatorTest extends TestCase
     public function authenticate(): void
     {
         $userProvider = $this->prophesize(UserProviderInterface::class);
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
 
         $request = $this->prophesize(ServerRequestInterface::class);
         $userEmail = 'johndoe@example.com';
@@ -144,6 +156,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler->reveal(),
+            $session,
             new FormLoginAuthenticator\FormLoginProperties([
                 'rememberMe' => false,
                 'parameters' => ['username' => 'email', 'password' => 'password'],
@@ -157,11 +170,13 @@ class FormLoginAuthenticatorTest extends TestCase
     #[Test]
     public function authenticateBadPostPayload(): void
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class)->reveal();
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler,
+            $session,
             new FormLoginAuthenticator\FormLoginProperties([
                 'rememberMe' => false,
                 'parameters' => ['username' => 'email', 'password' => 'password'],
@@ -179,11 +194,13 @@ class FormLoginAuthenticatorTest extends TestCase
     #[Test]
     public function createToken(): void
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class)->reveal();
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler,
+            $session
         );
         $passport = $this->prophesize(PassportInterface::class);
         $user = $this->prophesize(UserInterface::class);
@@ -196,6 +213,7 @@ class FormLoginAuthenticatorTest extends TestCase
     #[Test]
     public function handleAuthenticationSuccess(): void
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class);
         $token = $this->prophesize(TokenInterface::class)->reveal();
@@ -207,6 +225,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler->reveal(),
+            $session,
         );
 
         $this->assertSame($response, $authenticator->onAuthenticationSuccess($request, $token));
@@ -215,23 +234,28 @@ class FormLoginAuthenticatorTest extends TestCase
     #[Test]
     public function handleAuthenticationFailureNotPost(): void
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class);
 
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler->reveal(),
+            $session
         );
 
         $request = $this->prophesize(ServerRequestInterface::class);
         $request->getMethod()->willReturn('GET');
 
-        $this->assertNull($authenticator->onAuthenticationFailure($request->reveal(), new AuthenticationException('Test')));
+        $this->assertNull(
+            $authenticator->onAuthenticationFailure($request->reveal(), new AuthenticationException('Test'))
+        );
     }
 
     #[Test]
     public function handleAuthenticationFailureRedirect(): void
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class);
         $exception = new AuthenticationException('Test');
@@ -247,6 +271,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler->reveal(),
+            $session,
             new FormLoginAuthenticator\FormLoginProperties([
                 'rememberMe' => false,
                 'parameters' => ['username' => 'email', 'password' => 'password'],
@@ -256,17 +281,22 @@ class FormLoginAuthenticatorTest extends TestCase
 
         $this->assertNull($authenticator->onAuthenticationFailure($request->reveal(), $exception));
 
-        $logger->info('Authentication failed for user.', ['username' => $userEmail, 'exception' => $exception])->shouldHaveBeenCalled();
+        $logger->info(
+            'Authentication failed for user.',
+            ['username' => $userEmail, 'exception' => $exception]
+        )->shouldHaveBeenCalled();
     }
 
     #[Test]
     public function setFormLoginHandler(): void
     {
+        $session = $this->prophesize(SessionDriverInterface::class)->reveal();
         $userProvider = $this->prophesize(UserProviderInterface::class);
         $formLoginHandler = $this->prophesize(AuthenticatorHandlerInterface::class)->reveal();
         $authenticator = new FormLoginAuthenticator(
             $userProvider->reveal(),
             $formLoginHandler,
+            $session
         );
 
         $other = $this->prophesize(AuthenticatorHandlerInterface::class)->reveal();

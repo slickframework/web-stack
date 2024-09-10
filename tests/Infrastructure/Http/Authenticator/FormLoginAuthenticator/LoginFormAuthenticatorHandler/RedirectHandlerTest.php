@@ -100,19 +100,4 @@ class RedirectHandlerTest extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('/some-path', $response->getHeaderLine('Location'));
     }
-
-    #[Test]
-    public function successRedirectReferer(): void
-    {
-        $session = $this->prophesize(SessionDriverInterface::class);
-        $session->get(RedirectHandler::LAST_URI)->willReturn('/some-path');
-        $handler = new RedirectHandler($session->reveal(), new FormLoginProperties(['useReferer' => true]));
-        $request = $this->prophesize(ServerRequestInterface::class);
-        $request->getHeaderLine('referer')->willReturn('/other-path');
-        $token = $this->prophesize(TokenInterface::class)->reveal();
-
-        $response = $handler->onAuthenticationSuccess($request->reveal(), $token);
-        $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals('/other-path', $response->getHeaderLine('Location'));
-    }
 }

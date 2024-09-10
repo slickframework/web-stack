@@ -28,7 +28,7 @@ use Slick\WebStack\Infrastructure\Http\Authenticator\FormLoginAuthenticator\Form
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
-use Slick\WebStack\Infrastructure\Http\Authenticator\FormLoginAuthenticator\LoginFormAuthenticatorHandler\RedirectHandler;
+use Slick\WebStack\Infrastructure\Http\Authenticator\FormLoginAuthenticator\LoginFormAuthenticatorHandler;
 
 /**
  * FormLoginAuthenticator
@@ -36,6 +36,7 @@ use Slick\WebStack\Infrastructure\Http\Authenticator\FormLoginAuthenticator\Logi
  * @package Slick\WebStack\Infrastructure\Http\Authenticator
  * @template TUser of UserInterface
  * @implements AuthenticatorInterface<TUser>
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 final class FormLoginAuthenticator implements AuthenticatorInterface
 {
@@ -133,7 +134,7 @@ final class FormLoginAuthenticator implements AuthenticatorInterface
             if ($this->properties->useReferer()) {
                 $referer = parse_url($request->getHeaderLine('referer'), PHP_URL_PATH);
                 if (is_string($referer) && !in_array($referer, $this->properties->paths())) {
-                    $this->session->get(RedirectHandler::LAST_URI, $referer);
+                    $this->session->get(LoginFormAuthenticatorHandler\RedirectHandler::LAST_URI, $referer);
                 }
             }
 
