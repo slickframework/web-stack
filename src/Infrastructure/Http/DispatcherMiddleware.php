@@ -20,6 +20,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use ReflectionClass;
 use ReflectionException;
 use Slick\Di\ContainerInterface;
+use Slick\Di\Exception\NotFoundException;
 use Slick\WebStack\Infrastructure\Exception\UnresolvedControllerArgument;
 
 /**
@@ -27,13 +28,18 @@ use Slick\WebStack\Infrastructure\Exception\UnresolvedControllerArgument;
  *
  * @package Slick\WebStack\Infrastructure\Http
  */
-final class DispatcherMiddleware implements MiddlewareInterface
+final readonly class DispatcherMiddleware implements MiddlewareInterface
 {
 
     public function __construct(private ContainerInterface $container)
     {
     }
 
+    /**
+     * @throws ReflectionException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $request->getAttribute('route');
@@ -72,9 +78,10 @@ final class DispatcherMiddleware implements MiddlewareInterface
             }
             $type = (string) $argument->getType();
 
-            if ($this->container->has($type)) {
+            try {
                 $resolvedArguments[$name] = $this->container->get($type);
                 continue;
+            } catch (NotFoundException) {
             }
 
             if ($argument->isOptional()) {
