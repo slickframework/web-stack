@@ -36,6 +36,7 @@ final readonly class IsGranted
      * @param array<string, string> $headers
      * @param string|null $location
      * @param bool|null $asJson
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct(
         private string|array $attribute,

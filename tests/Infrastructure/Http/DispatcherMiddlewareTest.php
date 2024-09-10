@@ -15,6 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slick\Di\ContainerInterface;
+use Slick\Di\Exception\NotFoundException;
 use Slick\WebStack\Infrastructure\Http\DispatcherMiddleware;
 use PHPUnit\Framework\TestCase;
 use Test\Slick\WebStack\Infrastructure\Http\Dispatcher\SimpleController;
@@ -80,9 +81,8 @@ class DispatcherMiddlewareTest extends TestCase
         $handler = $this->prophesize(RequestHandlerInterface::class);
         $container = $this->prophesize(ContainerInterface::class);
         $container->make(SimpleController::class)->willReturn(new SimpleController());
-        $container->has(SomeInterface::class)->willReturn(true);
-        $container->has('?string')->willReturn(false);
         $container->get(SomeInterface::class)->willReturn($this->prophesize(SomeInterface::class)->reveal());
+        $container->get('?string')->willThrow(NotFoundException::class);
         $middleware = new DispatcherMiddleware($container->reveal());
         $response = $middleware->process(
             $this->prepareRequest(action: 'withContainerParam')->reveal(),
@@ -99,7 +99,7 @@ class DispatcherMiddlewareTest extends TestCase
         $handler = $this->prophesize(RequestHandlerInterface::class);
         $container = $this->prophesize(ContainerInterface::class);
         $container->make(SimpleController::class)->willReturn(new SimpleController());
-        $container->has('string')->willReturn(false);
+        $container->get('string')->willThrow(NotFoundException::class);
         $middleware = new DispatcherMiddleware($container->reveal());
         $this->expectException(\RuntimeException::class);
         $middleware->process($this->prepareRequest(action: 'missing')->reveal(), $handler->reveal());
