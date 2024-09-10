@@ -1,10 +1,12 @@
-FROM fsilva/php:8.0-apache
+FROM fsilva/php:8.2-cli
 
-RUN apt-install libyaml-dev
+ARG ENABLE_XDEBUG_FOR_MAC=no
 
-# Install YAML
-RUN pecl install yaml \
-    && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/yaml.ini
 
-COPY *.conf /etc/apache2/sites-available/
-COPY xdebug-profiler.ini /usr/local/etc/php/xdebug.d/
+# Add init scripts
+COPY init.d /docker-entrypoint-init.d/
+COPY etc /usr/local/etc
+
+WORKDIR /var/www/app
+
+ENV PATH=./vendor/bin:/var/www/.composer/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

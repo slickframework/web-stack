@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Module system to help initializing modules;
+- Module command line tools;
+- Security module to allow easy authentication and authorization flows;
+- Security profiles based on request path regular expression match;
+- Console script with command loader that searches for Symfony console commands and registers them as
+  applications;
+- Refactor dispatcher as a module;
+- Logging support PSR-03
+
 ## [v1.5.3] - 2023-03-07
 ### Fixes
 - Context getRouteParam(), getQueryParam() and getPostParam() now accept ``mixed`` as default value
