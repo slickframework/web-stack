@@ -45,7 +45,7 @@ final class RedirectHandler implements AuthenticatorHandlerInterface
      */
     public function onAuthenticationSuccess(ServerRequestInterface $request, TokenInterface $token): ?ResponseInterface
     {
-        $location = $this->resolveRedirectLocation($request);
+        $location = $this->resolveRedirectLocation();
         return new Response(status: 302, headers: ['Location' => $location]);
     }
 
@@ -56,7 +56,8 @@ final class RedirectHandler implements AuthenticatorHandlerInterface
         ServerRequestInterface $request,
         AuthenticationException $exception
     ): ?ResponseInterface {
-        $shouldRedirect = !in_array($request->getUri()->getPath(), $this->properties->paths());
+        $path = $request->getUri()->getPath();
+        $shouldRedirect = !in_array($path, $this->properties->paths());
         return $shouldRedirect
             ? new Response(status: 302, headers: ['Location' => $this->properties->path('login')])
             : null;
@@ -71,20 +72,13 @@ final class RedirectHandler implements AuthenticatorHandlerInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
      * @return string
      */
-    private function resolveRedirectLocation(ServerRequestInterface $request): string
+    private function resolveRedirectLocation(): string
     {
         $sessionPath = (string) $this->sessionDriver->get(self::LAST_URI);
         $loginPaths = $this->properties->paths();
         $location = $this->properties->path('defaultTarget');
-        $useReferer = $this->properties->useReferer();
-        $referer = $request->getHeaderLine('referer');
-
-        if ($useReferer && $referer !== '') {
-            return $referer;
-        }
 
         return $sessionPath && !in_array($sessionPath, $loginPaths) ? $sessionPath : $location;
     }

@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Infrastructure\Http\Authenticator;
 
+use Slick\Http\Session\SessionDriverInterface;
 use Slick\WebStack\Domain\Security\Authentication\Token\UsernamePasswordToken;
 use Slick\WebStack\Domain\Security\Authentication\TokenInterface;
 use Slick\WebStack\Domain\Security\Exception\AuthenticationException;
@@ -27,6 +28,7 @@ use Slick\WebStack\Infrastructure\Http\Authenticator\FormLoginAuthenticator\Form
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
+use Slick\WebStack\Infrastructure\Http\Authenticator\FormLoginAuthenticator\LoginFormAuthenticatorHandler\RedirectHandler;
 
 /**
  * FormLoginAuthenticator
@@ -47,12 +49,14 @@ final class FormLoginAuthenticator implements AuthenticatorInterface
      *
      * @param UserProviderInterface<TUser> $provider
      * @param AuthenticatorHandlerInterface $handler
+     * @param SessionDriverInterface $session
      * @param FormLoginProperties|null $properties
      * @param LoggerInterface|null $logger
      */
     public function __construct(
         private readonly UserProviderInterface  $provider,
         AuthenticatorHandlerInterface           $handler,
+        private readonly SessionDriverInterface $session,
         ?FormLoginProperties                    $properties = null,
         private readonly ?LoggerInterface       $logger = null,
     ) {
@@ -124,7 +128,15 @@ final class FormLoginAuthenticator implements AuthenticatorInterface
         ServerRequestInterface $request,
         AuthenticationException $exception
     ): ?ResponseInterface {
+
         if ($request->getMethod() !== "POST") {
+            if ($this->properties->useReferer()) {
+                $referer = parse_url($request->getHeaderLine('referer'), PHP_URL_PATH);
+                if (is_string($referer) && !in_array($referer, $this->properties->paths())) {
+                    $this->session->get(RedirectHandler::LAST_URI, $referer);
+                }
+            }
+
             return null;
         }
 

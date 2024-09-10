@@ -246,5 +246,6 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
         if ($profile instanceof StatefulSecurityProfileInterface) {
             $profile->logout();
         }
+        $_SESSION = [];
     }
 }

@@ -195,16 +195,29 @@ final class AuthenticatorsListFactory implements ArrayAccess, IteratorAggregate,
      */
     private function createFromContainer(int|string $name, array $config): void
     {
-        $customArgs = isset($config['args']) ? $config['args'] :$config;
+        $args = $this->parseConstructorArgs($name, $config);
         $customClass = isset($config['className']) ? $config['className'] : null;
-
-        $args = array_merge(self::$presets[$name]['args'], $customArgs);
         $className = $customClass ?? self::$presets[$name]['className'];
 
         $this->authenticators[$name] = $this->container->make($className, ...array_values($args));
         if ($this->authenticators[$name] instanceof AuthenticationEntryPointInterface) {
             $this->entryPoint = $this->authenticators[$name];
         }
+    }
+
+    /**
+     * @param int|string $name
+     * @param array<string, mixed> $config
+     * @return array<string, mixed>
+     */
+    private function parseConstructorArgs(int|string $name, array $config): array
+    {
+        $args = self::$presets[$name]['args'];
+        if ($name === 'custom' && isset($config['args'])) {
+            return array_merge($args, $config['args']);
+        }
+
+        return array_merge($args, $config);
     }
 
     /**

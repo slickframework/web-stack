@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Infrastructure\Http;
 
+use JsonException;
 use Slick\WebStack\Domain\Security\Attribute\IsGranted;
 use Slick\WebStack\Domain\Security\AuthorizationCheckerInterface;
 use Slick\WebStack\Domain\Security\UserInterface;
@@ -87,17 +88,18 @@ final readonly class AuthorizationMiddleware implements MiddlewareInterface
      * @param array<ReflectionAttribute<IsGranted>>|ReflectionAttribute<IsGranted>[] $attributes
      *
      * @return ResponseInterface|null The response if conditions are met, null otherwise.
+     * @throws JsonException
      */
     private function checkAttributes(array $attributes): ?ResponseInterface
     {
         $last = null;
         foreach ($attributes as $attribute) {
             $grantInfo = $attribute->newInstance();
-            if ($this->authorizationChecker->isGranted($grantInfo->attribute)) {
+            if ($this->authorizationChecker->isGranted($grantInfo->attribute())) {
                 return null;
             }
             $last = $grantInfo;
         }
-        return $last ? new Response($last->statusCode, $last->message) : null;
+        return $last ? $last->response() : null;
     }
 }

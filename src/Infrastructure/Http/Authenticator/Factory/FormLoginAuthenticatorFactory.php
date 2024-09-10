@@ -73,6 +73,7 @@ final class FormLoginAuthenticatorFactory implements AuthenticatorFactoryInterfa
             return new FormLoginAuthenticator(
                 provider: $container->get(UserProviderInterface::class),
                 handler: new FormLoginAuthenticator\FormLoginHandler($handlers),
+                session: $session,
                 properties: $properties,
                 logger: $container->get(LoggerInterface::class)
             );
