@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.2] - 2024-09-21
 ### Added
 - Module system to help initializing modules;
 - Module command line tools;
 - Security module to allow easy authentication and authorization flows;
 - Security profiles based on request path regular expression match;
+- Router debug console command
 - Console script with command loader that searches for Symfony console commands and registers them as
   applications;
 - Refactor dispatcher as a module;
@@ -110,7 +112,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v1.5.3...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.2...HEAD
+[v2.0.2]: https://github.com/slickframework/web-stack/compare/v1.5.3...v2.0.2
 [v1.5.3]: https://github.com/slickframework/web-stack/compare/v1.5.2...v1.5.3
 [v1.5.2]: https://github.com/slickframework/web-stack/compare/v1.5.1...v1.5.2
 [v1.5.1]: https://github.com/slickframework/web-stack/compare/v1.4.1...v1.5.1
