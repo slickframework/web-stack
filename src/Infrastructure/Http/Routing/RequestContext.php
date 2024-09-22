@@ -36,16 +36,15 @@ final class RequestContext extends SymfonyRequestContext
         $isSecure = strtoupper($requestUri->getScheme()) === 'HTTPS';
         $httpPort = (int) $requestUri->getPort();
 
-        $requestContext = new RequestContext();
-        $requestContext->setBaseUrl($baseUrl);
-        $requestContext->setPathInfo($requestUri->getPath());
-        $requestContext->setMethod($request->getMethod());
-        $requestContext->setHost($requestUri->getHost());
-        $requestContext->setScheme($requestUri->getScheme());
-        $requestContext->setHttpPort($httpPort);
-        $requestContext->setHttpsPort($isSecure && $httpPort > 0 ? $httpPort : $requestContext->getHttpsPort());
-        $requestContext->setQueryString($requestUri->getQuery());
-
-        return $requestContext;
+        return new RequestContext(
+            $baseUrl,
+            $request->getMethod(),
+            $requestUri->getHost(),
+            $requestUri->getScheme(),
+            $httpPort,
+            $isSecure && $httpPort > 0 ? $httpPort : 443,
+            $requestUri->getPath(),
+            (string) $requestUri->getQuery()
+        );
     }
 }
