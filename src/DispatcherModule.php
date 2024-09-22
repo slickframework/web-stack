@@ -12,15 +12,20 @@ declare(strict_types=1);
 namespace Slick\WebStack;
 
 use Dotenv\Dotenv;
+use Slick\Di\ContainerInterface;
+use Slick\Http\Message\Server\Request;
 use Slick\ModuleApi\Infrastructure\AbstractModule;
+use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\ModuleApi\Infrastructure\FrontController\MiddlewareHandler;
 use Slick\ModuleApi\Infrastructure\FrontController\MiddlewarePosition;
 use Slick\ModuleApi\Infrastructure\FrontController\Position;
 use Slick\ModuleApi\Infrastructure\FrontController\WebModuleInterface;
-use Slick\ModuleApi\Infrastructure\SlickModuleInterface;
+use Slick\WebStack\Infrastructure\Console\RouterDebugCommand;
+use Slick\WebStack\Infrastructure\Console\RouterDebugMatchCommand;
 use Slick\WebStack\Infrastructure\DependencyContainerFactory;
 use Slick\WebStack\Infrastructure\Http\DispatcherMiddleware;
 use Slick\WebStack\Infrastructure\Http\RoutingMiddleware;
+use Symfony\Component\Console\Application;
 use function Slick\ModuleApi\importSettingsFile;
 
 /**
@@ -28,7 +33,7 @@ use function Slick\ModuleApi\importSettingsFile;
  *
  * @package Slick\WebStack
  */
-final class DispatcherModule extends AbstractModule implements SlickModuleInterface, WebModuleInterface
+final class DispatcherModule extends AbstractModule implements WebModuleInterface, ConsoleModuleInterface
 {
     public function description(): ?string
     {
@@ -77,4 +82,15 @@ final class DispatcherModule extends AbstractModule implements SlickModuleInterf
             ),
         ];
     }
+
+    public function configureConsole(Application $cli, ContainerInterface $container): void
+    {
+        $container->register('http.request', new Request('GET', '/'));
+        $cli->addCommands([
+            $container->make(RouterDebugCommand::class),
+            $container->make(RouterDebugMatchCommand::class),
+        ]);
+    }
+
+
 }
