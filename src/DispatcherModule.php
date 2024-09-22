@@ -91,6 +91,4 @@ final class DispatcherModule extends AbstractModule implements WebModuleInterfac
             $container->make(RouterDebugMatchCommand::class),
         ]);
     }
-
-
 }
