@@ -17,6 +17,7 @@ use JsonException;
 use Slick\Configuration\ConfigurationInterface;
 use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\WebStack\ConsoleModule;
+use Slick\WebStack\DispatcherModule;
 use Slick\WebStack\FrontControllerModule;
 use Slick\WebStack\Infrastructure\AbstractApplication;
 use Slick\WebStack\Infrastructure\ApplicationSettingsInterface;
@@ -39,6 +40,7 @@ final class ConsoleApplication extends AbstractApplication
         parent::__construct($rootPath, $classLoader);
         $this->modules[] = new ConsoleModule();
         $this->modules[] = new FrontControllerModule();
+        $this->modules[] = new DispatcherModule();
     }
 
 
