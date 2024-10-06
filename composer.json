@@ -3,7 +3,7 @@
   "description": "PSR-15 HTTP middleware stack that can help you create web applications or web services for HTTP protocol.",
   "minimum-stability": "dev",
   "license": "MIT",
-  "version": "v2.0.3",
+  "version": "v2.0.4",
   "keywords": [
     "slick",
     "PSR-15",
@@ -54,6 +54,7 @@
     "phpspec/prophecy-phpunit": "^2.0@dev",
     "phpstan/phpstan": "2.0.x-dev",
     "phpunit/phpunit": "^11.3@dev",
+    "slick/json-api": "^1.0@dev",
     "slick/orm": "^2.0@dev",
     "squizlabs/php_codesniffer": "4.0.x-dev"
   },

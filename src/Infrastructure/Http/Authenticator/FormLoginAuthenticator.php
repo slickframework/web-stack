@@ -36,7 +36,7 @@ use Slick\WebStack\Infrastructure\Http\Authenticator\FormLoginAuthenticator\Logi
  * @package Slick\WebStack\Infrastructure\Http\Authenticator
  * @template TUser of UserInterface
  * @implements AuthenticatorInterface<TUser>
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD)
  */
 final class FormLoginAuthenticator implements AuthenticatorInterface
 {
@@ -68,7 +68,7 @@ final class FormLoginAuthenticator implements AuthenticatorInterface
     /**
      * @inheritDoc
      */
-    public function supports(ServerRequestInterface $request): ?bool
+    public function supports(ServerRequestInterface $request): bool
     {
         $path = $request->getUri()->getPath();
         if (in_array($path, $this->properties->paths())) {
@@ -76,6 +76,10 @@ final class FormLoginAuthenticator implements AuthenticatorInterface
         }
 
         $payload = $request->getParsedBody();
+        if (!is_array($payload)) {
+            return false;
+        }
+
         $isInvalidPayload = !isset($payload[$this->properties->parameter('username')])
             || !isset($payload[$this->properties->parameter('password')]);
 

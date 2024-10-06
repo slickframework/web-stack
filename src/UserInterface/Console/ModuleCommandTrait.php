@@ -126,10 +126,12 @@ trait ModuleCommandTrait
     {
         $camelCaseModule = str_replace(' ', '', ucwords(str_replace(['_', '-'], ' ', $module)));
         $withoutSuffix = str_replace('Module', '', $camelCaseModule);
+        $uppercaseModule = strtoupper($withoutSuffix);
         return [
             $module,
             "\\Slick\\WebStack\\{$camelCaseModule}Module",
             "\\Slick\\$withoutSuffix\\{$camelCaseModule}Module",
+            "\\Slick\\$uppercaseModule\\{$camelCaseModule}Module",
             "\\Slick\\WebStack\\$camelCaseModule",
         ];
     }

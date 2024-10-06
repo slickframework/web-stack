@@ -72,7 +72,7 @@ trait AttributesBagMethods
     /**
      * @inheritDoc
      */
-    public function withAttribute(string $name, mixed $value): static
+    public function withAttribute(string $name, mixed $value): self
     {
         $this->attributes[$name] = $value;
         return $this;

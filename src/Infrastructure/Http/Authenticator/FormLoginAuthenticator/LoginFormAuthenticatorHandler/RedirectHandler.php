@@ -43,7 +43,7 @@ final class RedirectHandler implements AuthenticatorHandlerInterface
     /**
      * @inheritDoc
      */
-    public function onAuthenticationSuccess(ServerRequestInterface $request, TokenInterface $token): ?ResponseInterface
+    public function onAuthenticationSuccess(ServerRequestInterface $request, TokenInterface $token): ResponseInterface
     {
         $location = $this->resolveRedirectLocation();
         return new Response(status: 302, headers: ['Location' => $location]);

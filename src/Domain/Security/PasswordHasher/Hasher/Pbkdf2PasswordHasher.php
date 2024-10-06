@@ -35,6 +35,14 @@ final class Pbkdf2PasswordHasher implements LegacyPasswordHasherInterface
     private int $encodedLength = -1;
 
 
+    /**
+     * Creates a Pbkdf2PasswordHasher
+     *
+     * @param string $algorithm
+     * @param int<1, max> $iterations
+     * @param int<0, max> $length
+     * @param string|null $salt
+     */
     public function __construct(
         private readonly string $algorithm = 'sha512',
         private readonly int $iterations = 1000,

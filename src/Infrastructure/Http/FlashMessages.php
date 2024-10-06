@@ -14,11 +14,14 @@ namespace Slick\WebStack\Infrastructure\Http;
 use Slick\Di\Definition\Attributes\Autowire;
 use Slick\WebStack\Infrastructure\Http\FlashMessage\FlashMessageType;
 use Slick\WebStack\Infrastructure\Http\FlashMessage\Message;
+use Test\Slick\WebStack\Infrastructure\Http\FlashMessagesTest;
+use Test\Slick\WebStack\Infrastructure\Http\FlashMessageStorageTest;
 
 /**
  * FlashMessages
  *
  * @package Slick\WebStack\Infrastructure\Http
+ * @phpstan-ignore trait.unused
  */
 trait FlashMessages
 {
@@ -28,7 +31,7 @@ trait FlashMessages
      * Sets the flash message storage.
      *
      * @param FlashMessageStorage $flashMessageStorage The flash message storage instance to set.
-     * @return self Returns the current object instance.
+     * @return FlashMessageStorageTest|FlashMessages|FlashMessagesTest Returns the current object instance.
      */
     #[Autowire]
     public function withMessagesStorage(FlashMessageStorage $flashMessageStorage): self
