@@ -59,7 +59,7 @@ final class AuthenticatorManager implements AuthenticatorManagerInterface
      * @inheritDoc
      * @throws InvalidArgumentException If at least one authenticator doesn't implement AuthenticatorInterface
      */
-    public function supports(ServerRequestInterface &$request): ?bool
+    public function supports(ServerRequestInterface &$request): bool
     {
         $authenticators = [];
         $skipped = [];

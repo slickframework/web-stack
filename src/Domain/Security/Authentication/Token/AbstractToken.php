@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Slick\WebStack\Domain\Security\Authentication\Token;
 
 use Slick\WebStack\Domain\Security\Authentication\TokenInterface;
-use Slick\WebStack\Domain\Security\Common\AttributesBagInterface;
 use Slick\WebStack\Domain\Security\Common\AttributesBagMethods;
 use Slick\WebStack\Domain\Security\UserInterface;
 
@@ -20,8 +19,7 @@ use Slick\WebStack\Domain\Security\UserInterface;
  * AbstractToken
  *
  * @package Slick\WebStack\Domain\Security\Authentication\Token
- * @template-covariant TUser of UserInterface
- * @implements TokenInterface<TUser>
+ * @implements TokenInterface<UserInterface>
  */
 abstract class AbstractToken implements TokenInterface
 {
@@ -30,7 +28,7 @@ abstract class AbstractToken implements TokenInterface
     /** @var array<string> */
     protected array $roleNames = [];
 
-    /** @phpstan-var TUser|null  */
+    /** @phpstan-var UserInterface|null  */
     protected ?UserInterface $user = null;
 
     /**

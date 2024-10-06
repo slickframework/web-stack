@@ -35,7 +35,7 @@ use function Slick\ModuleApi\importSettingsFile;
  */
 final class SecurityModule extends AbstractModule implements ConsoleModuleInterface, WebModuleInterface
 {
-    public function description(): ?string
+    public function description(): string
     {
         return "Provides authentication and authorization support for web applications.";
     }

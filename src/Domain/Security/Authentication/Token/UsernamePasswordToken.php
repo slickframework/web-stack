@@ -19,10 +19,8 @@ use Slick\WebStack\Domain\Security\UserInterface;
  * UsernamePasswordToken
  *
  * @package Slick\WebStack\Domain\Security\Authentication\Token
- * @template TUser of UserInterface
  *
- * @implements  TokenInterface<TUser>
- * @extends AbstractToken<TUser>
+ * @implements  TokenInterface<UserInterface>
  */
 final class UsernamePasswordToken extends AbstractToken implements TokenInterface
 {
@@ -30,7 +28,7 @@ final class UsernamePasswordToken extends AbstractToken implements TokenInterfac
     /**
      * Class constructor.
      *
-     * @param TUser $user The user object.
+     * @param UserInterface $user The user object.
      * @param array<string, mixed> $roles The user's roles.
      */
     public function __construct(UserInterface $user, array $roles = [])
