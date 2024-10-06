@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a9e633347f14149ffa1358f4bccc6b1",
+    "content-hash": "f2f01ba2c9e1f4c459289a987afb9093",
     "packages": [
         {
             "name": "doctrine/collections",
@@ -5675,6 +5675,65 @@
             "time": "2024-07-03T05:13:08+00:00"
         },
         {
+            "name": "slick/json-api",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slickframework/json-api.git",
+                "reference": "26a6a798c44110e273049d8cb59e3c0d8d53dee4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slickframework/json-api/zipball/26a6a798c44110e273049d8cb59e3c0d8d53dee4",
+                "reference": "26a6a798c44110e273049d8cb59e3c0d8d53dee4",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/collections": "^1.6|^2.1|^3.0",
+                "ext-json": "*",
+                "php": ">=8.1",
+                "psr/http-message": "^1.0|^2.0",
+                "psr/http-server-middleware": ">=1.0.0",
+                "slick/configuration": ">=v2.1.0",
+                "slick/module-api": ">=v0.4.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "^7",
+                "slick/http": "^3.1@dev",
+                "squizlabs/php_codesniffer": "4.0.x-dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev",
+                    "dev-develop": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Slick\\JSONAPI\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "fetching, creation, updating and deleting resourcesFilipe Silva",
+                    "email": "silvam.filipe@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "JSON:API specification library, providing content negotiation, error handling and pagination, as well as fetching, creation, updating and deleting resources",
+            "homepage": "https://github.com/slickframework/json-api",
+            "support": {
+                "issues": "https://github.com/slickframework/json-api/issues",
+                "source": "https://github.com/slickframework/json-api/tree/develop"
+            },
+            "time": "2024-10-05T22:25:00+00:00"
+        },
+        {
             "name": "slick/orm",
             "version": "dev-develop",
             "source": {
@@ -6627,6 +6686,7 @@
         "vlucas/phpdotenv": 20,
         "behat/behat": 20,
         "behat/mink": 20,
+        "doctrine/orm": 20,
         "ediasoft/mink-selenium4-driver": 20,
         "phpmd/phpmd": 20,
         "phpspec/prophecy": 20,

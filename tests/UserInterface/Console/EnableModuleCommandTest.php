@@ -10,6 +10,7 @@ namespace Test\Slick\WebStack\UserInterface\Console;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Slick\JSONAPI\JsonApiModule;
 use Slick\WebStack\Infrastructure\Exception\InvalidModuleName;
 use Slick\WebStack\SecurityModule;
 use Slick\WebStack\UserInterface\Console\EnableModuleCommand;
@@ -42,6 +43,21 @@ class EnableModuleCommandTest extends TestCase
         $expected = "Could not determine module name classname. Check SlickModuleInterface";
         $command->execute(["module" => 'something']);
         $this->assertStringContainsString($expected, $command->getDisplay());
+    }
+
+    #[Test]
+    public function loadUppercaseNamespace(): void
+    {
+        $enabledModulesFile = __DIR__ . '/config/modules/enabled.php';
+        mkdir(__DIR__ . '/config/modules/', 0755, true);
+        $contents = "<?php\n\nreturn[\\".SecurityModule::class."::class];\n";
+        file_put_contents($enabledModulesFile, $contents);
+
+        $command = new CommandTester(new EnableModuleCommand(__DIR__));
+        $command->execute(["module" => 'json-api']);
+
+        $this->assertTrue(file_exists($enabledModulesFile));
+        $this->assertStringContainsString(JsonApiModule::class, (string) file_get_contents($enabledModulesFile));
     }
 
     #[Test]
