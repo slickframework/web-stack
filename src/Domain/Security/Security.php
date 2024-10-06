@@ -235,7 +235,7 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
 
     /**
      * @inheritDoc
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings(PHPMD)
      */
     public function logout(): void
     {

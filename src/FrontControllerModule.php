@@ -38,7 +38,7 @@ use function Slick\ModuleApi\importSettingsFile;
  * FrontControllerModule
  *
  * @package Slick\WebStack
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD)
  */
 final class FrontControllerModule extends AbstractModule implements
     SlickModuleInterface,
@@ -58,7 +58,7 @@ final class FrontControllerModule extends AbstractModule implements
         $this->composerParser = new ComposerParser(APP_ROOT.'/composer.json');
     }
 
-    public function description(): ?string
+    public function description(): string
     {
         return "Core module that initializes a web application using the front controller pattern.";
     }

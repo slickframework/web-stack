@@ -35,7 +35,7 @@ use function Slick\ModuleApi\importSettingsFile;
  */
 final class DispatcherModule extends AbstractModule implements WebModuleInterface, ConsoleModuleInterface
 {
-    public function description(): ?string
+    public function description(): string
     {
         return "Core module that integrates routing and dispatching features as middleware for a web application.";
     }

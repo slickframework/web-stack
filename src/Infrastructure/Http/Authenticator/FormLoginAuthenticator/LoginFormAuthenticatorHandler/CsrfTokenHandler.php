@@ -71,7 +71,7 @@ final readonly class CsrfTokenHandler implements AuthenticatorHandlerInterface
 
         $tokenId = $this->properties->parameter('csrf') ?? '_csrf';
         $parsedBody = $request->getParsedBody();
-        $loaded = $parsedBody[$tokenId] ?? null;
+        $loaded = is_array($parsedBody) && isset($parsedBody[$tokenId]) ? $parsedBody[$tokenId] : null;
         $formToken = $loaded !== null ? new CsrfToken($tokenId, $loaded) : $this->tokenManager->tokenWithId($tokenId);
 
         $passport->addBadge(new CsrfBadge($formToken, fn() => $this->tokenManager->isTokenValid($formToken)));

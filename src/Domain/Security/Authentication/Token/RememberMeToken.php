@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Slick\WebStack\Domain\Security\Authentication\Token;
 
 use Slick\WebStack\Domain\Security\Authentication\TokenInterface;
-use Slick\WebStack\Domain\Security\Common\AttributesBagMethods;
 use Slick\WebStack\Domain\Security\UserInterface;
 use SensitiveParameter;
 
@@ -20,10 +19,8 @@ use SensitiveParameter;
  * RememberMeToken
  *
  * @package Slick\WebStack\Domain\Security\Authentication\Token
- * @template-covariant TUser of UserInterface
  *
- * @extends AbstractToken<TUser>
- * @implements TokenInterface<TUser>
+ * @implements TokenInterface<UserInterface>
  */
 final class RememberMeToken extends AbstractToken implements TokenInterface
 {
@@ -32,7 +29,7 @@ final class RememberMeToken extends AbstractToken implements TokenInterface
      * Creates a RememberMeToken
      *
      * @param UserInterface $user
-     * @phpstan-param TUser $user
+     * @phpstan-param UserInterface $user
      * @param string $secret
      */
     public function __construct(

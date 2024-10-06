@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.4] - 2024-09-22
+### Fixes
+- Enabling modules that use uppercase prefix namespaces.
+
 ## [v2.0.3] - 2024-09-22
 ### Added
 - Module system to help initializing modules;
@@ -112,7 +116,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.3...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.4...HEAD
+[v2.0.4]: https://github.com/slickframework/web-stack/compare/v2.0.3...v2.0.4
 [v2.0.3]: https://github.com/slickframework/web-stack/compare/v1.5.3...v2.0.3
 [v1.5.3]: https://github.com/slickframework/web-stack/compare/v1.5.2...v1.5.3
 [v1.5.2]: https://github.com/slickframework/web-stack/compare/v1.5.1...v1.5.2

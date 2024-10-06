@@ -92,7 +92,7 @@ final class ConsoleModule extends AbstractModule implements ConsoleModuleInterfa
         return "console";
     }
 
-    public function description(): ?string
+    public function description(): string
     {
         return "Provides streamlined command line tools for module management.";
     }

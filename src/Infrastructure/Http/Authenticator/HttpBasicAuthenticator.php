@@ -57,7 +57,7 @@ final class HttpBasicAuthenticator implements AuthenticatorInterface, Authentica
     /**
      * @inheritDoc
      */
-    public function supports(ServerRequestInterface $request): ?bool
+    public function supports(ServerRequestInterface $request): bool
     {
         $serverParams = $request->getServerParams() ?? [];
         return array_key_exists('PHP_AUTH_USER', $serverParams);
@@ -81,7 +81,6 @@ final class HttpBasicAuthenticator implements AuthenticatorInterface, Authentica
 
     /**
      * @inheritDoc
-     * @phpstan-return UsernamePasswordToken<UserInterface>
      * @throws SecurityException
      */
     public function createToken(PassportInterface $passport): UsernamePasswordToken
@@ -109,7 +108,7 @@ final class HttpBasicAuthenticator implements AuthenticatorInterface, Authentica
     public function onAuthenticationFailure(
         ServerRequestInterface $request,
         AuthenticationException $exception
-    ): ?ResponseInterface {
+    ): ResponseInterface {
         $serverParams = $request->getServerParams() ?? [];
         $this->logger?->info(
             'Basic authentication failed for user.',

@@ -99,7 +99,7 @@ final class RememberMeAuthenticator implements AuthenticatorInterface
 
     /**
      * @inheritDoc
-     * @return RememberMeToken<UserInterface>
+     * @return RememberMeToken
      * @throws SecurityException
      */
     public function createToken(PassportInterface $passport): TokenInterface
