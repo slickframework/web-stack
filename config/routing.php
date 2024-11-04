@@ -9,6 +9,7 @@
 
 namespace Infrastructure\Http\Routing;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Slick\Di\Container;
 use Slick\Di\Definition\ObjectDefinition;
 use Slick\WebStack\Infrastructure\Http\Routing\RequestContext;
@@ -29,9 +30,11 @@ if (!is_dir($cacheDirectory)) {
     mkdir($cacheDirectory, 0777, true);
 }
 
-$services['request.context'] = ObjectDefinition
-    ::create(RequestContext::class)
-    ->call('fromPsrRequest')->with('@http.request');
+$services['request.context'] = function (Container $container) {
+    $context = new RequestContext();
+    $request = $container->get(ServerRequestInterface::class);
+    return $context->fromPsrRequest($request);
+};
 
 $services['routes.attribute.loader'] = function () use ($userInterfaceDirectory) {
     return new AttributeDirectoryLoader(
