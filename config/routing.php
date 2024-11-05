@@ -32,7 +32,7 @@ if (!is_dir($cacheDirectory)) {
 
 $services['request.context'] = function (Container $container) {
     $context = new RequestContext();
-    $request = $container->get(ServerRequestInterface::class);
+    $request = $container->get('http.request');
     return $context->fromPsrRequest($request);
 };
 
