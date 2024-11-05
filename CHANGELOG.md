@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.5] - 2024-11-04
+### Fixes
+- Context passed to router was not created properly, ending in routing failures.
+
 ## [v2.0.4] - 2024-09-22
 ### Fixes
 - Enabling modules that use uppercase prefix namespaces.
@@ -116,7 +120,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.4...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.5...HEAD
+[v2.0.5]: https://github.com/slickframework/web-stack/compare/v2.0.4...v2.0.5
 [v2.0.4]: https://github.com/slickframework/web-stack/compare/v2.0.3...v2.0.4
 [v2.0.3]: https://github.com/slickframework/web-stack/compare/v1.5.3...v2.0.3
 [v1.5.3]: https://github.com/slickframework/web-stack/compare/v1.5.2...v1.5.3
