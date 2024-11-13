@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.6] - 2024-11-13
+### Adds
+- Access token authenticator
+### Fixes
+- Removed the need to return a 401 response when no authenticator support the request
+- The entry point is checked when checking grant in current session.
+
 ## [v2.0.5] - 2024-11-04
 ### Fixes
 - Context passed to router was not created properly, ending in routing failures.
@@ -120,7 +127,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.5...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.6...HEAD
+[v2.0.6]: https://github.com/slickframework/web-stack/compare/v2.0.5...v2.0.6
 [v2.0.5]: https://github.com/slickframework/web-stack/compare/v2.0.4...v2.0.5
 [v2.0.4]: https://github.com/slickframework/web-stack/compare/v2.0.3...v2.0.4
 [v2.0.3]: https://github.com/slickframework/web-stack/compare/v1.5.3...v2.0.3
