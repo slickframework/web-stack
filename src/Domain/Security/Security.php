@@ -11,16 +11,19 @@ declare(strict_types=1);
 
 namespace Slick\WebStack\Domain\Security;
 
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Slick\Di\Exception\NotFoundException;
 use Slick\Http\Session\SessionDriverInterface;
 use Slick\WebStack\Domain\Security\Authentication\Token\TokenStorageInterface;
+use Slick\WebStack\Domain\Security\Authentication\Token\UserToken;
 use Slick\WebStack\Domain\Security\Authentication\TokenInterface;
 use Slick\WebStack\Domain\Security\Exception\UserNotFoundException;
 use Slick\WebStack\Domain\Security\Http\SecurityProfile\SecurityProfileTrait;
 use Slick\WebStack\Domain\Security\Http\SecurityProfile\StatefulSecurityProfile\SessionSecurityProfile;
 use Slick\WebStack\Domain\Security\Http\SecurityProfile\StatefulSecurityProfileInterface;
 use Slick\WebStack\Domain\Security\Http\SecurityProfileFactory;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Security
@@ -51,6 +54,7 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
      * @var array<string>
      */
     private array $errors = [];
+    private ?Http\SecurityProfileInterface $securityProfile = null;
 
     /**
      * Creates a Security
@@ -58,12 +62,13 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
      * @param SecurityProfileFactory $profileFactory
      * @param TokenStorageInterface<TUser> $tokenStorage
      * @param array<string, mixed> $options
+     * @param SessionDriverInterface|null $sessionDriver
      */
     public function __construct(
         private readonly SecurityProfileFactory $profileFactory,
         private readonly TokenStorageInterface $tokenStorage,
         array $options = [],
-        private ?SessionDriverInterface $sessionDriver = null
+        private readonly ?SessionDriverInterface $sessionDriver = null
     ) {
         $this->options = array_merge(self::$defaultOptions, $options);
     }
@@ -91,8 +96,8 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
     
     public function isGrantedAcl(ServerRequestInterface $request): bool
     {
-        if (!$this->tokenStorage->getToken()) {
-            return true;
+        if (count($this->acl()) > 0 && !$this->tokenStorage->getToken()) {
+            return false;
         }
 
         foreach ($this->acl() as $pattern => $attributes) {
@@ -124,11 +129,14 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
 
     /**
      * @inheritDoc
+     * @throws NotFoundException|ContainerExceptionInterface
      */
     public function process(ServerRequestInterface $request): ?ResponseInterface
     {
         $securityProfile = $this->profileFactory->createProfile($this->options, $request);
         if ($securityProfile) {
+            $this->securityProfile = $securityProfile;
+            $this->options['accessControl'] = $securityProfile->acl();
             if ($securityProfile instanceof StatefulSecurityProfileInterface &&
                 $securityProfile->restoreToken()
             ) {
@@ -234,19 +242,39 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
     }
 
     /**
+     * Logs in the user using the provided UserInterface.
+     *
+     * @param UserInterface $user The user to log in.
+     * @return void
+     */
+    public function login(UserInterface $user): void
+    {
+        if ($this->securityProfile instanceof StatefulSecurityProfileInterface) {
+            $token = new UserToken($user);
+            $this->securityProfile->login($token);
+        }
+    }
+
+    /**
      * @inheritDoc
      * @SuppressWarnings(PHPMD)
      */
     public function logout(): void
     {
-        if ($this->sessionDriver) {
-            $this->sessionDriver->erase(SessionSecurityProfile::SESSION_KEY);
-        }
+        $this->sessionDriver?->erase(SessionSecurityProfile::SESSION_KEY);
 
         $profile = $this->profileFactory->profile();
         if ($profile instanceof StatefulSecurityProfileInterface) {
             $profile->logout();
         }
         $_SESSION = [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function processEntryPoint(ServerRequestInterface $request): ?ResponseInterface
+    {
+        return $this->securityProfile?->processEntryPoint($request);
     }
 }

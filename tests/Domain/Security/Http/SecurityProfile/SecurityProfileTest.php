@@ -63,7 +63,7 @@ class SecurityProfileTest extends TestCase
     }
 
     #[Test]
-    public function noAuthenticatorsUnauthorized()
+    public function noAuthenticatorsNull()
     {
         $request = $this->prophesize(ServerRequestInterface::class);
         $manager = $this->prophesize(AuthenticatorManagerInterface::class);
@@ -75,7 +75,7 @@ class SecurityProfileTest extends TestCase
         $profile = new SecurityProfile('/^\/api(.*)/i', $manager->reveal(), $tokenStorage);
 
         $response = $profile->process($serverRequest);
-        $this->assertEquals(401, $response->getStatusCode());
+        $this->assertNull($response);
     }
 
     #[Test]
@@ -83,17 +83,15 @@ class SecurityProfileTest extends TestCase
     {
         $response = $this->prophesize(ResponseInterface::class);
         $request = $this->prophesize(ServerRequestInterface::class);
-        $entryPoint = $this->prophesize(AuthenticationEntryPointInterface::class);
         $serverRequest = $request->reveal();
-        $entryPoint->start($serverRequest)->willReturn($response->reveal())->shouldBeCalled();
         $manager = $this->prophesize(AuthenticatorManagerInterface::class);
         $manager->supports($serverRequest)->willReturn(false)->shouldBeCalled();
         $tokenStorage = $this->prophesize(TokenStorageInterface::class)->reveal();
 
-        $profile = new SecurityProfile('/^\/api(.*)/i', $manager->reveal(), $tokenStorage, $entryPoint->reveal());
+        $profile = new SecurityProfile('/^\/api(.*)/i', $manager->reveal(), $tokenStorage);
 
         $processedResponse = $profile->process($serverRequest);
-        $this->assertSame($response->reveal(), $processedResponse);
+        $this->assertNull($processedResponse);
     }
 
     #[Test]

@@ -12,9 +12,6 @@ declare(strict_types=1);
 namespace Slick\WebStack\Infrastructure\Http;
 
 use JsonException;
-use Slick\WebStack\Domain\Security\Attribute\IsGranted;
-use Slick\WebStack\Domain\Security\AuthorizationCheckerInterface;
-use Slick\WebStack\Domain\Security\UserInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -22,7 +19,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
-use Slick\Http\Message\Response;
+use Slick\WebStack\Domain\Security\Attribute\IsGranted;
+use Slick\WebStack\Domain\Security\AuthorizationCheckerInterface;
+use Slick\WebStack\Domain\Security\UserInterface;
 
 /**
  * AuthorizationMiddleware
@@ -44,12 +43,12 @@ final readonly class AuthorizationMiddleware implements MiddlewareInterface
 
     /**
      * @inheritDoc
-     * @throws ReflectionException
+     * @throws ReflectionException|JsonException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $request->getAttribute('route');
-        $response = $this->checkClassAuthorization($route);
+        $response = $this->checkClassAuthorization($route, $request);
 
         if ($response instanceof ResponseInterface) {
             return $response;
@@ -64,9 +63,9 @@ final readonly class AuthorizationMiddleware implements MiddlewareInterface
      * @param array<string, string> $route The route information
      * @return ResponseInterface|null Returns a ResponseInterface object if the user is not authorized,
      *                                otherwise returns null
-     * @throws ReflectionException
+     * @throws ReflectionException|JsonException
      */
-    private function checkClassAuthorization(?array $route): ?ResponseInterface
+    private function checkClassAuthorization(?array $route, ServerRequestInterface $request): ?ResponseInterface
     {
         if (!is_array($route) || !array_key_exists('_controller', $route)) {
             return null;
@@ -79,7 +78,7 @@ final readonly class AuthorizationMiddleware implements MiddlewareInterface
         $reflectionMethod = $reflectionClass->getMethod($route['_action']);
         $methodAttributes = $reflectionMethod->getAttributes(IsGranted::class);
 
-        return $this->checkAttributes(array_merge($classAttributes, $methodAttributes));
+        return $this->checkAttributes(array_merge($classAttributes, $methodAttributes), $request);
     }
 
     /**
@@ -90,7 +89,7 @@ final readonly class AuthorizationMiddleware implements MiddlewareInterface
      * @return ResponseInterface|null The response if conditions are met, null otherwise.
      * @throws JsonException
      */
-    private function checkAttributes(array $attributes): ?ResponseInterface
+    private function checkAttributes(array $attributes, ServerRequestInterface $request): ?ResponseInterface
     {
         $last = null;
         foreach ($attributes as $attribute) {
@@ -100,6 +99,10 @@ final readonly class AuthorizationMiddleware implements MiddlewareInterface
             }
             $last = $grantInfo;
         }
-        return $last ? $last->response() : null;
+
+        $response = $last ? $this->authorizationChecker->processEntryPoint($request) : null;
+        $attributeResponse = $last ? $last->response() : null;
+
+        return $response && $response->getStatusCode() < 400 ? $response : $attributeResponse;
     }
 }

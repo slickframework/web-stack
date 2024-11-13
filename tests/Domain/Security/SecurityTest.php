@@ -106,6 +106,7 @@ class SecurityTest extends TestCase
         $token = $this->prophesize(TokenInterface::class);
         $profile = $this->prophesize(StatefulSecurityProfileInterface::class);
         $profile->restoreToken()->willReturn($token->reveal());
+        $profile->acl()->willReturn([]);
         $factory->createProfile($config, $request->reveal())->willReturn($profile->reveal());
         $security = new Security($factory->reveal(), $tokenStorage->reveal(), $config);
 
@@ -122,6 +123,7 @@ class SecurityTest extends TestCase
         $profile = $this->prophesize(SecurityProfileInterface::class);
         $profile->process($request->reveal())->willReturn(null);
         $profile->authenticationErrors()->willReturn([]);
+        $profile->acl()->willReturn([]);
         $factory->createProfile($config, $request->reveal())->willReturn($profile->reveal());
         $security = new Security($factory->reveal(), $tokenStorage->reveal(), $config);
 
@@ -257,7 +259,7 @@ class SecurityTest extends TestCase
     }
 
     #[Test]
-    public function grantAclTrueOnNoToken()
+    public function grantAclFalseOnNoToken()
     {
         $acl = ['/\/test(.*)/i' => ['IS_AUTHENTICATED', 'ROLE_USER']];
         $config = ['enabled' => true, 'accessControl' => $acl];
@@ -270,7 +272,7 @@ class SecurityTest extends TestCase
 
         $security = new Security($factory->reveal(), $tokenStorage->reveal(), $config);
 
-        $this->assertTrue($security->isGrantedAcl($request->reveal()));
+        $this->assertFalse($security->isGrantedAcl($request->reveal()));
     }
 
     #[Test]

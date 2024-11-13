@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Slick\WebStack\Infrastructure\Http\Authenticator\Factory;
 
 use ArrayIterator;
+use Slick\WebStack\Infrastructure\Http\Authenticator\AccessTokenAuthenticator;
 use Slick\WebStack\Infrastructure\Http\Authenticator\HttpBasicAuthenticator;
 use ArrayAccess;
 use IteratorAggregate;
@@ -43,6 +44,10 @@ final class AuthenticatorsListFactory implements ArrayAccess, IteratorAggregate,
     private static array $presets = [
         'custom' => [
             'className' => null,
+            'args' => []
+        ],
+        'accessToken' => [
+            'factoryClass' => AccessTokenAuthenticatorFactory::class,
             'args' => []
         ],
         'httpBasicAuth' => [
@@ -198,6 +203,10 @@ final class AuthenticatorsListFactory implements ArrayAccess, IteratorAggregate,
         $args = $this->parseConstructorArgs($name, $config);
         $customClass = isset($config['className']) ? $config['className'] : null;
         $className = $customClass ?? self::$presets[$name]['className'];
+
+        if (isset($config['className'])) {
+            unset($args['className']);
+        }
 
         $this->authenticators[$name] = $this->container->make($className, ...array_values($args));
         if ($this->authenticators[$name] instanceof AuthenticationEntryPointInterface) {
