@@ -53,4 +53,12 @@ interface SecurityAuthenticatorInterface
      * @return void
      */
     public function logout(): void;
+
+    /**
+     * Logs in the user using the provided UserInterface.
+     *
+     * @param UserInterface $user The user to log in.
+     * @return void
+     */
+    public function login(UserInterface $user): void;
 }

@@ -91,4 +91,25 @@ final class DisabledSecurityProfile implements SecurityProfileInterface, Statefu
     {
         // nothing to do here.
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function processEntryPoint(ServerRequestInterface $request): ?ResponseInterface
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function acl(): array
+    {
+        return [];
+    }
+
+    public function login(TokenInterface $token): void
+    {
+        // Tdo nothing
+    }
 }

@@ -39,9 +39,29 @@ interface SecurityProfileInterface
     public function process(ServerRequestInterface $request): ?ResponseInterface;
 
     /**
+     * Processes the entry point for the given server request.
+     *
+     * If an entry point is defined, it will start the authentication process
+     * using the provided server request. Otherwise, it returns a response with
+     * a status code of 401 (Unauthorized).
+     *
+     * @param ServerRequestInterface $request The server request to process the entry point.
+     * @return null|ResponseInterface Returns the response of the entry point or a response with
+     *                           a status code of 401 (Unauthorized).
+     */
+    public function processEntryPoint(ServerRequestInterface $request): ?ResponseInterface;
+
+    /**
      * Returns an array containing authentication errors.
      *
      * @return array<string> Returns an array of authentication errors.
      */
     public function authenticationErrors(): array;
+
+    /**
+     * Returns an array containing the Access Control List (ACL) for the current security profile.
+     *
+     * @return array<string> An associative array representing the Access Control List.
+     */
+    public function acl(): array;
 }

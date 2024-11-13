@@ -57,9 +57,12 @@ class AuthorizationMiddlewareTest extends TestCase
     #[Test]
     public function processFail(): void
     {
+        $request = $this->prophesize(ServerRequestInterface::class);
+
         $checker = $this->prophesize(AuthorizationCheckerInterface::class);
         $checker->isGranted("ROLE_ADMIN")->willReturn(false);
         $checker->isGranted("ROLE_USER")->willReturn(false);
+        $checker->processEntryPoint($request)->willReturn(null);
         $middleware = new AuthorizationMiddleware($checker->reveal());
 
         $parameters = [
@@ -67,7 +70,6 @@ class AuthorizationMiddlewareTest extends TestCase
             "_controller" => DummyController::class,
             "_action" => "handle"
         ];
-        $request = $this->prophesize(ServerRequestInterface::class);
         $request->getAttribute("route")->willReturn($parameters);
         $response = $this->prophesize(ResponseInterface::class)->reveal();
         $handle = $this->prophesize(RequestHandlerInterface::class);

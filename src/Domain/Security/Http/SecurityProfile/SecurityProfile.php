@@ -38,12 +38,14 @@ class SecurityProfile implements SecurityProfileInterface
      * @param AuthenticatorManagerInterface $authenticatorManager
      * @param TokenStorageInterface<UserInterface> $tokenStorage
      * @param AuthenticationEntryPointInterface|null $entryPoint
+     * @param array<string> $acl
      */
     public function __construct(
         string $matchExp,
         protected readonly AuthenticatorManagerInterface $authenticatorManager,
         protected readonly TokenStorageInterface $tokenStorage,
-        private readonly ?AuthenticationEntryPointInterface $entryPoint = null
+        private readonly ?AuthenticationEntryPointInterface $entryPoint = null,
+        private readonly array $acl = []
     ) {
         $this->matchExp = $matchExp;
     }
@@ -58,7 +60,7 @@ class SecurityProfile implements SecurityProfileInterface
     {
         $supports = $this->authenticatorManager->supports($request);
         if (!$supports) {
-              return $this->processEntryPoint($request);
+              return null;
         }
 
         $response =  $this->authenticatorManager->authenticateRequest($request);
@@ -79,7 +81,7 @@ class SecurityProfile implements SecurityProfileInterface
      * @return null|ResponseInterface Returns the response of the entry point or a response with
      *                           a status code of 401 (Unauthorized).
      */
-    private function processEntryPoint(ServerRequestInterface $request): ?ResponseInterface
+    public function processEntryPoint(ServerRequestInterface $request): ?ResponseInterface
     {
         if ($this->entryPoint) {
             return $this->entryPoint->start($request);
@@ -107,5 +109,13 @@ class SecurityProfile implements SecurityProfileInterface
     public function authenticationErrors(): array
     {
         return $this->authenticatorManager->authenticationErrors();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function acl(): array
+    {
+        return $this->acl;
     }
 }
