@@ -37,7 +37,8 @@ trait ProfileFactoryTrait
         "stateless" => true,
         "tokenStorage" => TokenStorageInterface::class,
         "sessionDriver" => SessionDriverInterface::class,
-        "entryPoint" => null
+        "entryPoint" => null,
+        "accessControl" => []
     ];
 
     /**

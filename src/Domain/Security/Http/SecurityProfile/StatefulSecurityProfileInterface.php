@@ -37,4 +37,10 @@ interface StatefulSecurityProfileInterface extends SecurityProfileInterface
      * @return void
      */
     public function logout(): void;
+
+    /**
+     * @param TokenInterface<UserInterface> $token
+     * @return void
+     */
+    public function login(TokenInterface $token): void;
 }

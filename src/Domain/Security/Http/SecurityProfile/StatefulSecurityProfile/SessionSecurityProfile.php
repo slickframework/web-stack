@@ -41,6 +41,8 @@ final class SessionSecurityProfile extends SecurityProfile implements StatefulSe
      * @param TokenStorageInterface<T> $tokenStorage The token storage
      * @param SessionDriverInterface $session The session driver
      * @param AuthenticationEntryPointInterface|null $entryPoint The authentication entry point (optional)
+     * @param TokenValidatorInterface|null $tokenValidator
+     * @param array<string> $acl
      */
     public function __construct(
         string $matchExp,
@@ -48,9 +50,10 @@ final class SessionSecurityProfile extends SecurityProfile implements StatefulSe
         TokenStorageInterface $tokenStorage,
         private readonly SessionDriverInterface $session,
         ?AuthenticationEntryPointInterface $entryPoint = null,
-        private readonly ?TokenValidatorInterface $tokenValidator = null
+        private readonly ?TokenValidatorInterface $tokenValidator = null,
+        array $acl = []
     ) {
-        parent::__construct($matchExp, $authenticatorManager, $tokenStorage, $entryPoint);
+        parent::__construct($matchExp, $authenticatorManager, $tokenStorage, $entryPoint, $acl);
     }
 
     /**
@@ -92,5 +95,11 @@ final class SessionSecurityProfile extends SecurityProfile implements StatefulSe
     {
         $this->session->erase(self::SESSION_KEY);
         $this->authenticatorManager->clear();
+    }
+
+    public function login(TokenInterface $token): void
+    {
+        $this->session->set(self::SESSION_KEY, $token);
+        $this->tokenStorage->setToken($token);
     }
 }

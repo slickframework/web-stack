@@ -135,7 +135,8 @@ class SecurityProfileFactory
                 $profile['pattern'],
                 $this->createAuthenticatorManager($profile),
                 $this->createTokenStorage($profile),
-                $this->createEntryPoint($profile)
+                $this->createEntryPoint($profile),
+                $profile['accessControl']
             );
         }
 
@@ -162,7 +163,8 @@ class SecurityProfileFactory
             $this->createTokenStorage($profile),
             $this->createSessionDriver($profile),
             $this->createEntryPoint($profile),
-            $tokenValidator
+            $tokenValidator,
+            $profile['accessControl']
         );
     }
 
