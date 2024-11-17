@@ -36,7 +36,7 @@ class FormLoginEntryPointTest extends TestCase
         $session = $this->prophesize(SessionDriverInterface::class);
         $request = $this->prophesize(ServerRequestInterface::class);
         $request->getUri()->willReturn(new Uri('http://example.com/home'));
-        $session->set(RedirectHandler::LAST_URI, "/home")->shouldBeCalled()->willReturn($session->reveal());
+        $session->set(RedirectHandler::LAST_URI, 'http://example.com/home')->shouldBeCalled()->willReturn($session->reveal());
         $FormLoginEntryPoint = new FormLoginEntryPoint($session->reveal());
         $response = $FormLoginEntryPoint->start($request->reveal());
         $this->assertInstanceOf(ResponseInterface::class, $response);

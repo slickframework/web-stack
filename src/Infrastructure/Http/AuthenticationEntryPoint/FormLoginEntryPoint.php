@@ -47,7 +47,7 @@ final class FormLoginEntryPoint implements AuthenticationEntryPointInterface
         if (!in_array($path, $this->properties->paths())) {
             $this->sessionDriver->set(
                 FormLoginAuthenticator\LoginFormAuthenticatorHandler\RedirectHandler::LAST_URI,
-                $request->getUri()->getPath()
+                (string) $request->getUri()
             );
         }
         return new Response(status: 302, headers: ['Location' => $this->properties->path('login')]);
