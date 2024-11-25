@@ -179,7 +179,7 @@ trait ModuleCommandTrait
         foreach ($modules as $module) {
             $installed = "   <info>√</info>";
             $core = "   <fg=gray>-</>";
-            $moduleName = $this->retrieveModuleName($module->name());
+            $moduleName = is_object($module) ? get_class($module) : $this->retrieveModuleName($module->name());
             $notInstalled = "   <fg=red>x</>";
             $status = $this->checkModuleNotExists($moduleName, $installedModules) ? $notInstalled : $installed;
             if (in_array($module->name(), ["console", "dispatcher", "front_controller"])) {

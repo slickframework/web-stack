@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.8] - 2024-11-25
+### Fixes
+- Loading modules fail for custom modules
+
 ## [v2.0.7] - 2024-11-17
 ### Fixes
 - Redirect location after login missing the full URI
@@ -131,8 +135,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.7...HEAD
-[v2.0.6]: https://github.com/slickframework/web-stack/compare/v2.0.6...v2.0.7
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.8...HEAD
+[v2.0.8]: https://github.com/slickframework/web-stack/compare/v2.0.7...v2.0.8
+[v2.0.7]: https://github.com/slickframework/web-stack/compare/v2.0.6...v2.0.7
 [v2.0.6]: https://github.com/slickframework/web-stack/compare/v2.0.5...v2.0.6
 [v2.0.5]: https://github.com/slickframework/web-stack/compare/v2.0.4...v2.0.5
 [v2.0.4]: https://github.com/slickframework/web-stack/compare/v2.0.3...v2.0.4
