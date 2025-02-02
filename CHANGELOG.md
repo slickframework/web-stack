@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.9] - 2025-02-02
+### Adds
+- `AbstractApplication::container()` to allow running applications to retrieve the dependency
+  container and interact with available dependencies.
+
 ## [v2.0.8] - 2024-11-25
 ### Fixes
 - Loading modules fail for custom modules
@@ -135,7 +140,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.8...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.9...HEAD
+[v2.0.9]: https://github.com/slickframework/web-stack/compare/v2.0.8...v2.0.9
 [v2.0.8]: https://github.com/slickframework/web-stack/compare/v2.0.7...v2.0.8
 [v2.0.7]: https://github.com/slickframework/web-stack/compare/v2.0.6...v2.0.7
 [v2.0.6]: https://github.com/slickframework/web-stack/compare/v2.0.5...v2.0.6
