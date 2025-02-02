@@ -38,6 +38,8 @@ abstract class AbstractApplication
 
     protected Dotenv $dotenv;
 
+    private ?ContainerInterface $container = null;
+
     /**
      * Creates an AbstractApplication
      *
@@ -53,6 +55,11 @@ abstract class AbstractApplication
         }
         $this->dotenv = Dotenv::createImmutable($this->rootPath);
         $this->containerFactory = DependencyContainerFactory::instance();
+    }
+
+    public function container(): ContainerInterface
+    {
+        return $this->prepareContainer();
     }
 
     /**
@@ -79,6 +86,10 @@ abstract class AbstractApplication
      */
     protected function prepareContainer(): ContainerInterface
     {
+        if ($this->container) {
+            return $this->container;
+        }
+
         $this->loadModules();
         $settingsDriver = new PriorityConfigurationChain();
         $settingsDriver->add(new Environment(), 10);
@@ -93,6 +104,7 @@ abstract class AbstractApplication
             $container->register(ClassLoader::class, $this->classLoader);
         }
 
+        $this->container = $container;
         return $container;
     }
 
