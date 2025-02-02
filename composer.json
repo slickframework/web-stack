@@ -3,7 +3,7 @@
   "description": "PSR-15 HTTP middleware stack that can help you create web applications or web services for HTTP protocol.",
   "minimum-stability": "dev",
   "license": "MIT",
-  "version": "v2.0.8",
+  "version": "v2.0.9",
   "keywords": [
     "slick",
     "PSR-15",
@@ -68,7 +68,7 @@
     "test": "phpunit",
     "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src",
     "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src",
-    "check-code": "phpmd --ignore-errors-on-exit src html build/phpmd.xml > build/phpmd.html && phpstan analyze"
+    "check-code": "phpmd --ignore-errors-on-exit src html build/phpmd.xml > build/phpmd.html && phpstan analyze --memory-limit=256M"
   },
   "config": {
     "preferred-install": {
