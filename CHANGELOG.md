@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.10] - 2025-04-28
+### Fixes
+- Adds token attributes when forcing a login, fixing the unauthorized when checking
+  `IS_AUTHENTICATED`, `IS_AUTHENTICATED_REMEMBERED` or `IS_AUTHENTICATED_FULLY` 
+
 ## [v2.0.9] - 2025-02-02
 ### Adds
 - `AbstractApplication::container()` to allow running applications to retrieve the dependency
@@ -140,7 +145,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.9...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.10...HEAD
+[v2.0.10]: https://github.com/slickframework/web-stack/compare/v2.0.9...v2.0.10
 [v2.0.9]: https://github.com/slickframework/web-stack/compare/v2.0.8...v2.0.9
 [v2.0.8]: https://github.com/slickframework/web-stack/compare/v2.0.7...v2.0.8
 [v2.0.7]: https://github.com/slickframework/web-stack/compare/v2.0.6...v2.0.7
