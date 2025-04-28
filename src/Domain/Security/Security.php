@@ -251,6 +251,11 @@ final class Security implements AuthorizationCheckerInterface, SecurityAuthentic
     {
         if ($this->securityProfile instanceof StatefulSecurityProfileInterface) {
             $token = new UserToken($user);
+            $token->withAttributes([
+                'IS_AUTHENTICATED_FULLY' => 'true',
+                'IS_AUTHENTICATED_REMEMBERED' => 'true',
+                'IS_AUTHENTICATED' => 'true'
+            ]);
             $this->securityProfile->login($token);
         }
     }

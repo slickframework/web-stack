@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixes
+- Adds token attributes when forcing a login, fixing the unauthorized when checking
+  `IS_AUTHENTICATED`, `IS_AUTHENTICATED_REMEMBERED` or `IS_AUTHENTICATED_FULLY` 
+
 ## [v2.0.9] - 2025-02-02
 ### Adds
 - `AbstractApplication::container()` to allow running applications to retrieve the dependency
