@@ -29,11 +29,16 @@ $userInterfaceDirectory = $path;
 if (!is_dir($cacheDirectory)) {
     mkdir($cacheDirectory, 0777, true);
 }
-
+$services['routingBasePath'] = $_ENV['ROUTING_BASE_PATH'] ?? '';
 $services['request.context'] = function (Container $container) {
     $context = new RequestContext();
     $request = $container->get('http.request');
-    return $context->fromPsrRequest($request);
+    $requestContext = $context->fromPsrRequest($request);
+    $baseUrl = $container->get('routingBasePath');
+    if (!empty($baseUrl)) {
+        $requestContext->setBaseUrl($baseUrl);
+    }
+    return $requestContext;
 };
 
 $services['routes.attribute.loader'] = function () use ($userInterfaceDirectory) {

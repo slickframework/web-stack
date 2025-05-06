@@ -31,16 +31,20 @@ final class RoutingMiddleware implements MiddlewareInterface
      * @param UrlMatcherInterface $matcher
      */
     public function __construct(
-        private UrlMatcherInterface $matcher
+        private UrlMatcherInterface $matcher,
+        private string $routingBasePath = ''
     ) {
     }
 
     /**
      * @inheritDoc
+     * @SuppressWarnings
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $parameters = $this->matcher->match($request->getUri()->getPath());
+        $pathinfo = $request->getUri()->getPath();
+        $basePath = $this->routingBasePath;
+        $parameters = $this->matcher->match(str_replace('//', '/', '/'.str_replace($basePath, '', $pathinfo)));
         $request = $request->withAttribute('route', $parameters);
         return $handler->handle($request);
     }
