@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.11] - 2025-05-06
+### Adds
+- Adds the ability to configure a base path for routing via the `ROUTING_BASE_PATH`
+  environment variable.
+
 ## [v2.0.10] - 2025-04-28
 ### Fixes
 - Adds token attributes when forcing a login, fixing the unauthorized when checking
