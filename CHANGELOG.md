@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.14] - 2026-03-27
+### Changed
+- Updates `ConsoleApplication` to handle the `console.commands_dir` configuration as either astring
+  or an array, enabling command registration from multiple paths.
+
 ## [v2.0.13] - 2026-03-27
 ### Added
 - Adds the ability to configure a resources path for attribute routes with multiple
@@ -162,7 +167,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.13...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.14...HEAD
+[v2.0.13]: https://github.com/slickframework/web-stack/compare/v2.0.13...v2.0.14
 [v2.0.13]: https://github.com/slickframework/web-stack/compare/v2.0.12...v2.0.13
 [v2.0.12]: https://github.com/slickframework/web-stack/compare/v2.0.11...v2.0.12
 [v2.0.11]: https://github.com/slickframework/web-stack/compare/v2.0.10...v2.0.11
