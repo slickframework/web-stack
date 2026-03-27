@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.13] - 2026-03-27
+### Added
+- Adds the ability to configure a resources path for attribute routes with multiple
+  controllers by creating a module config file `dispatcher.php` in the `config/modules` directory.
+### Changed
+- It no longer throws an exception when the resources path doesn't exist, enabling the possibility of pre-configuring
+  the resources path(s).
+
 ## [v2.0.12] - 2025-09-22
 ### Changed
 - Updates the symfony packages versions to v7.4.x
@@ -154,7 +162,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.12...HEAD
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.13...HEAD
+[v2.0.13]: https://github.com/slickframework/web-stack/compare/v2.0.12...v2.0.13
 [v2.0.12]: https://github.com/slickframework/web-stack/compare/v2.0.11...v2.0.12
 [v2.0.11]: https://github.com/slickframework/web-stack/compare/v2.0.10...v2.0.11
 [v2.0.10]: https://github.com/slickframework/web-stack/compare/v2.0.9...v2.0.10
