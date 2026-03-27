@@ -14,13 +14,14 @@ namespace Slick\WebStack\Infrastructure\Console;
 use Composer\Autoload\ClassLoader;
 use Exception;
 use JsonException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Slick\Configuration\ConfigurationInterface;
 use Slick\ModuleApi\Infrastructure\Console\ConsoleModuleInterface;
 use Slick\WebStack\ConsoleModule;
 use Slick\WebStack\DispatcherModule;
 use Slick\WebStack\FrontControllerModule;
 use Slick\WebStack\Infrastructure\AbstractApplication;
-use Slick\WebStack\Infrastructure\ApplicationSettingsInterface;
 use Slick\WebStack\Infrastructure\ComposerParser;
 use Symfony\Component\Console\Application;
 use function Slick\ModuleApi\constantValue;
@@ -32,9 +33,9 @@ use function Slick\ModuleApi\constantValue;
  */
 final class ConsoleApplication extends AbstractApplication
 {
-    
+
     private ?Application $commandLine = null;
-    
+
     public function __construct(string $rootPath, ?ClassLoader $classLoader = null)
     {
         parent::__construct($rootPath, $classLoader);
@@ -45,15 +46,22 @@ final class ConsoleApplication extends AbstractApplication
 
 
     /**
+     * @return null
      * @throws JsonException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      * @throws Exception
      */
     public function run(): null
     {
         $container = $this->prepareContainer();
         $commandsDir = $container->get(ConfigurationInterface::class)->get('console.commands_dir');
+        $paths = is_array($commandsDir) ? $commandsDir : [$commandsDir];
 
-        $loader = new ConsoleCommandLoader($container, APP_ROOT . $commandsDir);
+        $loader = new DirectoryCommandLoader($container);
+        foreach ($paths as $path) {
+            $loader->add(APP_ROOT . $path);
+        }
         $cli = $this->commandLine();
 
         $cli->setCatchExceptions(true);

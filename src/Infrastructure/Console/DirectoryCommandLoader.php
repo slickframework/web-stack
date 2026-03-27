@@ -72,6 +72,9 @@ final class DirectoryCommandLoader implements CommandLoaderInterface
 
     public function add(string $sourcePath): void
     {
+        if (!is_dir($sourcePath)) {
+            return;
+        }
         $this->loaders[] = new ConsoleCommandLoader($this->container, $sourcePath);
     }
 }
