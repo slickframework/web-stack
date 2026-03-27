@@ -53,12 +53,14 @@ class SecurityProfileTest extends TestCase
     {
         $request = $this->prophesize(ServerRequestInterface::class);
         $manager = $this->prophesize(AuthenticatorManagerInterface::class);
+        $tokenStorage = $this->prophesize(TokenStorageInterface::class);
+        $tokenStorage->getToken()->willReturn(null);
+        $request->withAttribute(SecurityProfile::REQUEST_TOKEN_KEY, null)->shouldBeCalled()->willReturn($request);
         $serverRequest = $request->reveal();
         $manager->supports($serverRequest)->willReturn(true)->shouldBeCalled();
         $manager->authenticateRequest($serverRequest)->shouldBeCalled()->willReturn(null);
-        $tokenStorage = $this->prophesize(TokenStorageInterface::class)->reveal();
 
-        $profile = new SecurityProfile('/^\/api(.*)/i', $manager->reveal(), $tokenStorage);
+        $profile = new SecurityProfile('/^\/api(.*)/i', $manager->reveal(), $tokenStorage->reveal());
         $this->assertNull($profile->process($serverRequest));
     }
 
