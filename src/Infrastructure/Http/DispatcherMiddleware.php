@@ -45,7 +45,7 @@ final readonly class DispatcherMiddleware implements MiddlewareInterface
         $route = $request->getAttribute('route');
         $controller = $this->container->make($route['_controller']);
 
-        $result = $this->runAction($controller, $route['_action'], $route);
+        $result = $this->runAction($controller, $route['_action'], $route, $request);
 
         if ($result instanceof ResponseInterface) {
             return $result;
@@ -63,8 +63,12 @@ final readonly class DispatcherMiddleware implements MiddlewareInterface
      * @throws NotFoundExceptionInterface
      * @throws ReflectionException
      */
-    private function runAction(mixed $controller, mixed $action, array $route): mixed
-    {
+    private function runAction(
+        mixed $controller,
+        mixed $action,
+        array $route,
+        ServerRequestInterface $request,
+    ): mixed {
         $reflection = new ReflectionClass($controller);
         $method = $reflection->getMethod($action);
         $parameters = $this->resolveParameters($route);
@@ -77,6 +81,11 @@ final readonly class DispatcherMiddleware implements MiddlewareInterface
                 continue;
             }
             $type = (string) $argument->getType();
+
+            if (is_a($request, $type)) {
+                $resolvedArguments[$name] = $request;
+                continue;
+            }
 
             try {
                 $resolvedArguments[$name] = $this->container->get($type);

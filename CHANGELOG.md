@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v2.0.15] - 2026-04-25
+### Fixed
+- `DispatcherMiddleware` now injects the middleware-chain `ServerRequestInterface` into controller
+  actions instead of the DI-container-registered request. Previously, attributes set by upstream
+  middleware (e.g. authenticated account, route params from security middleware) were invisible to
+  controllers because the container holds the original, undecorated request.
+
 ## [v2.0.14] - 2026-03-27
 ### Changed
 - Updates `ConsoleApplication` to handle the `console.commands_dir` configuration as either astring
@@ -167,8 +174,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - First release 
 
-[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.14...HEAD
-[v2.0.13]: https://github.com/slickframework/web-stack/compare/v2.0.13...v2.0.14
+[Unreleased]: https://github.com/slickframework/web-stack/compare/v2.0.15...HEAD
+[v2.0.15]: https://github.com/slickframework/web-stack/compare/v2.0.14...v2.0.15
+[v2.0.14]: https://github.com/slickframework/web-stack/compare/v2.0.13...v2.0.14
 [v2.0.13]: https://github.com/slickframework/web-stack/compare/v2.0.12...v2.0.13
 [v2.0.12]: https://github.com/slickframework/web-stack/compare/v2.0.11...v2.0.12
 [v2.0.11]: https://github.com/slickframework/web-stack/compare/v2.0.10...v2.0.11

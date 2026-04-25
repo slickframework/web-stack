@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Test\Slick\WebStack\Infrastructure\Http\Dispatcher;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Slick\Http\Message\Response;
 
 /**
@@ -45,5 +46,10 @@ final class SimpleController
     public function missing(string $needed): ResponseInterface
     {
         return new Response(200, $needed);
+    }
+
+    public function withRequest(ServerRequestInterface $request): ResponseInterface
+    {
+        return new Response(200, $request->getAttribute('test-attr') ?? '');
     }
 }
