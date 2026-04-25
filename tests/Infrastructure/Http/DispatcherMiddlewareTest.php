@@ -105,6 +105,22 @@ class DispatcherMiddlewareTest extends TestCase
         $middleware->process($this->prepareRequest(action: 'missing')->reveal(), $handler->reveal());
     }
 
+    #[Test]
+    public function injectsMiddlewareChainRequest(): void
+    {
+        $handler = $this->prophesize(RequestHandlerInterface::class);
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->make(SimpleController::class)->willReturn(new SimpleController());
+        $middleware = new DispatcherMiddleware($container->reveal());
+
+        $request = $this->prepareRequest(action: 'withRequest');
+        $request->getAttribute('test-attr')->willReturn('middleware-value');
+
+        $response = $middleware->process($request->reveal(), $handler->reveal());
+        $response->getBody()->rewind();
+        $this->assertEquals('middleware-value', $response->getBody()->getContents());
+    }
+
 
 
     private function prepareRequest(
